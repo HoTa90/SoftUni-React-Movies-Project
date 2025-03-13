@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function NavBar() {
   return (
-    <div className="navbar shadow-sm bg-[#191638]" >
+    <div className="navbar shadow-sm bg-[#1b1a25]" >
       <div className="navbar-start  ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
