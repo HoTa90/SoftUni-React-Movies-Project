@@ -1,7 +1,7 @@
-import MovieCard from "./MovieCard.jsx";
-import Spinner from "./Spinner.jsx";
+import HeroCard from "../HeroCard.jsx";
+import Spinner from "../Spinner.jsx";
 
-export default function MoviesSection({ movieList, errorMessage, isLoading, people, series }) {
+export default function PopularSection({ movieList, errorMessage, isLoading, people, series }) {
     return (
         <section className="px-4 py-10">
             {/* Popular Movies Section */}
@@ -14,7 +14,7 @@ export default function MoviesSection({ movieList, errorMessage, isLoading, peop
                 <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
                     {movieList && movieList.slice(0, 5).map(movie => (
                         <li key={movie.id} className="p-2">
-                            <MovieCard data={movie} type='movie' />
+                            <HeroCard data={movie} type='movie' />
                         </li>
                     ))}
                 </ul>
@@ -25,7 +25,7 @@ export default function MoviesSection({ movieList, errorMessage, isLoading, peop
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
                 {series && series.slice(0, 5).map(tv => (
                     <li key={tv.id} className="p-2">
-                        <MovieCard data={tv} type='tv' />
+                        <HeroCard data={tv} type='tv' />
                     </li>
                 ))}
             </ul>
@@ -35,7 +35,7 @@ export default function MoviesSection({ movieList, errorMessage, isLoading, peop
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {people && people.slice(0, 5).map(p => (
                     <li key={p.id} className="p-2">
-                        <MovieCard data={p}  type='person' />
+                        <HeroCard data={p}  type='person' />
                     </li>
                 ))}
             </ul>

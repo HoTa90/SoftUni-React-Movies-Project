@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import HeaderSection from "./HeaderSection.jsx";
-import { fetchDetails, fetchTrending } from "../api/movieService.js";
 import PopularSection from "./PopularSection.jsx";
+import { fetchDetails, fetchTrending } from "../../api/movieService.js";
 
 
 export default function Home() {
