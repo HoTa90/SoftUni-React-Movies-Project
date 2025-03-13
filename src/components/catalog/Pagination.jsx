@@ -1,11 +1,24 @@
-export default function Pagination(pageNumbers) {
-   return (
-    <div className="join">
-    <button className="join-item btn">1</button>
-    <button className="join-item btn">2</button>
-    <button className="join-item btn btn-disabled">...</button>
-    <button className="join-item btn">99</button>
-    <button className="join-item btn">100</button>
-  </div>
-   );
+export default function Pagination({ currentPage, onPageChange, hasNextPage }) {
+    
+    console.log(hasNextPage)
+   
+    return (
+        <div className="join">
+            <button className="join-item btn"
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+            >
+                Previous
+            </button>
+            <button className="join-item btn">{currentPage}</button>
+            <button
+                className="join-item btn"
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={!hasNextPage}
+            >
+                Next
+            </button>
+
+        </div>
+    );
 }

@@ -60,6 +60,11 @@ export const fetchMovies = async (page, sortBy) => {
     const url = `${API_BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sortBy}`;
     return await fetchData(url);
 };
+export const fetchAllMovies = async () => {
+    const url = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+    const data = await fetchData(url)
+    return data.results;
+}
 
 // DISCOVER - TV Series
 export const fetchTvSeries = async (page, sortBy) => {
