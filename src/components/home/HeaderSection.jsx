@@ -1,3 +1,6 @@
+import { Link } from "react-router";
+import { minutesTohours } from "../../utils/helper.js";
+
 export default function HeaderSection({ movie }) {
   
     console.log(movie);
@@ -22,9 +25,9 @@ export default function HeaderSection({ movie }) {
   
               <div className="max-w-xl text-white z-10">
                  <h1 className="mt-4 text-5xl font-extrabold text-balance">{movie.title}</h1>
-                 <p className="mt-2">{movie.release_date ? movie.release_date.split('-')[0] : 'N/A'} • {movie.runtime} minutes</p>
+                 <p className="mt-2">{movie.release_date ? movie.release_date.split('-')[0] : 'N/A'} • {minutesTohours(movie.runtime)}</p>
                  <p className="mt-2 text-lg">{movie.overview}</p>
-                 <button className="btn btn-primary mt-4">More Details</button>
+                 <Link to={`/movie/${movie.id}`} className="btn mt-4 bg-[#2c2c2c]">More Details</Link>
               </div>
   
               <div className="w-full lg:w-1/3 flex justify-center lg:justify-end p-4 z-10">

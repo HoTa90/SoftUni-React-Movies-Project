@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-     <footer className="footer sm:footer-horizontal bg-[#1b1a25] text-neutral-content items-center p-4 ">
+     <footer className="footer sm:footer-horizontal bg-[#2c2c2c] text-neutral-content items-center p-4 ">
      <aside className="grid-flow-col items-center">
        <svg
          width="36"

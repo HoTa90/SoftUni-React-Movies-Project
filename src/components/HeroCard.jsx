@@ -6,7 +6,7 @@ export default function HeroCard({ data, type }) {
     return (
         <Link
             to={`/${type}/${data?.id}`}
-            className="bg-[#1b1a25] p-6 rounded-3xl shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10"
+            className="bg-[#2c2c2c] p-6 rounded-3xl shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10"
         >
             <img 
                 src={data.poster_path || data.profile_path 

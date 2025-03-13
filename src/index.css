@@ -37,7 +37,7 @@
 
 
   button {
-    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700;
+    @apply px-4 py-2 text-white rounded bg-[#2c2c2c];
   }
 
 

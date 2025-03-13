@@ -4,7 +4,6 @@ import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal }
 import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 import Spinner from "../loading/Spinner.jsx";
-import Video from "./Videos/Video.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 
 
@@ -128,7 +127,7 @@ export default function Details() {
                                 {details?.genres?.map((genre) => (
                                     <span
                                         key={genre?.id}
-                                        className="px-2 py-1 bg-gray-700 rounded text-sm"
+                                        className="px-2 py-1 bg-[#2c2c2c] rounded text-sm"
                                     >
                                         {genre?.name}
                                     </span>
@@ -144,7 +143,7 @@ export default function Details() {
                 <div className="flex mt-5 mb-10 overflow-x-scroll gap-8">
                     {cast?.length === 0 && <p>No cast found</p>}
                     {cast?.map((item) => (
-                        <div key={item?.id} className="min-w-[200px] bg-[#191638] p-5 rounded-3xl shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10">
+                        <div key={item?.id} className="min-w-[200px] bg-[#2c2c2c] p-5 rounded shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10">
                             <img
                                 src={`${imagePath}/${item?.profile_path}`}
                                 alt={item?.name}
