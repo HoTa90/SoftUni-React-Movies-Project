@@ -61,7 +61,7 @@ export default function AllMovies() {
             {/* Main Movie Content */}
             <div className="flex-1 p-6">
                 {/* Search Bar */}
-                <div className="flex justify-center items-center py-6">
+                <div className="flex justify-center items-center py-6  ">
                     <form action={searchMoviesHandler} className="w-1/2">
                         <label className="input input-bordered flex items-center gap-2 w-full">
                             <svg
@@ -78,8 +78,8 @@ export default function AllMovies() {
                                 type="search"
                                 required
                                 name="query"
-                                placeholder="Search"
-                                className="w-full"
+                                placeholder="Search by Movie title"
+                                className="w-full bg-[#2c2c2c]"
                             />
                         </label>
                     </form>

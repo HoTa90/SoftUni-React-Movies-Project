@@ -17,7 +17,8 @@ export default function FilterNavBar({ onGenreSelect }) {
         { id: 878, name: "Science Fiction" },
         { id: 53, name: "Thriller" },
         { id: 10752, name: "War" },
-        { id: 37, name: "Western" }
+        { id: 37, name: "Western" },
+        {id: false, name: "Remove Filter"}
     ];
 
     return (
