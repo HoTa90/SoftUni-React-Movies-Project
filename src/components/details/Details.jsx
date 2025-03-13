@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal } from "../api/movieService.js";
+import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal } from "../../api/movieService.js";
 import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
-import { minutesTohours, ratingToPercentage } from "../../utils/helper.js";import { minutesTohours, ratingToPercentage } from "../../utils/helper.js";
-import Spinner from "../Spinner.jsx";
+import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
+import Spinner from "../loading/Spinner.jsx";
+import Video from "./Videos/Video.jsx";
+import VideoGallery from "./Videos/VideoGalery.jsx";
 
 
-export default function DetailsPage () {
+export default function Details() {
     const { type, id } = useParams();
 
     const [details, setDetails] = useState({});
     const [cast, setCast] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [video, setVideo] = useState(null);
+    const [videos, setVideos] = useState([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +50,7 @@ export default function DetailsPage () {
     console.log(cast)
     if (loading) {
         return (
-            <Spinner/>
+            <Spinner />
         );
     }
 
@@ -88,7 +93,7 @@ export default function DetailsPage () {
                                 </div>
                                 {type === "movie" && (
                                     <>
-                                        <div>*</div>
+                                        <div>•</div>
                                         <div className="flex items-center">
                                             <ClockIcon className="w-5 h-5 mr-2 text-gray-400" />
                                             <span className="text-sm">
@@ -115,7 +120,7 @@ export default function DetailsPage () {
                                     </div>
                                 </div>
                                 <span className="hidden md:inline">User Score</span>
-                                </div>
+                            </div>
                             <p className="text-gray-400 text-sm italic my-5">{details?.tagline}</p>
                             <h2 className="text-xl font-bold mb-3">Overview</h2>
                             <p className="text-md mb-3">{details?.overview}</p>
@@ -153,8 +158,8 @@ export default function DetailsPage () {
                     ))}
                 </div>
 
-                <h2 className="text-md uppercase mt-10 mb-5">Videos</h2>
-                </div>
+                <VideoGallery video={video} videos={videos}/>
+            </div>
         </div>
     );
 };
