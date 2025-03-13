@@ -43,6 +43,11 @@ export const fetchDetails = async (type, id) => {
     return await fetchData(url);
 };
 
+export const fetchMoviesByGenre = async (genreId, page) => {
+    const url = `${API_BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`
+    return await fetchData(url)
+}
+
 // MOVIES & SERIES - Credits
 export const fetchCredits = async (type, id) => {
     const url = `${API_BASE_URL}/${type}/${id}/credits?language=en-US`;
@@ -73,7 +78,7 @@ export const fetchTvSeries = async (page, sortBy) => {
 };
 
 // SEARCH
-export const searchData = async (query, page) => {
-    const url = `${API_BASE_URL}/search/multi?&query=${query}&include_adult=false&language=en-US&page=${page}`;
+export const searchMovie = async (query, page) => {
+    const url = `${API_BASE_URL}/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`;
     return await fetchData(url);
 };

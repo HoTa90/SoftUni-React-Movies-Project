@@ -16,6 +16,9 @@ export default function Details() {
     const [video, setVideo] = useState(null);
     const [videos, setVideos] = useState([]);
 
+    useEffect(() => {
+        window.scroll(0,0)
+    },[])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -162,10 +165,3 @@ export default function Details() {
         </div>
     );
 };
-
-
-
-
-
-
-
