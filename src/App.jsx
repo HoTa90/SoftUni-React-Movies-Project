@@ -10,7 +10,7 @@ function App() {
   return (
     <>
     <NavBar/>
-    <main>
+    <main className="bg-[#05011d] min-h-screen">
       <Routes>
         <Route index element={<Home/>}/>
       </Routes>
