@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import HeaderSection from "./HeaderSection.jsx";
 import PopularSection from "./PopularSection.jsx";
 import { fetchDetails, fetchTrending } from "../../api/movieService.js";
+import Skeleton from "../loading/Skeleton.jsx";
 
 
 export default function Home() {
@@ -45,6 +46,7 @@ export default function Home() {
    
     return (
     <>
+    {isLoading && <Skeleton/>}
     <HeaderSection movie={headerMovie}/>
     <PopularSection movieList={movieList} errorMessage={errorMessage} isLoading={isLoading} people={peopleList} series={seriesList} />
     </>

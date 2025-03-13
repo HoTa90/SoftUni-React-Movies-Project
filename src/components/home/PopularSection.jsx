@@ -1,5 +1,5 @@
 import HeroCard from "../HeroCard.jsx";
-import Spinner from "../Spinner.jsx";
+import Spinner from "../loading/Spinner.jsx";
 
 export default function PopularSection({ movieList, errorMessage, isLoading, people, series }) {
     return (
