@@ -153,26 +153,20 @@ export default function Details() {
 
             <div className="container mx-auto px-4 pb-10">
                 <h2 className="text-md uppercase mt-10">Cast</h2>
-                <div className="flex mt-5 mb-10 overflow-x-scroll gap-8">
-                    {cast?.length === 0 && <p>No cast found</p>}
-                    {cast?.map((item) => (
-                        <div key={item?.id} className="min-w-[200px] bg-[#2c2c2c] p-5 rounded shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10">
-                            <img
-                                src={`${imagePath}/${item?.profile_path}`}
-                                alt={item?.name}
-                                className="w-full h-[225px] rounded-sm"
-                            />
-                            <div className="grid-cols-2 mt-5 ">
-                                <p className="text-gray-400 text-sm italic mt-3 mb-1">{item?.character}</p>
-                                <p className="text-white text-sm bold mb-2">{item?.name}</p>
+                <div className="flex mt-5 mb-10 overflow-x-auto pb-4">
+                    <div className="flex gap-8 m-2">
+                        {cast?.length === 0 && <p>No cast found</p>}
+                        {cast?.map((person) => (
+                            <div key={person?.id} className="min-w-[200px] max-w-[200px] flex-none">
+                                <SmallHeroCard data={person} type={type} isPerson />
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
                 <h2 className="text-md uppercase mt-10">Similar Movies</h2>
                 <div className="flex mt-5 mb-10 overflow-x-auto pb-4">
-                    <div className="flex gap-4">
+                    <div className="flex gap-8 m-2">
                         {similar?.length === 0 && <p>No Similar Movies found</p>}
                         {similar?.map((m) => (
                             <div key={m?.id} className="min-w-[200px] max-w-[200px] flex-none">
