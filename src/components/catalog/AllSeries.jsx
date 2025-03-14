@@ -6,26 +6,26 @@ import FilterNavBar from "./FilterNavBar.jsx";
 import { getGenreName } from "../../utils/helper.js";
 import { useFetch } from "../../hooks/useFetch.js";
 
-export default function AllMovies() {
+export default function AllSeries() {
 
-    const [movies, setMovies] = useState([]);
+    const [series, setSeries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const {isPending, error, searchMovie, getMoviesByGenre, getMovies } = useFetch()
+    const {isPending, error, searchTV, getTVByGenre, getSeries } = useFetch()
 
 
     useEffect(() => {
         if (searchQuery) {
-            searchMovie(searchQuery, currentPage)
-                .then(setMovies)
+            searchTV(searchQuery, currentPage)
+                .then(setSeries)
         } else if (selectedGenre) {
-            getMoviesByGenre(selectedGenre, currentPage)
-                .then(setMovies)
+            getTVByGenre(selectedGenre, currentPage)
+                .then(setSeries)
      
         } else {
-            getMovies(currentPage, "desc")
-                .then(setMovies)
+            getSeries(currentPage, "desc")
+                .then(setSeries)
 
         }
     }, [currentPage, selectedGenre, searchQuery]);
@@ -47,14 +47,15 @@ export default function AllMovies() {
         setCurrentPage(1);
     };
 
+    console.log(series)
+
     return (
         <div className="min-h-screen flex">
             {/* Sidebar (Filters) */}
             <div className="w-64 p-4">
-                <FilterNavBar onGenreSelect={genreSelectHandler} />
+                <FilterNavBar onGenreSelect={genreSelectHandler} isMovie={false} />
             </div>
 
-            {/* Main Movie Content */}
             <div className="flex-1 p-6">
                 {/* Search Bar */}
                 <div className="flex justify-center items-center py-6  ">
@@ -81,14 +82,14 @@ export default function AllMovies() {
                     </form>
                 </div>
 
-                {/* All Movies Section */}
+                {/* All TV Series Section */}
                 <section className="px-4 py-10">
                     <h2 className="text-white text-2xl font-bold mb-8">
                         {searchQuery
                             ? `Search Results for "${searchQuery}"`
                             : selectedGenre
-                            ? `Every ${getGenreName(selectedGenre)} Movie`
-                            : "All Movies"}
+                            ? `Every ${getGenreName(selectedGenre)} TV Series`
+                            : "All TV Series"}
                     </h2>
                     {isPending ? (
                         <Spinner />
@@ -97,17 +98,16 @@ export default function AllMovies() {
                     ) : (
                         <>
                             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
-                                {movies && movies.map((movie) => (
-                                    <li key={movie.id} className="p-2">
-                                        <HeroCard data={movie} type="movie" />
+                                {series && series.map((item) => (
+                                    <li key={item.id} className="p-2">
+                                        <HeroCard data={item} type="tv" />
                                     </li>
                                 ))}
                             </ul>
                             <Pagination
                                 currentPage={currentPage}
                                 onPageChange={handlePageChange}
-                                hasNextPage={movies?.length === 20}
-                                isMovie={true}
+                                hasNextPage={series?.length === 20}
                             />
                         </>
                     )}

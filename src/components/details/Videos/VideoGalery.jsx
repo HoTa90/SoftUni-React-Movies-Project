@@ -4,7 +4,6 @@ import Video from "./Video.jsx";
 export default function VideoGallery({ video, videos }) {
   const [selectedVideoKey, setSelectedVideoKey] = useState(video?.key);
 
-  // Handle video selection
   const changeSelectedVideo = (key) => {
     setSelectedVideoKey(key);
   };

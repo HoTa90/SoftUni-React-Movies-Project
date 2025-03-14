@@ -15,7 +15,7 @@ export default function NavBar() {
       <div className="navbar-center flex">
         <ul className="menu menu-horizontal px-1 m-auto">
           <li><Link to='/movies'>Movies</Link></li>
-          <li><a>TV Series</a></li>
+          <li><Link to='/series'>TV Series</Link></li>
         </ul>
       </div>
       <div className="navbar-end ">

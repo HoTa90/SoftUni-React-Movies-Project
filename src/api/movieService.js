@@ -60,6 +60,13 @@ export const fetchVideos = async (type, id) => {
     return await fetchData(url);
 };
 
+export const fetchSimilar = async (type, id) =>{
+
+    const url = `${API_BASE_URL}/${type}/${id}/similar?language=en-US&page=1`
+   const data = await fetchData(url)
+   return data.results
+}
+
 // DISCOVER - Movies
 export const fetchMovies = async (page, sortBy) => {
     const url = `${API_BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sortBy}`;

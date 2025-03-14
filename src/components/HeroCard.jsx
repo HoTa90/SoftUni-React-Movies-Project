@@ -13,7 +13,7 @@ export default function HeroCard({ data, type }) {
                     ? `https://image.tmdb.org/t/p/w500/${data.poster_path || data.profile_path}` 
                     : '/no-poster.png'} 
                 alt={data.title || data.name} 
-                className="rounded-lg w-full max-w-auto h-auto object-cover mx-auto"
+                className="rounded-lg w-full max-w-auto min-h-[102px] object-cover mx-auto"
             />
             <div className="mt-5">
                 <h3 className="text-white font-bold text-lg truncate">{data.title || data.name}</h3>

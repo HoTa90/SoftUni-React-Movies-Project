@@ -6,6 +6,7 @@ import NavBar from './components/NavBar.jsx'
 import Home from './components/home/Home.jsx'
 import Details from './components/details/Details.jsx'
 import AllMovies from './components/catalog/AllMovies.jsx'
+import AllSeries from './components/catalog/AllSeries.jsx'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='/:type/:id' element={<Details />} />
           <Route path='/movies' element={<AllMovies />} />
+          <Route path='/series' element={<AllSeries />} />
         </Routes>
       </main>
       <Footer />

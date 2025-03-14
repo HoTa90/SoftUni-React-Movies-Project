@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal } from "../../api/movieService.js";
+import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal, fetchSimilar } from "../../api/movieService.js";
 import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
+import SmallHeroCard from "./SmallHeroCard.jsx";
 
 
 export default function Details() {
@@ -15,21 +16,24 @@ export default function Details() {
     const [loading, setLoading] = useState(true);
     const [video, setVideo] = useState(null);
     const [videos, setVideos] = useState([]);
+    const [similar, setSimilar] = useState([])
 
     useEffect(() => {
-        window.scroll(0,0)
-    },[])
+        window.scroll(0, 0)
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [detailsData, creditsData, videosData] = await Promise.all([
+                const [detailsData, creditsData, videosData, similarData] = await Promise.all([
                     fetchDetails(type, id),
                     fetchCredits(type, id),
                     fetchVideos(type, id),
+                    fetchSimilar(type, id)
                 ]);
 
                 setDetails(detailsData);
+                setSimilar(similarData)
                 setCast(creditsData?.cast?.slice(0, 10));
                 const video = videosData?.results?.find(
                     (video) => video?.type === "Trailer"
@@ -49,11 +53,14 @@ export default function Details() {
         fetchData();
     }, [type, id]);
 
-    console.log(cast)
+    console.log(similar)
+
     if (loading) {
         return (
             <Spinner />
         );
+
+
     }
 
     const title = details?.title || details?.name;
@@ -65,7 +72,7 @@ export default function Details() {
             <div
                 className="w-full h-auto md:h-[500px] py-2 flex items-center"
                 style={{
-                    background: `linear-gradient(rgba(0,0,0,.88), rgba(0,0,0,.88)), url(${imagePathOriginal}/${details?.backdrop_path})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,.88), rgba(0,0,0,.88)), url(${imagePathOriginal}/${details?.backdrop_path})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -160,7 +167,19 @@ export default function Details() {
                     ))}
                 </div>
 
-                <VideoGallery video={video} videos={videos}/>
+                <h2 className="text-md uppercase mt-10">Similar Movies</h2>
+                <div className="flex mt-5 mb-10 overflow-x-auto pb-4">
+                    <div className="flex gap-4">
+                        {similar?.length === 0 && <p>No Similar Movies found</p>}
+                        {similar?.map((m) => (
+                            <div key={m?.id} className="min-w-[200px] max-w-[200px] flex-none">
+                                <SmallHeroCard data={m} type={type} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <VideoGallery video={video} videos={videos} />
             </div>
         </div>
     );
