@@ -16,8 +16,8 @@ export default function PopularSection({ movieList, errorMessage, isLoading }) {
                     [getTrending('tv'), getTrending('person')]
                 );
                 console.log(peopleData);
-                setSeries(seriesData);  // Sets series data
-                setPeople(peopleData);  // Sets people data
+                setSeries(seriesData);  
+                setPeople(peopleData);  
             } catch (err) {
                 console.error("Error fetching data:", err);
             }

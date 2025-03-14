@@ -1,36 +1,32 @@
 import { useEffect, useState } from "react";
 import HeroCard from "../HeroCard.jsx";
 import Spinner from "../loading/Spinner.jsx";
-import { fetchMovies, fetchMoviesByGenre, searchMovie } from "../../api/movieService.js";
 import Pagination from "./Pagination.jsx";
 import FilterNavBar from "./FilterNavBar.jsx";
 import { getGenreName } from "../../utils/helper.js";
+import { useFetch } from "../../hooks/useFetch.js";
 
 export default function AllMovies() {
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const {isPending, error, searchMovie, getMoviesByGenre, getMovies } = useFetch()
+
 
     useEffect(() => {
-        setIsLoading(true);
         if (searchQuery) {
             searchMovie(searchQuery, currentPage)
-                .then((data) => setMovies(data.results))
-                .catch(setErrorMessage)
-                .finally(() => setIsLoading(false));
+                .then(setMovies)
         } else if (selectedGenre) {
-            fetchMoviesByGenre(selectedGenre, currentPage)
-                .then((data) => setMovies(data.results))
-                .catch(setErrorMessage)
-                .finally(() => setIsLoading(false));
+            getMoviesByGenre(selectedGenre, currentPage)
+                .then(setMovies)
+     
         } else {
-            fetchMovies(currentPage, "desc")
-                .then((data) => setMovies(data.results))
-                .catch(setErrorMessage)
-                .finally(() => setIsLoading(false));
+            getMovies(currentPage, "desc")
+                .then(setMovies)
+
         }
     }, [currentPage, selectedGenre, searchQuery]);
 
@@ -94,10 +90,10 @@ export default function AllMovies() {
                             ? `Every ${getGenreName(selectedGenre)} Movie`
                             : "All Movies"}
                     </h2>
-                    {isLoading ? (
+                    {isPending ? (
                         <Spinner />
-                    ) : errorMessage ? (
-                        <p className="text-red-500">{errorMessage}</p>
+                    ) : error ? (
+                        <p className="text-red-500">{error}</p>
                     ) : (
                         <>
                             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
@@ -110,7 +106,7 @@ export default function AllMovies() {
                             <Pagination
                                 currentPage={currentPage}
                                 onPageChange={handlePageChange}
-                                hasNextPage={movies.length === 20}
+                                hasNextPage={movies?.length === 20}
                             />
                         </>
                     )}
