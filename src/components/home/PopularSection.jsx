@@ -1,7 +1,32 @@
+import { useEffect, useState } from "react";
 import HeroCard from "../HeroCard.jsx";
 import Spinner from "../loading/Spinner.jsx";
+import { useFetch } from "../../hooks/useFetch.js";
 
-export default function PopularSection({ movieList, errorMessage, isLoading, people, series }) {
+export default function PopularSection({ movieList, errorMessage, isLoading }) {
+    
+    const {getTrending} = useFetch()
+    const [series, setSeries] = useState([])
+    const [people, setPeople] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [seriesData, peopleData] = await Promise.all(
+                    [getTrending('tv'), getTrending('person')]
+                );
+                console.log(peopleData);
+                setSeries(seriesData);  // Sets series data
+                setPeople(peopleData);  // Sets people data
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
+        };
+
+        fetchData();
+    }, []);
+    
+    
     return (
         <section className="px-4 py-10">
             {/* Popular Movies Section */}
@@ -33,7 +58,7 @@ export default function PopularSection({ movieList, errorMessage, isLoading, peo
             {/* People Section */}
             <h2 className="text-white text-2xl font-bold mb-8">People</h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                {people && people.slice(0, 5).map(p => (
+                {people && people?.slice(0, 5).map(p => (
                     <li key={p.id} className="p-2">
                         <HeroCard data={p}  type='person' />
                     </li>

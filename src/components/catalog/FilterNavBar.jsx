@@ -22,7 +22,7 @@ export default function FilterNavBar({ onGenreSelect }) {
     ];
 
     return (
-        <aside className="w-64 h-screen text-white  left-0 top-0 flex flex-col py-6 px-4">
+        <aside className="w-64 h-screen text-white  left-0 top-0 mt-auto flex flex-col py-6 px-4">
             <h2 className="text-xl font-bold mb-6 text-center">Filter by Genre</h2>
             <nav className="space-y-2">
                 {genres.map((genre) => (
