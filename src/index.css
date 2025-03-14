@@ -2,9 +2,11 @@
 @plugin "daisyui";
 
 
-@tailwind utilities;
+@import "tailwindcss/utilities";
+
 
 @layer base {
+  
   h1 {
     @apply text-4xl font-bold mb-6;
   }
@@ -24,10 +26,6 @@
     @apply text-base font-bold mb-2;
   }
 
-  p {
-    @apply text-base mb-4;
-  }
-
   ul {
     @apply list-inside mb-4;
   }
@@ -35,14 +33,8 @@
     @apply list-decimal list-inside mb-4;
   }
 
-
   button {
     @apply px-4 py-2 text-white rounded bg-[#2c2c2c];
-  }
-
-
-  img {
-    @apply max-w-full h-auto;
   }
 
   input, textarea, select {

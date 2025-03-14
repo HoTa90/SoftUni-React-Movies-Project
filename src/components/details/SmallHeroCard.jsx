@@ -27,14 +27,12 @@ export default function SmallHeroCard({ data, type }) {
 
             {/* Content Section */}
             <div className="mt-2 flex flex-col flex-1">
-                {/* Title with fixed height */}
                 <div className="min-h-[40px] flex items-center">
                     <h3 className="text-white font-bold text-base truncate">
                         {data.title || data.name}
                     </h3>
                 </div>
 
-                {/* Details with proper alignment */}
                 <div className="mt-1 flex items-baseline gap-2 flex-wrap">
                     <div className="flex items-baseline gap-1">
                         <StarIcon className="w-4 h-4 text-yellow-400 relative top-0.5" />

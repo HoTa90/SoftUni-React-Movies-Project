@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <main className="bg-[#05011d] min-h-screen">
+      <main className="bg-[#05011d] min-h-screen ">
         <Routes>
           <Route index element={<Home />} />
           <Route path='/:type/:id' element={<Details />} />

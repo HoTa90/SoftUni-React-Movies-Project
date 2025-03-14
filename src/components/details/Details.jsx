@@ -23,6 +23,8 @@ export default function Details() {
     }, [])
 
     useEffect(() => {
+        setVideo(null);
+        setLoading(true)
         const fetchData = async () => {
             try {
                 const [detailsData, creditsData, videosData, similarData] = await Promise.all([
@@ -51,6 +53,7 @@ export default function Details() {
         };
 
         fetchData();
+
     }, [type, id]);
 
     console.log(similar)

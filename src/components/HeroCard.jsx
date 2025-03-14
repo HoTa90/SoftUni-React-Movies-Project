@@ -1,3 +1,4 @@
+import { StarIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
 
 export default function HeroCard({ data, type }) {
@@ -6,7 +7,7 @@ export default function HeroCard({ data, type }) {
     return (
         <Link
             to={`/${type}/${data?.id}`}
-            className="bg-[#2c2c2c] p-6 rounded-3xl shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-112 hover:shadow-[#a8b5db]/50 hover:z-10"
+            className="bg-[#2c2c2c] p-6 rounded-3xl shadow-2xl shadow-[#a8b5db]/30 relative block transform transition-all duration-300 hover:scale-108 hover:shadow-[#a8b5db]/50 hover:z-10 h-full"
         >
             <img 
                 src={data.poster_path || data.profile_path 
@@ -21,15 +22,17 @@ export default function HeroCard({ data, type }) {
                 {!isPerson ? (
                     <div className="content mt-3 flex items-center gap-3 flex-wrap">
                         <div className="flex items-center gap-2">
-                            <img src="Rating.svg" alt="Star Icon" className="w-5 h-5 object-contain mb-auto" />
+                            <StarIcon className="w-4 h-4 text-yellow-400" />
                             <p className="font-bold text-white text-sm">
                                 {data.vote_average ? data.vote_average.toFixed(1) : 'N/A'}
                             </p>
                         </div>
-                        <span className="text-xs text-[#a8b5db] mb-auto">•</span>
-                        <p className="lang capitalize text-[#a8b5db] text-sm font-medium">{data.original_language}</p>
-                        <span className="text-xs text-[#a8b5db] mb-auto">•</span>
-                        <p className="year text-[#a8b5db] text-sm font-medium">
+                        <span className="text-sm text-[#a8b5db] self-center">•</span>
+                        <p className="lang capitalize text-[#a8b5db] text-sm font-medium self-center">
+                            {data.original_language}
+                        </p>
+                        <span className="text-sm text-[#a8b5db] self-center">•</span>
+                        <p className="year text-[#a8b5db] text-sm font-medium self-center">
                             {data.release_date?.split('-')[0] || data.first_air_date?.split('-')[0] || 'N/A'}
                         </p>
                     </div>
