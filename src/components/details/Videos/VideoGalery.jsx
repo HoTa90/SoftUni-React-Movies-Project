@@ -31,7 +31,7 @@ export default function VideoGallery({ video, videos }) {
           ))}
         </div>
       ) : (
-        <p className="text-xl font-bold mt-3">No more available videos</p>
+        <p className="text-l text-gray-300 mt-3">No more available videos</p>
       )}
     </div>
   );

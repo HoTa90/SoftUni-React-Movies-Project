@@ -39,9 +39,15 @@ export const fetchTrending = async (type) => {
 
 // MOVIES & SERIES - Details
 export const fetchDetails = async (type, id) => {
-    const url = `${API_BASE_URL}/${type}/${id}`;
+    let url = `${API_BASE_URL}/${type}/${id}`;
     return await fetchData(url);
 };
+
+export const fetchImages = async (type, id) => {
+    const url = `${API_BASE_URL}/${type}/${id}/images`
+    const result = await fetchData(url)
+    return result.profiles
+}
 
 export const fetchMoviesByGenre = async (genreId, page) => {
     const url = `${API_BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`
@@ -51,6 +57,11 @@ export const fetchMoviesByGenre = async (genreId, page) => {
 // MOVIES & SERIES - Credits
 export const fetchCredits = async (type, id) => {
     const url = `${API_BASE_URL}/${type}/${id}/credits?language=en-US`;
+    return await fetchData(url);
+};
+
+export const fetchPErsonCredits = async (type, id) => {
+    const url = `${API_BASE_URL}/${type}/${id}/combined_credits?language=en-US`;
     return await fetchData(url);
 };
 

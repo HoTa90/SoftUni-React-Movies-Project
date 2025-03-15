@@ -7,6 +7,8 @@ export default function SmallHeroCard({ data, type, isPerson}) {
         window.scroll(0, 0);
     }, []);
 
+    console.log(data)
+
     return (
         <Link
             to={`/${type}/${data?.id}`}

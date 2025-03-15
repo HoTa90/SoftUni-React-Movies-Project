@@ -25,7 +25,7 @@ export default function PopularSection({ movieList, errorMessage, isLoading }) {
     }, []);
     
     return (
-        <section className="px-10 py-10">
+        <section className="px-28 py-15">
             {/* Popular Movies Section */}
             <h2 className="text-white text-2xl font-bold mb-8">Popular Movies</h2>
             {isLoading ? (
