@@ -7,6 +7,7 @@ import Home from './components/home/Home.jsx'
 import Details from './components/details/Details.jsx'
 import AllMovies from './components/catalog/AllMovies.jsx'
 import AllSeries from './components/catalog/AllSeries.jsx'
+import NotFound from './components/not-found/NotFound.jsx'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/:type/:id' element={<Details />} />
           <Route path='/movies' element={<AllMovies />} />
           <Route path='/series' element={<AllSeries />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

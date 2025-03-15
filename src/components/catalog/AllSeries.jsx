@@ -59,7 +59,7 @@ export default function AllSeries() {
             <div className="flex-1 p-6">
                 {/* Search Bar */}
                 <div className="flex justify-center items-center py-6  ">
-                    <form action={searchMoviesHandler} className="w-1/2">
+                    <form action={searchMoviesHandler} className="w-2/3">
                         <label className="input input-bordered flex items-center gap-2 w-full">
                             <svg
                                 className="h-[1em] opacity-50"
@@ -84,7 +84,7 @@ export default function AllSeries() {
 
                 {/* All TV Series Section */}
                 <section className="px-4 py-10">
-                    <h2 className="text-white text-2xl font-bold mb-8">
+                    <h2 className="text-white text-3xl font-bold pb-5 flex justify-self-center ">
                         {searchQuery
                             ? `Search Results for "${searchQuery}"`
                             : selectedGenre

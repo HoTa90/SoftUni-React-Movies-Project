@@ -41,17 +41,26 @@ export default function AllMovies() {
         setCurrentPage(1);
     };
 
+    
+
     const genreSelectHandler = (genreId) => {
         setSelectedGenre(genreId);
         setSearchQuery("");
         setCurrentPage(1);
     };
 
+    useEffect(() => {
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
+    }, [currentPage])
+
     return (
         <div className="min-h-screen flex">
             {/* Sidebar (Filters) */}
             <div className="w-64 p-4">
-                <FilterNavBar onGenreSelect={genreSelectHandler} />
+                <FilterNavBar onGenreSelect={genreSelectHandler} isMovie={true} />
             </div>
 
             {/* Main Movie Content */}
@@ -83,7 +92,7 @@ export default function AllMovies() {
 
                 {/* All Movies Section */}
                 <section className="px-4 py-10">
-                    <h2 className="text-white text-2xl font-bold mb-8">
+                    <h2 className="text-white text-3xl font-bold pb-5 flex justify-center">
                         {searchQuery
                             ? `Search Results for "${searchQuery}"`
                             : selectedGenre

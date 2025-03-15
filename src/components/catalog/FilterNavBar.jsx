@@ -42,16 +42,17 @@ export default function FilterNavBar({ onGenreSelect, isMovie }) {
     ];
     
     const genres = isMovie ? genresMovies : genresTV;
+    console.log(genres)
 
     return (
-        <aside className="w-64 h-screen text-white  left-0 top-0 mt-auto flex flex-col py-6 px-4">
-            <h2 className="text-xl font-bold mb-6 text-center">Filter by Genre</h2>
+        <aside className="min-w-[64] h-screen text-gray-300  left-0 top-0 mt-33 flex flex-col py-6 px-4">
+            <h2 className="text-xl font-bold mb-9 text-center">Filter by Genre</h2>
             <nav className="space-y-2">
                 {genres.map((genre) => (
                     <button
                         key={genre.id}
                         onClick={() => onGenreSelect(genre.id)}
-                        className="w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-gray-700"
+                        className="w-full text-left px-4 py-2 m-1.5 rounded-lg transition-all hover:bg-gray-700"
                     >
                         {genre.name}
                     </button>
