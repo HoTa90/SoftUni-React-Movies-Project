@@ -1,24 +1,31 @@
+import { FilmIcon, TvIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
-
 
 export default function NavBar() {
   return (
-    <div className="navbar shadow-sm bg-[#2c2c2c] " >
-      <div className="navbar-start  ">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
-          </div>
-        </div>
-        <Link to='/' className="btn btn-ghost text-xl ">Simple Movies</Link>
+    <div className="navbar shadow-sm bg-[#2c2c2c]">
+      <div className="navbar-start">
+        <Link to="/" className="btn btn-ghost text-xl">
+          Simple Movies
+        </Link>
       </div>
       <div className="navbar-center flex">
         <ul className="menu menu-horizontal px-1 m-auto">
-          <li><Link to='/movies'>Movies</Link></li>
-          <li><Link to='/series'>TV Series</Link></li>
+          <li>
+            <Link to="/movies" className="flex items-center gap-2 text-lg">
+              <FilmIcon className="w-5 h-5 text-gray-300" />
+              <span>Movies</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/series" className="text-lg">
+              <TvIcon className="w-5 h-5 text-gray-300" />
+              <span>TV Series</span>
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className="navbar-end ">
+      <div className="navbar-end">
         <a className="btn">Button</a>
       </div>
     </div>
