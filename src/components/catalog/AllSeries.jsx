@@ -47,7 +47,9 @@ export default function AllSeries() {
         setCurrentPage(1);
     };
 
-    console.log(series)
+    useEffect(() => {
+        window.scroll(0,0)
+    }, [currentPage])
 
     return (
         <div className="min-h-screen flex">

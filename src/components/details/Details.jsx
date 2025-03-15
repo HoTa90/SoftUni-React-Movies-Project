@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal, fetchSimilar, fetchImages, fetchPErsonCredits } from "../../api/movieService.js";
-import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
-import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 import SmallHeroCard from "./SmallHeroCard.jsx";

@@ -9,7 +9,7 @@ export default function NotFound() {
 
             {/* Content */}
             <div className={styles.content}>
-                <h1 className={styles.title}>Are you Lost?</h1>
+                <h1 className={styles.title}>Are You Lost?</h1>
                 <p className={styles.subtitle}>
                     It looks like the page you are looking for is missing.
                 </p>
