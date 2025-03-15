@@ -2,12 +2,12 @@ import { Link } from "react-router";
 import { StarIcon } from "@heroicons/react/16/solid";
 import { useEffect } from "react";
 
-export default function SmallHeroCard({ data, type, isPerson}) {
+export default function SmallHeroCard({ data, type}) {
     useEffect(() => {
         window.scroll(0, 0);
     }, []);
 
-    console.log(data)
+
 
     return (
         <Link
@@ -33,7 +33,7 @@ export default function SmallHeroCard({ data, type, isPerson}) {
                     </h3>
                 </div>
 
-                {!isPerson ? (
+                {type !== 'person' ? (
                     <div className="-mt-2 flex items-baseline gap-2 flex-wrap">
                         <div className="flex items-baseline gap-1">
                             <StarIcon className="w-4 h-4 text-yellow-400 relative top-0.5" />

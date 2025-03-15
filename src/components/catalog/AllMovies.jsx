@@ -58,7 +58,7 @@ export default function AllMovies() {
             <div className="flex-1 p-6">
                 {/* Search Bar */}
                 <div className="flex justify-center items-center py-6  ">
-                    <form action={searchMoviesHandler} className="w-1/2">
+                    <form action={searchMoviesHandler} className="w-2/3">
                         <label className="input input-bordered flex items-center gap-2 w-full">
                             <svg
                                 className="h-[1em] opacity-50"

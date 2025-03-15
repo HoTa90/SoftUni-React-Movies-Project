@@ -98,7 +98,6 @@ export default function Details() {
                                 <SmallHeroCard
                                     data={person}
                                     type={type === 'person' ? person.media_type : 'person'}
-                                    isPerson={type === 'person'}
                                 />
                             </div>
                         ))}

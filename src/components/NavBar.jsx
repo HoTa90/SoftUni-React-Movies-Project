@@ -1,4 +1,4 @@
-import { FilmIcon, TvIcon } from "@heroicons/react/16/solid";
+import { FilmIcon, HomeIcon, TvIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
 
 export default function NavBar() {
@@ -6,7 +6,8 @@ export default function NavBar() {
     <div className="navbar shadow-sm bg-[#2c2c2c]">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost text-xl">
-          Simple Movies
+        <HomeIcon className="w-5 h-5 text-gray-300" />
+          <span>Simple Movies</span>
         </Link>
       </div>
       <div className="navbar-center flex">
@@ -20,13 +21,16 @@ export default function NavBar() {
           <li>
             <Link to="/series" className="text-lg">
               <TvIcon className="w-5 h-5 text-gray-300" />
-              <span>TV Series</span>
-            </Link>
+              <span>TV Series</span>               
+                       </Link>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+      <Link to="/profile" className="btn btn-ghost text-xl">
+        <UserIcon className="w-5 h-5 text-gray-300" />
+          <span>Profile </span>
+        </Link>
       </div>
     </div>
   );
