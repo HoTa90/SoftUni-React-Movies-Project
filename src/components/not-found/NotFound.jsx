@@ -1,13 +1,11 @@
 import { Link } from 'react-router';
-import styles from './NotFound.module.css'; // Import the CSS module
+import styles from './NotFound.module.css';
 
 export default function NotFound() {
     return (
         <div className={styles.container}>
-            {/* Overlay for better text visibility */}
-            <div className={styles.overlay}></div>
 
-            {/* Content */}
+            <div className={styles.overlay}></div>
             <div className={styles.content}>
                 <h1 className={styles.title}>Are You Lost?</h1>
                 <p className={styles.subtitle}>

@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchDetails, fetchCredits, fetchVideos, imagePath, imagePathOriginal, fetchSimilar, fetchImages, fetchPErsonCredits } from "../../api/movieService.js";
+import { fetchDetails, fetchCredits, fetchVideos, fetchSimilar, fetchImages, fetchPErsonCredits } from "../../api/movieService.js";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 import SmallHeroCard from "./SmallHeroCard.jsx";
 import DetailsHeaderCard from "./DetailsHeaderCard.jsx";
 import PersonHeaderCard from "./PersonHeaderCard.jsx";
+import { useFetch } from "../../hooks/useFetch.js";
 
 
 export default function Details() {
     const { type, id } = useParams();
 
+    const { isPending,
+        error,
+        getDetails,
+        getPersonImages,
+        getPersonCredits,
+        getVideos,
+        getSimilar,
+        getCredits
+    } = useFetch();
+
     const [details, setDetails] = useState({});
     const [cast, setCast] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [video, setVideo] = useState(null);
     const [videos, setVideos] = useState([]);
     const [similar, setSimilar] = useState([])
@@ -25,41 +35,36 @@ export default function Details() {
 
     useEffect(() => {
         setVideo(null);
-        setLoading(true)
         const fetchData = async () => {
             try {
-                const detailsData = await fetchDetails(type, id)
-
+                const detailsData = await getDetails(type, id)
                 setDetails(detailsData);
 
-
                 if (type === "person") {
-                    const profilesData = await fetchImages(type, id)
-                    const credits = await fetchPErsonCredits(type, id)
+                    const profilesData = await getPersonImages(type, id)
+                    const credits = await getPersonCredits(type, id)
                     setCast(credits?.cast)
                     setProfiles(profilesData)
                 }
 
                 if (type !== "person") {
                     const [videosData, similarData, creditsData] = await Promise.all([
-                        fetchVideos(type, id),
-                        fetchSimilar(type, id),
-                        fetchCredits(type, id),
+                        getVideos(type, id),
+                        getSimilar(type, id),
+                        getCredits(type, id),
                     ]);
 
                     setSimilar(similarData);
                     setCast(creditsData?.cast?.slice(0, 10));
 
-                    const video = videosData?.results?.find((video) => video?.type === "Trailer");
+                    const video = videosData?.find((video) => video?.type === "Trailer");
                     setVideo(video);
 
-                    const videos = videosData?.results?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
+                    const videos = videosData?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
                     setVideos(videos);
                 }
             } catch (error) {
                 console.log(error, "error");
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -68,14 +73,13 @@ export default function Details() {
     }, [type, id]);
 
 
-    if (loading) {
+    if (isPending) {
         return (
             <Spinner />
         );
     }
 
     if (!type || !id) return <Spinner />;
-
 
     return (
         <div>
@@ -115,7 +119,11 @@ export default function Details() {
                             </div>
                         </div>
 
-                        <VideoGallery video={video} videos={videos} />
+                        {videos.length === 0 ? (
+                            <Spinner />
+                        ) : (
+                            <VideoGallery video={video} videos={videos} />
+                        )}
                     </>}
 
             </div>

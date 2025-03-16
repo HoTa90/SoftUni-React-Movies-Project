@@ -3,7 +3,6 @@ import { imagePath, imagePathOriginal } from "../../api/movieService.js";
 import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 
 export default function DetailsHeaderCard({details, type}) {
-  
     
     const title = details?.title || details?.name;
     const releaseDate =
@@ -30,7 +29,7 @@ export default function DetailsHeaderCard({details, type}) {
                 <h1 className="text-3xl font-bold">
                     {title}{" "}
                     <span className="font-normal text-gray-400">
-                        {new Date(releaseDate).getFullYear()}
+                        {new Date(releaseDate).getFullYear() || 'N/A'}
                     </span>
                 </h1>
 

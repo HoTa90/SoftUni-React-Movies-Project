@@ -60,6 +60,10 @@ export const useFetch = () => {
     
     const getCredits = async (type, id) => fetchData(`/${type}/${id}/credits?language=en-US`);
 
+    const getPersonCredits = async (type, id) => fetchData(`${type}/${id}/combined_credits?language=en-US`);
+    
+    const getPersonImages = async (type, id) => fetchData(`/${type}/${id}/images`);
+
     const getVideos = async (type, id) => fetchData(`/${type}/${id}/videos?language=en-US`);
 
     const getMovies = async (page = 1, sortBy = "desc") =>
@@ -85,6 +89,8 @@ export const useFetch = () => {
         getMoviesByGenre,
         getTVByGenre,
         getCredits,
+        getPersonCredits,
+        getPersonImages,
         getVideos,
         getMovies,
         searchMovie,
