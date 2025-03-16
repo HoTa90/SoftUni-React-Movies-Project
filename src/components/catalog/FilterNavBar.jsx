@@ -42,7 +42,6 @@ export default function FilterNavBar({ onGenreSelect, isMovie }) {
     ];
     
     const genres = isMovie ? genresMovies : genresTV;
-    console.log(genres)
 
     return (
         <aside className="min-w-[64] text-gray-300 left-0 top-0 sticky mt-33 mb-27 flex flex-col py-6 px-4">
