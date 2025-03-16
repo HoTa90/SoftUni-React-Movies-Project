@@ -5,6 +5,8 @@ import { ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 export default function PersonHeaderCard({ details, profiles }) {
     const profileImage = profiles[0]?.file_path;
 
+    console.log(details)
+
     return (
         <div
             className="w-full h-auto md:h-[500px] py-2 flex items-center"
@@ -31,7 +33,7 @@ export default function PersonHeaderCard({ details, profiles }) {
                             <div className="flex items-center">
                                 <CalendarIcon className="w-5 h-5 mr-2 text-gray-400" />
                                 <span className="text-sm">
-                                    Born: {new Date(details?.birthday).toLocaleDateString("en-US")}
+                                    Born: {new Date(details?.birthday).toLocaleDateString("en-US") || 'N/A'}
                                 </span>
                             </div>
                             {details?.deathday && (
@@ -64,10 +66,11 @@ export default function PersonHeaderCard({ details, profiles }) {
                             </div>
                             <span className="hidden md:inline">Popularity Rating</span>
                         </div>
-                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Place of Birth:</span> {details?.place_of_birth}</p>
+                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Place of Birth:</span> {details?.place_of_birth || 'Unknown'}</p>
+                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Known For:</span> {details?.known_for_department}</p>
                         <h2 className="text-xl font-bold mb-3">Biography</h2>
                         <div className="overflow-y-auto max-h-[200px] pr-4">
-                            <p className="text-md mb-3">{details?.biography}</p>
+                            <p className="text-md mb-3">{details?.biography || 'No available information.'}</p>
                         </div>
                     </div>
                 </div>

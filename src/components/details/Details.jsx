@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchDetails, fetchCredits, fetchVideos, fetchSimilar, fetchImages, fetchPErsonCredits } from "../../api/movieService.js";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 import SmallHeroCard from "./SmallHeroCard.jsx";
@@ -43,8 +42,9 @@ export default function Details() {
                 if (type === "person") {
                     const profilesData = await getPersonImages(type, id)
                     const credits = await getPersonCredits(type, id)
-                    setCast(credits?.cast)
-                    setProfiles(profilesData)
+
+                    setCast(credits?.cast.slice(0, 20))
+                    setProfiles(profilesData.profiles)
                 }
 
                 if (type !== "person") {
@@ -56,11 +56,12 @@ export default function Details() {
 
                     setSimilar(similarData);
                     setCast(creditsData?.cast?.slice(0, 10));
-
+                    
                     const video = videosData?.find((video) => video?.type === "Trailer");
                     setVideo(video);
 
                     const videos = videosData?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
+                   
                     setVideos(videos);
                 }
             } catch (error) {
@@ -119,7 +120,7 @@ export default function Details() {
                             </div>
                         </div>
 
-                        {videos.length === 0 ? (
+                        {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />

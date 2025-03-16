@@ -7,10 +7,12 @@ export const useFetch = () => {
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(null);
     const abortControllers = useRef(new Set());
+    const ongoingFetches = useRef(0)
 
     const fetchData = async (url) => {
         const abortController = new AbortController();
         abortControllers.current.add(abortController);
+        ongoingFetches.current += 1
         setIsPending(true);
         setError(null);
 
@@ -36,7 +38,11 @@ export const useFetch = () => {
                 console.error(err.message);
             }
         } finally {
-            setIsPending(false);
+            ongoingFetches.current -= 1;
+            if (ongoingFetches.current === 0) {
+
+                setIsPending(false);
+            }
             abortControllers.current.delete(abortController);
         }
     };
@@ -54,14 +60,14 @@ export const useFetch = () => {
 
     const getMoviesByGenre = async (genreId, page = 1) =>
         fetchData(`/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`);
- 
+
     const getTVByGenre = async (genreId, page = 1) =>
         fetchData(`/discover/tv?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`);
-    
+
     const getCredits = async (type, id) => fetchData(`/${type}/${id}/credits?language=en-US`);
 
-    const getPersonCredits = async (type, id) => fetchData(`${type}/${id}/combined_credits?language=en-US`);
-    
+    const getPersonCredits = async (type, id) => fetchData(`/${type}/${id}/combined_credits?language=en-US`);
+
     const getPersonImages = async (type, id) => fetchData(`/${type}/${id}/images`);
 
     const getVideos = async (type, id) => fetchData(`/${type}/${id}/videos?language=en-US`);
@@ -71,13 +77,13 @@ export const useFetch = () => {
 
     const getSeries = async (page = 1, sortBy = "desc") =>
         fetchData(`/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.${sortBy}`);
-    
+
     const getSimilar = async (type, id) =>
         fetchData(`/${type}/${id}/similar?language=en-US&page=1`);
 
     const searchMovie = async (query, page = 1) =>
         fetchData(`/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`);
-   
+
     const searchTV = async (query, page = 1) =>
         fetchData(`/search/tv?query=${query}&include_adult=false&language=en-US&page=${page}`);
 

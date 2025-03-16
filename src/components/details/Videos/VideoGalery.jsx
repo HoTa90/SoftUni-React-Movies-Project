@@ -11,7 +11,6 @@ export default function VideoGallery({ video, videos, loading }) {
     setSelectedVideoKey(key);
   };
 
-  console.log(video)
 
 
   if (loading) {
