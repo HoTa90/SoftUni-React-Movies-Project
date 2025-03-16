@@ -1,12 +1,16 @@
 import { FilmIcon, HomeIcon, TvIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function NavBar() {
+
+  const { user } = useAuth();
+
   return (
     <div className="navbar shadow-sm bg-[#2c2c2c]">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost text-xl">
-        <HomeIcon className="w-5 h-5 text-gray-300" />
+          <HomeIcon className="w-5 h-5 text-gray-300" />
           <span>Simple Movies</span>
         </Link>
       </div>
@@ -20,17 +24,28 @@ export default function NavBar() {
           </li>
           <li>
             <Link to="/series" className="text-lg">
-              <TvIcon className="w-5 h-5 text-gray-300" />
-              <span>TV Series</span>               
-                       </Link>
+             
+              <span>TV Series</span>
+            </Link>
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-      <Link to="/profile" className="btn btn-ghost text-xl">
-        <UserIcon className="w-5 h-5 text-gray-300" />
-          <span>Profile </span>
-        </Link>
+      <div className="navbar-end mr-30">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost text-xl m-1">
+          <UserIcon className="w-5 h-5 text-gray-300" />
+            Profile</div>
+          <ul tabIndex={0} className="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm">
+            {!user ?
+              <>
+                <li><Link to={'/login'}>Login</Link></li>
+                <li><Link to={'/register'}>Register</Link></li>
+              </>
+              : <li><Link to={'/'} >Logout</Link></li>}
+
+
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -8,11 +8,12 @@ import Details from './components/details/Details.jsx'
 import AllMovies from './components/catalog/AllMovies.jsx'
 import AllSeries from './components/catalog/AllSeries.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 function App() {
 
   return (
-    <>
+    <AuthProvider>
       <NavBar />
       <main className="bg-[#05011d] min-h-screen ">
         <Routes>
@@ -24,7 +25,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
-    </>
+    </AuthProvider>
   )
 }
 

@@ -84,7 +84,6 @@ export default function Details() {
 
     return (
         <div>
-
             {type === "movie" || type === "tv" ? (
                 <DetailsHeaderCard details={details} type={type} />
             ) : (
