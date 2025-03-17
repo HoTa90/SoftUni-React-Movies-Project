@@ -50,6 +50,6 @@ export const minutesTohours = (minutes) => {
         { id: 10768, name: "War & Politics" },
   ];
 
-    const name = genres.find(genre => genre.id === id)
-    return name.name
+    const {name} = genres.find(genre => genre.id === id)
+    return name
   }

@@ -5,7 +5,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 export default function NavBar() {
 
   const { user, logout } = useAuth();
-  console.log(user)
 
   return (
     <div className="navbar shadow-sm bg-[#2c2c2c]">
@@ -47,7 +46,7 @@ export default function NavBar() {
               :
               <>
                 <li><Link to={'/profile'}>My Profile</Link></li>
-                <li><Link to={'/'} onClick={() => logout()} >Logout</Link></li>
+                <li><Link to={'/'} onClick={logout} >Logout</Link></li>
               </>
             }
           </ul>
