@@ -1,6 +1,6 @@
 import { FilmIcon, HomeIcon, TvIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthProvider.jsx";
 
 export default function NavBar() {
 
@@ -46,10 +46,10 @@ export default function NavBar() {
               </>
               :
               <>
-               <li><Link to={'/profile'}>My Profile</Link></li>
-              <li><Link to={'/'} onClick={() => logout()} >Logout</Link></li>
+                <li><Link to={'/profile'}>My Profile</Link></li>
+                <li><Link to={'/'} onClick={() => logout()} >Logout</Link></li>
               </>
-              }
+            }
           </ul>
         </div>
       </div>

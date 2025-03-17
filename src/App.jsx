@@ -8,7 +8,7 @@ import Details from './components/details/Details.jsx'
 import AllMovies from './components/catalog/AllMovies.jsx'
 import AllSeries from './components/catalog/AllSeries.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
-import { AuthProvider } from './context/AuthContext.jsx'
+import { AuthProvider } from './context/AuthProvider.jsx'
 import RegisterPage from './components/home/RegisterPage.jsx'
 import LoginPage from './components/home/LoginPage.jsx'
 

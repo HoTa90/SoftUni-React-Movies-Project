@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthProvider.jsx";
 import { useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
 
@@ -36,8 +36,8 @@ export default function RegisterPage() {
       }}
     >
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/50"></div>
-      {isLoading && <Spinner/>}
-     
+      {isLoading && <Spinner />}
+
 
       <form action={registerHandler} className="w-full max-w-md p-6 bg-[#2c2c2c] rounded-box shadow-lg relative z-10">
         <fieldset className="border border-base-300 p-4 rounded-box">
