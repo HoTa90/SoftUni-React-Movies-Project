@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../../context/AuthProvider.jsx";
 import { useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 
 export default function LoginPage() {

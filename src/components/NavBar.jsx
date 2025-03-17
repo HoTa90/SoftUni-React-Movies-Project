@@ -1,6 +1,6 @@
 import { FilmIcon, HomeIcon, TvIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
-import { useAuth } from "../context/AuthProvider.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function NavBar() {
 
