@@ -1,19 +1,23 @@
-import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
+import { CalendarIcon, ClockIcon, MinusCircleIcon, PlusCircleIcon, } from "@heroicons/react/16/solid";
 import { imagePath, imagePathOriginal } from "../../api/movieService.js";
 import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import useFirestore from "../../services/firestore.js";
+import { useEffect, useState } from "react";
+import Spinner from "../loading/Spinner.jsx";
 
 export default function DetailsHeaderCard({ details, type }) {
     const { user } = useAuth()
-    const {addToWatchList} = useFirestore()
+    const [isInWatchlist, setIsInWatchlist] = useState(false)
+    const [isLoading, setIsloading] = useState(true)
+    const { addToWatchList, checkIfInWatchlist, removeFromWatchlist } = useFirestore()
     const title = details?.title || details?.name;
     const releaseDate =
         type === "tv" ? details?.first_air_date : details?.release_date;
 
     const addToWatchListHandler = async () => {
         const data = {
-            id: details?.id,
+            id: details?.id.toString(),
             type: type,
             title: details?.title || details?.name,
             poster_path: details?.poster_path,
@@ -22,9 +26,31 @@ export default function DetailsHeaderCard({ details, type }) {
             vote_average: details?.vote_average,
         }
 
-        await addToWatchList(user?.uid, data?.id.toString(), data)
+        setIsloading(true)
+        await addToWatchList(user?.uid, data?.id, data)
+        const inWatchList = await checkIfInWatchlist(user?.uid, data?.id)
+        setIsInWatchlist(inWatchList)
+        setIsloading(false)
 
     }
+
+    const removeFromWatchlistHandler = async () => {
+
+        setIsloading(true)
+        await removeFromWatchlist(user?.uid, details?.id.toString())
+        setIsInWatchlist(false)
+        setIsloading(false)
+    }
+
+    useEffect(() => {
+       setIsloading(true)
+
+
+        checkIfInWatchlist(user?.uid, details?.id)
+            .then(setIsInWatchlist)
+            .finally(() => setIsloading(false))
+
+    }, [user, details?.id])
 
     return (
         <div
@@ -66,12 +92,33 @@ export default function DetailsHeaderCard({ details, type }) {
                                         <span className="text-sm">
                                             {minutesTohours(details?.runtime)}
                                         </span>
-                                        {user &&
+                                        {user && (
                                             <>
                                                 <div>•</div>
-                                                <button onClick={addToWatchListHandler} className="btn mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c]">Add to Watchlist</button>
+                                                {isLoading ? (
+                                                   <div className="relative inline-flex items-center justify-center w-[120px] h-[40px]">
+                                                   <div className="absolute inset-0 flex items-center justify-center">
+                                                       <Spinner small={true} />
+                                                   </div>
+                                               </div>
+                                                ) : !isInWatchlist ? (
+                                                    <button
+                                                        onClick={addToWatchListHandler}
+                                                        className="btn flex items-center mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c] px-3 py-2 rounded">
+                                                        <PlusCircleIcon className="w-5 h-5 text-green-500" />
+                                                        Add to Watchlist
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={removeFromWatchlistHandler}
+                                                        className="btn flex items-center mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c] px-3 py-2 rounded">
+                                                        <MinusCircleIcon className="w-5 h-5 text-red-500" />
+                                                        Remove from Watchlist
+                                                    </button>
+                                                )}
                                             </>
-                                        }
+                                        )}
+
 
                                     </div>
                                 </>
