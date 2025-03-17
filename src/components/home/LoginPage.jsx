@@ -5,14 +5,13 @@ import { useAuth } from "../../context/AuthContext.jsx";
 
 
 export default function LoginPage() {
-    const { login } = useAuth()
+    const { login, isLoading } = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
 
 
     const loginHandler = async (formdata) => {
-        setIsLoading(true)
+
         setError(null)
         const { email, password } = Object.fromEntries(formdata)
         try {
@@ -21,8 +20,6 @@ export default function LoginPage() {
         } catch (err) {
             setError(err.message)
             console.log(err.message)
-        } finally {
-            setIsLoading(false)
         }
     }
 

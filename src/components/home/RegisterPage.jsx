@@ -3,43 +3,55 @@ import { useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 
-
 export default function RegisterPage() {
-  const { register } = useAuth()
-  const navigate = useNavigate()
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const { register } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const registerHandler = async (event) => {
+    event.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
-  const registerHandler = async (formdata) => {
-    setIsLoading(true)
-    setError(null)
-    const { email, password, username } = Object.fromEntries(formdata)
+    const formData = new FormData(event.target);
+    const { email, password, username, rePass } = Object.fromEntries(formData);
+
     try {
-      await register(email, password, username)
-      navigate('/')
+      if (password !== rePass) {
+        event.target.password.value = "";
+        event.target.rePass.value = "";
+        throw new Error('Passwords don\'t match!')
+      }
+
+      await register(email, password, username);
+      event.target.reset()
+      navigate("/");
     } catch (err) {
-      setError(err.message)
-      console.log(err.message)
+      event.target.reset()
+      if (err.code === 'auth/email-already-in-use') {
+        setError('This email is already in use.');
+      } else {
+        setError(err.message);
+      }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
+
     }
-  }
+  };
 
   return (
     <div
       className="min-h-screen flex items-center justify-center relative"
       style={{
-        backgroundImage: "url('/registerBackground.jpg')",
+        backgroundImage: "url('/asd.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/50"></div>
-      {isLoading && <Spinner />}
 
-
-      <form action={registerHandler} className="w-full max-w-md p-6 bg-[#2c2c2c] rounded-box shadow-lg relative z-10">
+      <form onSubmit={registerHandler} className="w-full max-w-md p-6 bg-[#2c2c2c] rounded-box shadow-lg relative z-10">
         <fieldset className="border border-base-300 p-4 rounded-box">
           <legend className="text-xl font-bold text-center mb-4">Register</legend>
 
@@ -76,6 +88,17 @@ export default function RegisterPage() {
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">Repeat Password</label>
+              <input
+                type="password"
+                name="rePass"
+                className="input bg-[#05011d] input-bordered w-full"
+                placeholder="Repeat Password"
+                required
+              />
+            </div>
+
             <div className="text-center m-auto">
               <p className="text-sm text-gray-300">
                 Already have an account?{" "}
@@ -84,10 +107,11 @@ export default function RegisterPage() {
                 </Link>
               </p>
               {error && <p className="text-red-500">{error}</p>}
+              {isLoading && <Spinner />}
             </div>
 
-            <button type="submit" className="btn w-full mt-6">
-              Register
+            <button type="submit" className="btn w-full mt-6" disabled={isLoading}>
+              {isLoading ? "Registering..." : "Register"}
             </button>
           </div>
         </fieldset>
