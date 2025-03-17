@@ -6,13 +6,13 @@ export const imagePathOriginal = "https://image.tmdb.org/t/p/original";
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
 
-const API_OPTIONS = {
-    method: "GET",
-    headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-    },
-};
+// const API_OPTIONS = {
+//     method: "GET",
+//     headers: {
+//         accept: "application/json",
+//         Authorization: `Bearer ${API_KEY}`,
+//     },
+// };
 
 
 // Helper function to handle fetch requests

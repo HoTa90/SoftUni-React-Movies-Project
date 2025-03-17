@@ -15,6 +15,8 @@ export default function DetailsHeaderCard({ details, type }) {
     const releaseDate =
         type === "tv" ? details?.first_air_date : details?.release_date;
 
+        console.log(details)
+
     const addToWatchListHandler = async () => {
         const data = {
             id: details?.id.toString(),
@@ -43,14 +45,16 @@ export default function DetailsHeaderCard({ details, type }) {
     }
 
     useEffect(() => {
-       setIsloading(true)
+      
+       if (user && details.id){
+        setIsloading(true)
+        checkIfInWatchlist(user.uid, details.id)
+        .then(setIsInWatchlist)
+        .finally(() => setIsloading(false))
+       }
+        
 
-
-        checkIfInWatchlist(user?.uid, details?.id)
-            .then(setIsInWatchlist)
-            .finally(() => setIsloading(false))
-
-    }, [user, details?.id])
+    }, [user?.uid, details?.id])
 
     return (
         <div
@@ -84,13 +88,14 @@ export default function DetailsHeaderCard({ details, type }) {
                                     {new Date(releaseDate).toLocaleDateString("en-US")} (US)
                                 </span>
                             </div>
-                            {type === "movie" && (
+                            {type !== "person" && (
                                 <>
                                     <div>•</div>
                                     <div className="flex content-center items-center space-x-5">
                                         <ClockIcon className="w-5 h-5 mr-2 text-gray-400" />
                                         <span className="text-sm">
-                                            {minutesTohours(details?.runtime)}
+                                            {type === 'movie' && minutesTohours(details?.runtime)}
+                                            {type === 'tv' && `${minutesTohours(details?.last_episode_to_air?.runtime) || 'N/A'}`}
                                         </span>
                                         {user && (
                                             <>

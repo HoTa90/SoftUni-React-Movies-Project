@@ -20,14 +20,21 @@ export default function useFirestore() {
     }
 
     const checkIfInWatchlist = async (userId, dataId) => {
-        const docRef = doc(db, 'users', userId.toString(), 'watchlist', dataId?.toString());
+
+        console.log("userId:", userId, "dataId:", dataId);
+
+        if (!userId || !dataId) {
+            throw new Error("userId or dataId is missing");
+        }
+
+        const docRef = doc(db, 'users', userId.toString(), 'watchlist', dataId.toString());
         const docSnapshot = await getDoc(docRef)
         return docSnapshot.exists()
     }
 
     const removeFromWatchlist = async (userId, dataId) => {
         try {
-            await deleteDoc(doc(db, 'users', userId, 'watchlist', dataId?.toString()));
+            await deleteDoc(doc(db, 'users', userId?.toString(), 'watchlist', dataId?.toString()));
             console.log('Successfully removed from watchlist');
         } catch (err) {
             console.error('Error removing from watchlist:', err);
