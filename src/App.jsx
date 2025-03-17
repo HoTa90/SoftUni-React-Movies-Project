@@ -10,6 +10,7 @@ import AllSeries from './components/catalog/AllSeries.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import RegisterPage from './components/home/RegisterPage.jsx'
+import LoginPage from './components/home/LoginPage.jsx'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/movies' element={<AllMovies />} />
           <Route path='/series' element={<AllSeries />} />
           <Route path='/register' element={<RegisterPage />} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </main>
