@@ -42,7 +42,7 @@ export default function Details() {
                 if (type === "person") {
                     const profilesData = await getPersonImages(type, id)
                     const credits = await getPersonCredits(type, id)
-
+                   
                     setCast(credits?.cast.slice(0, 20))
                     setProfiles(profilesData.profiles)
                 }

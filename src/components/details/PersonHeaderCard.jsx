@@ -5,7 +5,6 @@ import { ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 export default function PersonHeaderCard({ details, profiles }) {
     const profileImage = profiles[0]?.file_path;
 
-    console.log(details)
 
     return (
         <div
