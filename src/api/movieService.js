@@ -3,7 +3,6 @@ export const imagePath = "https://image.tmdb.org/t/p/w500";
 export const imagePathOriginal = "https://image.tmdb.org/t/p/original";
 
 
-const API_KEY ="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDc5M2VmOGYwNTRlZmMwZjZhN2RmMWVhN2IxZjM3MyIsIm5iZiI6MTc0MDc0MjYwMi4wMDgsInN1YiI6IjY3YzE5ZmNhYjYwYmI5ODM5NzM1YjE1NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZeagTbUtOlAcWwUeXRbvAH3TwzbMp_I8jQvEqMsUU5I";
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
 
