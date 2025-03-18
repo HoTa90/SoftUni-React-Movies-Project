@@ -19,7 +19,7 @@ export default function PersonHeaderCard({ details, profiles }) {
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row items-center gap-10">
                     <img
-                        className="h-[450px] rounded-sm"
+                        className="h-[450px] rounded-sm shadow-lg shadow-gray-500/50"
                         src={`${imagePath}/${profileImage}`}
                         alt={details?.name}
                     />
