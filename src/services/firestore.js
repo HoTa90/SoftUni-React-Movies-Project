@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { addDoc, collection, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
 
 
 export default function useFirestore() {
@@ -41,10 +41,23 @@ export default function useFirestore() {
         }
     };
 
+
+    const getWatchlist = async (userId) => {
+
+        try {
+            const watchlistSnapshot = await getDocs(collection(db, 'users', userId, 'watchlist'));
+            const watchListData = watchlistSnapshot.docs.map((doc) => ({ ...doc.data() }))
+            return watchListData
+        } catch (err) {
+            console.log('Failed fetching watchlist', err.message)
+        }
+    }
+
     return {
         addDocument,
         addToWatchList,
         checkIfInWatchlist,
-        removeFromWatchlist
+        removeFromWatchlist,
+        getWatchlist
     }
 }

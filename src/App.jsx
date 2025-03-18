@@ -26,7 +26,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/watchlist' element={<WatchList />} />
+          <Route path='/:username/watchlist' element={<WatchList />} />
         </Routes>
       </main>
       <Footer />
