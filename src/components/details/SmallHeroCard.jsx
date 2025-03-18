@@ -53,7 +53,7 @@ export default function SmallHeroCard({ data, type}) {
                 ) : (
                     <div className="-mt-2 flex flex-wrap">
                     <p className="text-gray-400 text-sm italic ">
-                        {data.character}
+                        {data.character || 'N/A'}
                     </p>
                     </div>
                 )}
