@@ -23,7 +23,7 @@ export default function DetailsHeaderCard({ details, type }) {
         setAlert({ show: true, message});
         setTimeout(() => {
             setAlert({ show: false, message: ''})
-        }, 2000)
+        }, 3000)
     }
 
 
