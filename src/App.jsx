@@ -1,6 +1,5 @@
 
 import { Route, Routes } from 'react-router'
-import './App.css'
 import Footer from './components/Footer.jsx'
 import NavBar from './components/NavBar.jsx'
 import Home from './components/home/Home.jsx'
@@ -11,6 +10,7 @@ import NotFound from './components/not-found/NotFound.jsx'
 import { AuthProvider } from './context/AuthProvider.jsx'
 import RegisterPage from './components/home/RegisterPage.jsx'
 import LoginPage from './components/home/LoginPage.jsx'
+import WatchList from './components/Watchlist.jsx'
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='*' element={<NotFound />} />
+          <Route path='/watchlist' element={<WatchList />} />
         </Routes>
       </main>
       <Footer />

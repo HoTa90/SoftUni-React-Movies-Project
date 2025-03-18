@@ -45,7 +45,7 @@ export default function NavBar() {
               </>
               :
               <>
-                <li><Link to={'/profile'}>My Profile</Link></li>
+                <li><Link to={'/watchlist'}>My Watchlist</Link></li>
                 <li><Link to={'/'} onClick={logout} >Logout</Link></li>
               </>
             }
