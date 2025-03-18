@@ -3,11 +3,12 @@ import useFirestore from "../services/firestore.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import HeroCard from "./HeroCard.jsx";
 import Spinner from "./loading/Spinner.jsx";
+import { MinusCircleIcon } from "@heroicons/react/16/solid";
 
 export default function WatchList() {
     const { user } = useAuth()
     const [watchlist, setWatchlist] = useState([])
-    const { getWatchlist } = useFirestore()
+    const { getWatchlist, removeFromWatchlist } = useFirestore()
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
 
@@ -22,6 +23,20 @@ export default function WatchList() {
         }
     }, [user])
 
+    const removeFromWatchListHandler = async (id) => {
+        try {
+            setError(null)
+            setIsPending(true)
+            await removeFromWatchlist(user.uid, id)
+            setWatchlist((prev) => prev.filter((item) => item.id !== id))
+        } catch (err) {
+            console.log('Failed to Remove Item from Watchlist', err)
+            setError(err.message)
+        } finally {
+            setIsPending(false)
+        }
+    }
+
 
     return (
         <section className="px-28 py-15">
@@ -34,15 +49,19 @@ export default function WatchList() {
             ) : watchlist.length > 0 ? (
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
-                    {watchlist.map(item => (
+                    {watchlist.map((item) => (
                         <li key={item.id} className="p-0">
-                            <HeroCard data={item} type={item.type} />
+                            <HeroCard
+                                data={item}
+                                type={item.type}
+                                onRemove={removeFromWatchListHandler}
+                                isWatchlist={true}
+                            />
                         </li>
                     ))}
                 </ul>)
                 :
-                
-            <h3 className="text-gray-400 text-lg font-bold mb-8">You haven't added any Movies or TV shows to your Watchlist yet!</h3>
+                <h3 className="text-gray-400 text-lg italic mb-8">You haven't added any Movies or TV shows to your Watchlist yet!</h3>
             }
         </section>
     );

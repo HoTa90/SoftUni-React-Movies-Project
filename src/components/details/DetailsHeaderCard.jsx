@@ -11,7 +11,7 @@ export default function DetailsHeaderCard({ details, type }) {
     const { user } = useAuth()
     const [isInWatchlist, setIsInWatchlist] = useState(false)
     const [isLoading, setIsloading] = useState(true)
-    const [alert, setAlert] = useState({ show: false, message: "", isAdd: false })
+    const [alert, setAlert] = useState({ show: false, message: ""})
 
     const { addToWatchList, checkIfInWatchlist, removeFromWatchlist } = useFirestore()
 
@@ -19,10 +19,10 @@ export default function DetailsHeaderCard({ details, type }) {
     const releaseDate =
         type === "tv" ? details?.first_air_date : details?.release_date;
 
-    const showAlert = (message, isAdd) => {
-        setAlert({ show: true, message, isAdd });
+    const showAlert = (message) => {
+        setAlert({ show: true, message});
         setTimeout(() => {
-            setAlert({ show: false, message: '', isAdd: false })
+            setAlert({ show: false, message: ''})
         }, 2000)
     }
 
@@ -43,7 +43,7 @@ export default function DetailsHeaderCard({ details, type }) {
         const inWatchList = await checkIfInWatchlist(user?.uid, data?.id)
         setIsInWatchlist(inWatchList)
         setIsloading(false)
-        showAlert("Successfully added to watchlist!", true);
+        showAlert("Successfully added to watchlist!");
 
     }
 
@@ -53,7 +53,7 @@ export default function DetailsHeaderCard({ details, type }) {
         await removeFromWatchlist(user?.uid, details?.id.toString())
         setIsInWatchlist(false)
         setIsloading(false)
-        showAlert("Successfully removed from watchlist!", false);
+        showAlert("Successfully removed from watchlist!");
     }
 
     useEffect(() => {
@@ -137,7 +137,7 @@ export default function DetailsHeaderCard({ details, type }) {
                                                     </button>
                                                 )}
                                                 <div className="h-[50px] flex items-center justify-center">
-                                                    {alert.show && <AlertMessage message={alert.message} isAdd={alert.isAdd} />}
+                                                    {alert.show && <AlertMessage message={alert.message}/>}
                                                 </div>
                                             </>
                                         )}
