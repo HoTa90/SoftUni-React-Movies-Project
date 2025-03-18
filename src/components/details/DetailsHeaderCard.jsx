@@ -5,17 +5,27 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import useFirestore from "../../services/firestore.js";
 import { useEffect, useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
+import AlertMessage from "./AlertMessage.jsx";
 
 export default function DetailsHeaderCard({ details, type }) {
     const { user } = useAuth()
     const [isInWatchlist, setIsInWatchlist] = useState(false)
     const [isLoading, setIsloading] = useState(true)
+    const [alert, setAlert] = useState({ show: false, message: "", isAdd: false })
+
     const { addToWatchList, checkIfInWatchlist, removeFromWatchlist } = useFirestore()
+
     const title = details?.title || details?.name;
     const releaseDate =
         type === "tv" ? details?.first_air_date : details?.release_date;
 
-        console.log(details)
+    const showAlert = (message, isAdd) => {
+        setAlert({ show: true, message, isAdd });
+        setTimeout(() => {
+            setAlert({ show: false, message: '', isAdd: false })
+        }, 2000)
+    }
+
 
     const addToWatchListHandler = async () => {
         const data = {
@@ -33,6 +43,7 @@ export default function DetailsHeaderCard({ details, type }) {
         const inWatchList = await checkIfInWatchlist(user?.uid, data?.id)
         setIsInWatchlist(inWatchList)
         setIsloading(false)
+        showAlert("Successfully added to watchlist!", true);
 
     }
 
@@ -42,17 +53,18 @@ export default function DetailsHeaderCard({ details, type }) {
         await removeFromWatchlist(user?.uid, details?.id.toString())
         setIsInWatchlist(false)
         setIsloading(false)
+        showAlert("Successfully removed from watchlist!", false);
     }
 
     useEffect(() => {
-      
-       if (user && details.id){
-        setIsloading(true)
-        checkIfInWatchlist(user.uid, details.id)
-        .then(setIsInWatchlist)
-        .finally(() => setIsloading(false))
-       }
-        
+
+        if (user && details.id) {
+            setIsloading(true)
+            checkIfInWatchlist(user.uid, details.id)
+                .then(setIsInWatchlist)
+                .finally(() => setIsloading(false))
+        }
+
 
     }, [user?.uid, details?.id])
 
@@ -66,6 +78,8 @@ export default function DetailsHeaderCard({ details, type }) {
                 backgroundPosition: "center",
             }}
         >
+
+
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row items-center gap-10">
                     <img
@@ -100,12 +114,13 @@ export default function DetailsHeaderCard({ details, type }) {
                                         {user && (
                                             <>
                                                 <div>•</div>
+
                                                 {isLoading ? (
-                                                   <div className="relative inline-flex items-center justify-center w-[120px] h-[40px]">
-                                                   <div className="absolute inset-0 flex items-center justify-center">
-                                                       <Spinner small={true} />
-                                                   </div>
-                                               </div>
+                                                    <div className="relative inline-flex items-center justify-center w-[120px] h-[40px]">
+                                                        <div className="absolute inset-0 flex items-center justify-center">
+                                                            <Spinner small={true} />
+                                                        </div>
+                                                    </div>
                                                 ) : !isInWatchlist ? (
                                                     <button
                                                         onClick={addToWatchListHandler}
@@ -121,6 +136,9 @@ export default function DetailsHeaderCard({ details, type }) {
                                                         Remove from Watchlist
                                                     </button>
                                                 )}
+                                                <div className="h-[50px] flex items-center justify-center">
+                                                    {alert.show && <AlertMessage message={alert.message} isAdd={alert.isAdd} />}
+                                                </div>
                                             </>
                                         )}
 
