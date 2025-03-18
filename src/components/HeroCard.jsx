@@ -7,10 +7,10 @@ export default function HeroCard({ data, type, onRemove, isWatchlist }) {
     return (
         <div className="relative group transform transition-all duration-300 hover:scale-105 hover:shadow-[#a8b5db]/50 hover:z-10 ">
             {isWatchlist && (
-                <div className="tooltip ml-13" data-tip="Remove from Watchlist">
+                <div className="tooltip ml-13 tooltip-error" data-tip="Remove from Watchlist">
                     <button
                         onClick={() => onRemove(data.id)}
-                        className="absolute top-2 right-0 z-10 p-2 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
+                        className="absolute top-2 right-0 z-10 p-2 bg-red-600 rounded-full hover:bg-red-500 transition-colors"
                     >
                         <MinusCircleIcon className="w-10 h-10 text-white" />
                     </button>
