@@ -120,11 +120,11 @@ export default function Details() {
                             </div>
                         </div>
 
-                        {/* {isPending ? (
+                        {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />
-                        )} */}
+                        )}
 
                         <ReviewForm />
                     </>}

@@ -10,7 +10,7 @@ export default function NavBar() {
   return (
     <div className="navbar shadow-sm bg-[#2c2c2c]">
       <div className="navbar-start">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/" className="btn btn-ghost text-xl ml-5">
           <HomeIcon className="w-5 h-5 text-gray-300" />
           <span >Simple Movies</span>
         </Link>
@@ -33,7 +33,7 @@ export default function NavBar() {
       </div>
       <div className="navbar-end">
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost m-1">
+          <div tabIndex={0} role="button" className="btn btn-ghost mr-5">
 
             <UserIcon className="w-6 h-6 text-gray-300" />
             <span className="text-xl">{user ? `${user.username}` : 'Profile'}</span>
