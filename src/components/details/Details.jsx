@@ -6,6 +6,7 @@ import SmallHeroCard from "./SmallHeroCard.jsx";
 import DetailsHeaderCard from "./DetailsHeaderCard.jsx";
 import PersonHeaderCard from "./PersonHeaderCard.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
+import ReviewForm from "./reviews/ReviewForm.jsx";
 
 
 export default function Details() {
@@ -42,7 +43,7 @@ export default function Details() {
                 if (type === "person") {
                     const profilesData = await getPersonImages(type, id)
                     const credits = await getPersonCredits(type, id)
-                   
+
                     setCast(credits?.cast.slice(0, 20))
                     setProfiles(profilesData.profiles)
                 }
@@ -56,12 +57,12 @@ export default function Details() {
 
                     setSimilar(similarData);
                     setCast(creditsData?.cast?.slice(0, 10));
-                    
+
                     const video = videosData?.find((video) => video?.type === "Trailer");
                     setVideo(video);
 
                     const videos = videosData?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
-                   
+
                     setVideos(videos);
                 }
             } catch (error) {
@@ -119,11 +120,13 @@ export default function Details() {
                             </div>
                         </div>
 
-                        {isPending ? (
+                        {/* {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />
-                        )}
+                        )} */}
+
+                        <ReviewForm />
                     </>}
 
             </div>
