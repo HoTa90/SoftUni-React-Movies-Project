@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query } from "firebase/firestore";
 
 
 export default function useFirestore() {
@@ -9,28 +9,8 @@ export default function useFirestore() {
         console.log('Document written with id', docRef.id)
     }
 
-    const addToWatchList = async (userId, dataId, data) => {
-        try {
-            await setDoc(doc(db, 'users', userId, 'watchlist', dataId), data)
-            console.log('Successfully added to watchlsit')
 
-        } catch (err) {
-            console.log(err, 'Error adding to Watchlist')
-        }
-    }
 
-    const checkIfInWatchlist = async (userId, dataId) => {
-
-        console.log("userId:", userId, "dataId:", dataId);
-
-        if (!userId || !dataId) {
-            throw new Error("userId or dataId is missing");
-        }
-
-        const docRef = doc(db, 'users', userId.toString(), 'watchlist', dataId.toString());
-        const docSnapshot = await getDoc(docRef)
-        return docSnapshot.exists()
-    }
 
     const removeFromWatchlist = async (userId, dataId) => {
         try {
@@ -53,11 +33,70 @@ export default function useFirestore() {
         }
     }
 
+    const checkIfInWatchlist = async (userId, dataId) => {
+
+        console.log("userId:", userId, "dataId:", dataId);
+
+        if (!userId || !dataId) {
+            throw new Error("userId or dataId is missing");
+        }
+
+        const docRef = doc(db, 'users', userId.toString(), 'watchlist', dataId.toString());
+        const docSnapshot = await getDoc(docRef)
+        return docSnapshot.exists()
+    }
+
+    const addToWatchList = async (userId, dataId, data) => {
+        try {
+            await setDoc(doc(db, 'users', userId, 'watchlist', dataId), data)
+            console.log('Successfully added to watchlsit')
+
+        } catch (err) {
+            console.log(err, 'Error adding to Watchlist')
+        }
+    }
+
+
+    const addReview = async (data) => {
+
+        const reviewData = {
+            ...data
+        }
+
+        try {
+            await setDoc(doc(db, 'reviews'), reviewData)
+            console.log('Sucessfully added to reviews')
+        }
+        catch (err) {
+            console.log(err, 'Error creating a review')
+        }
+    }
+
+    const getReviewsForMovie = async (movieId) => {
+
+        try {
+            const reviewsRef = collection(db, 'reviews');
+            const reviewsSnapshot = await getDocs(query(reviewsRef, where('movieId', '==', movieId )));
+
+            const reviews = reviewsSnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            return reviews
+        } catch (err){
+            console.log('Failed fetching reviews', err.message)
+        }
+
+    }
+
     return {
         addDocument,
         addToWatchList,
         checkIfInWatchlist,
         removeFromWatchlist,
-        getWatchlist
+        getWatchlist,
+        addReview,
+        getReviewsForMovie,
     }
 }
