@@ -20,16 +20,20 @@ export const resolveRatingColor = (rating) => {
 };
 
 export const formattedDate = (date) => {
+  if (date?.toDate) {
+      date = date.toDate(); 
+  }
 
-  const formated = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  if (!(date instanceof Date) || isNaN(date)) {
+      return "Invalid Date";
+  }
+
+  return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
   });
-
-  return formated
-
-}
+};
 
 export const getGenreName = (id) => {
   const genres = [
