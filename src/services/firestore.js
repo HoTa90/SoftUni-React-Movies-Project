@@ -1,16 +1,8 @@
 import { db } from "./firebase.js";
-import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where, query, orderBy, limit } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where, orderBy, limit, updateDoc } from "firebase/firestore";
 
 
 export default function useFirestore() {
-
-    const addDocument = async (collectionName, data) => {
-        const docRef = await addDoc(collection(db, collectionName), data);
-        console.log('Document written with id', docRef.id)
-    }
-
-
-
 
     const removeFromWatchlist = async (userId, dataId) => {
         try {
@@ -62,6 +54,7 @@ export default function useFirestore() {
         try {
             const docRef = await addDoc(collection(db, 'reviews'), data)
             console.log('Sucessfully added to reviews', docRef.id)
+            return { id: docRef.id, ...data };
         }
         catch (err) {
             console.log(err, 'Error creating a review')
@@ -72,7 +65,7 @@ export default function useFirestore() {
 
         try {
             const reviewsRef = collection(db, 'reviews');
-            const reviewsSnapshot = await getDocs(query(reviewsRef, where('movieId', '==', movieId)));
+            const reviewsSnapshot = await getDocs(query(reviewsRef, where('detailsData.id', '==', movieId.toString())));
 
             const reviews = reviewsSnapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -90,16 +83,18 @@ export default function useFirestore() {
     const getLatestReview = async (movieId) => {
         try {
             const reviewsRef = collection(db, 'reviews');
-            const query = query(reviewsRef,
-                where('movieId', '==', movieId),
+            const q = query(reviewsRef,
+                where('detailsData.id', '==', movieId.toString()),
                 orderBy('createdOn', 'desc'),
-                limit(1)
+                limit(1),
             )
 
-            const reviewsSnapshot = await getDocs(query)
+            const reviewsSnapshot = await getDocs(q)
 
             if (!reviewsSnapshot.empty) {
-                return {id: reviewsSnapshot.docs[0].id, ...reviewsSnapshot.docs[0].data() }
+                const latestReview = { id: reviewsSnapshot.docs[0].id, ...reviewsSnapshot.docs[0].data() };
+                console.log("Latest review found:", latestReview);
+                return latestReview;
             }
             return null
 
@@ -109,13 +104,45 @@ export default function useFirestore() {
         }
     }
 
+    const editReview = async (reviewId, data) => {
+        try {
+            const reviewRef = doc(db, 'reviews', reviewId);
+            await updateDoc(reviewRef, {
+                ...data,
+                editedOn: new Date()
+            });
+            console.log('Review updated')
+        } catch (err){
+            console.log('Failed to edit', err.message)
+        }
+    }
+
+    const getReviewById = async (reviewId) => {
+        try {
+            const reviewRef = doc(db, 'reviews', reviewId);
+            const reviewSnapshot = await getDoc(reviewRef);
+    
+            if (reviewSnapshot.exists()) {
+                return { id: reviewSnapshot.id, ...reviewSnapshot.data() };
+            } else {
+                console.log("No such review found!");
+                return null;
+            }
+        } catch (err) {
+            console.error("Error fetching review:", err.message);
+            return null;
+        }
+    };
+
     return {
-        addDocument,
         addToWatchList,
         checkIfInWatchlist,
         removeFromWatchlist,
         getWatchlist,
         addReview,
         getReviewsForMovie,
+        getLatestReview,
+        editReview,
+        getReviewById
     }
 }
