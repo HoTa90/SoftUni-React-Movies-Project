@@ -45,7 +45,7 @@ export default function Details() {
             try {
                 const detailsData = await getDetails(type, id);
                 setDetails(detailsData);
-                console.log(detailsData)
+
 
                 if (type === "person") {
                     const profilesData = await getPersonImages(type, id);
@@ -140,7 +140,7 @@ export default function Details() {
                         </div>
 
 
-                        
+
                         {/* {isPending ? (
                             <Spinner />
                         ) : (
@@ -149,9 +149,9 @@ export default function Details() {
 
                         {/* Latest Review Section */}
                         <h2 className="text-md uppercase mt-10">
-                            Latest Review <Link to="#">{">"}</Link>
+                            Latest Review <Link to="reviews">{">"}</Link>
                         </h2>
-                        <div className="flex justify-center pb-5">
+                        <div className="pb-5">
                             {latestReview ? (
                                 <div className="max-w-2xl mx-auto">
                                     <ReviewComponent review={latestReview} />
