@@ -7,7 +7,7 @@ export default function ReviewComponent({ review, onDelete }) {
 
 
     return (
-        <div className="p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white max-w-2xl mx-auto min-w-[600px]">
+        <div className="p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white max-w-2xl mx-auto max-w-[600px]">
             <div className="flex justify-between items-center mb-4">
 
                 <div className="flex items-center gap-1">

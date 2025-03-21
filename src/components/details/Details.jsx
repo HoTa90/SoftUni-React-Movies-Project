@@ -9,6 +9,7 @@ import { useFetch } from "../../hooks/useFetch.js";
 import ReviewComponent from "./reviews/ReviewComponent.jsx";
 import useFirestore from "../../services/firestore.js";
 import CreateReview from "./reviews/CreateReview.jsx";
+import Skeleton from "../loading/Skeleton.jsx";
 
 export default function Details() {
     const { type, id } = useParams();
@@ -149,34 +150,37 @@ export default function Details() {
                         )} */}
 
                         {/* Latest Review Section */}
-                        <h2 className="text-md uppercase mt-10">
-                            Latest Review <Link to="reviews">{">"}</Link>
+                        <h2 className="text-md uppercase mt-9 text-start">
+                            Latest Review{" "}
+                            <Link className="hover:text-gray-400 transition text-4xl" to="reviews">
+                                {">"}
+                            </Link>
                         </h2>
                         <div className="pb-5">
-                            {dbLoading ?
-                                <Spinner/> :
-                                    latestReview ?
-                                    (<div className="max-w-2xl mx-auto">
-                                        <ReviewComponent review={latestReview} />
-                                    </div>
-                                    ) : (
-                                    <p className="text-gray-300">No reviews yet.</p>
-                                    )}
-
-
+                            {dbLoading ? (
+                                <div className="flex justify-center">
+                                    <Skeleton small={true} />
                                 </div>
+                            ) : latestReview ? (
+                                <div className="max-w-2xl mx-auto">
+                                    <ReviewComponent review={latestReview} />
+                                </div>
+                            ) : (
+                                <p className="text-gray-300 text-start">No reviews yet.</p>
+                            )}
+                        </div>
 
                         {/* Review Form */}
-                            <CreateReview movieDetails={details} setLatest={setLatestReview} onCreate={addReview} />
-                        </>
+                        <CreateReview movieDetails={details} setLatest={setLatestReview} onCreate={addReview} />
+                    </>
                 )}
-                    </div>
             </div>
-            );
+        </div>
+    );
 }
 
 
-            {/* 
+{/* 
                         {isPending ? (
                             <Spinner />
                         ) : (

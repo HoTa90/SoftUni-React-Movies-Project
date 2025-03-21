@@ -5,6 +5,7 @@ import useFirestore from "../../../services/firestore.js";
 import Spinner from "../../loading/Spinner.jsx";
 import ReviewComponent from "./ReviewComponent.jsx";
 import DetailsHeaderCard from "../DetailsHeaderCard.jsx";
+import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
 
 export default function AllReviews() {
     const { id, type } = useParams()
@@ -47,20 +48,32 @@ export default function AllReviews() {
                 :
                 <>
                     <DetailsHeaderCard details={details} type={type} />
-                    <div className="container mx-auto px-4 pb-10">
-                        <h2 className="text-md uppercase mt-10 text-center">
-                            <Link to={-1}>{'< '}</Link>
-                            All Reviews For {details?.title || details?.name}</h2>
-                        {reviews.length > 0 ? (reviews.map(review => (
-                            <div key={review.id} className="p-6 mt-6 rounded-lg ">
-                                <ReviewComponent review={review} />
-
-                            </div>
-                        )))
-                            :
+                    <div className="container mx-auto pb-10">
+                        <div className="flex items-center justify-center mt-10">
+                            <Link
+                                className="hover:text-gray-400 transition mb-6"
+                                to={-1}
+                            >
+                                <ArrowUturnLeftIcon className="h-8 w-8" />
+                            </Link>
+                            <h2 className="text-md uppercase ml-2 text-center">
+                                All Reviews For {details?.title || details?.name}
+                            </h2>
+                        </div>
+                        {reviews.length > 0 ? (
+                            reviews.map((review) => (
+                                <div
+                                    key={review.id}
+                                    className="p-6 mt-6 rounded-lg"
+                                >
+                                    <ReviewComponent review={review} />
+                                </div>
+                            ))
+                        ) : (
                             <p className="text-gray-300 text-center">
-                                No reviews yet.</p>
-                        }
+                                No reviews yet.
+                            </p>
+                        )}
                     </div>
                 </>}
 
