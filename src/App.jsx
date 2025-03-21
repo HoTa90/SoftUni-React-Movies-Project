@@ -11,6 +11,7 @@ import { AuthProvider } from './context/AuthProvider.jsx'
 import RegisterPage from './components/home/RegisterPage.jsx'
 import LoginPage from './components/home/LoginPage.jsx'
 import WatchList from './components/Watchlist.jsx'
+import EditReview from './components/details/reviews/EditReview.jsx'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path='/:type/:id' element={<Details />} />
+          <Route path='/:type/:id/edit/:reviewId' element={<EditReview />} />
           <Route path='/movies' element={<AllMovies />} />
           <Route path='/series' element={<AllSeries />} />
           <Route path='/register' element={<RegisterPage />} />

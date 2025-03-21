@@ -1,53 +1,58 @@
-
-import { UserIcon, TrashIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
+import { Link, useParams } from "react-router";
 import { formattedDate } from "../../../utils/helper.js";
 
-export default function ReviewComponent({ review, onEdit, onDelete }) {
-    const { ownerId, title, review: reviewText, rating, createdOn } = review;
-
+export default function ReviewComponent({ review, onDelete }) {
+    const { type, id } = useParams()
 
 
     return (
-        <div className="flex gap-5 p-5 rounded-2xl bg-gray-800 shadow-lg text-white mb-5">
-            <div className="flex flex-col items-center gap-3">
-                <div className="flex flex-col items-center gap-2">
-                    <UserIcon className="text-4xl text-gray-400" />
-                    <span className="text-sm font-medium text-gray-300">{ownerId}</span>
+        <div className="p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white max-w-2xl mx-auto min-w-[600px]">
+            <div className="flex justify-between items-center mb-4">
+
+                <div className="flex items-center gap-1">
+                    <span className="text-yellow-400">{review.rating}/10</span>
+                    <span className="text-lg text-yellow-400">★</span>
+
                 </div>
-                <div className="flex gap-1">
-                    {[...Array(10)].map((_, index) => (
-                        <span
-                            key={index}
-                            className={`text-lg ${index < rating ? "text-yellow-400" : "text-gray-600"}`}
-                        >
-                            ★
-                        </span>
-                    ))}
+
+
+                <div className="text-sm text-gray-300">
+                    {review.editedOn ? 
+                        (<span className="ml-2">Edited on: {formattedDate(review.editedOn)}</span>)
+                        : 
+                    (<span className="ml-2">Created on: {formattedDate(review.createdOn)}</span>)
+                    }
                 </div>
             </div>
 
-            <div className="flex-1">
-                <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-xl font-semibold text-white">{title}</h3>
-                    <span className="text-sm text-gray-400">{formattedDate(createdOn)}</span>
-                </div>
-                <p className="text-gray-300 mb-4 leading-relaxed">{reviewText}</p>
+            <div className="text-sm text-gray-300 mb-4">
+                From: <span className="font-medium text-gray-200">{review.username}</span>
+            </div>
 
 
-                <div className="flex justify-end gap-3">
-                    <button
-                        className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md bg-purple-600 hover:bg-purple-700 transition"
-                        onClick={onEdit}
-                    >
-                        <PencilSquareIcon /> Edit
+            <div className="text-lg text-gray-300 mb-4">
+                Title: <span className="font-semibold text-gray-200">{review.title}</span>
+            </div>
+
+            <div className="border border-gray-600 rounded-lg p-4 mb-4">
+                <p className="text-gray-300 whitespace-normal break-words">
+                    {review.review}
+                </p>
+            </div>
+
+            <div className="flex justify-end">
+                <Link to={`/${type}/${id}/edit/${review.id}`}>
+                    <button className="text-gray-400 hover:text-purple-500 transition">
+                        <PencilSquareIcon className="h-5 w-5" />
                     </button>
-                    <button
-                        className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md bg-red-600 hover:bg-red-700 transition"
-                        onClick={onDelete}
-                    >
-                        <TrashIcon /> Delete
-                    </button>
-                </div>
+                </Link>
+                <button
+                    onClick={onDelete}
+                    className="text-gray-400 hover:text-red-500 transition"
+                >
+                    <TrashIcon className="h-5 w-5" />
+                </button>
             </div>
         </div>
     );
