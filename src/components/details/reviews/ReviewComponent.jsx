@@ -43,13 +43,13 @@ export default function ReviewComponent({ review, onDelete }) {
 
             <div className="flex justify-end">
                 <Link to={`/${type}/${id}/edit/${review.id}`}>
-                    <button className="text-gray-400 hover:text-purple-500 transition">
+                    <button className="text-gray-400 hover:text-yellow-400 transition cursor-pointer">
                         <PencilSquareIcon className="h-5 w-5" />
                     </button>
                 </Link>
                 <button
                     onClick={onDelete}
-                    className="text-gray-400 hover:text-red-500 transition"
+                    className="text-gray-400 hover:text-red-500 transition cursor-pointer"
                 >
                     <TrashIcon className="h-5 w-5" />
                 </button>
