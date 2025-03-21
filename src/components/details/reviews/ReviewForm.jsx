@@ -21,6 +21,7 @@ export default function ReviewForm({ onSubmit, initialData = { title: "", rating
     const submitHandler = (e) => {
         e.preventDefault();
         onSubmit(formData);
+        setFormData(initialData)
     };
 
     return (

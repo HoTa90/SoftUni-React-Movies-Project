@@ -6,7 +6,6 @@ import SmallHeroCard from "./SmallHeroCard.jsx";
 import DetailsHeaderCard from "./DetailsHeaderCard.jsx";
 import PersonHeaderCard from "./PersonHeaderCard.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
-import ReviewForm from "./reviews/ReviewForm.jsx";
 import ReviewComponent from "./reviews/ReviewComponent.jsx";
 import useFirestore from "../../services/firestore.js";
 import CreateReview from "./reviews/CreateReview.jsx";
@@ -33,7 +32,7 @@ export default function Details() {
     const [profiles, setProfiles] = useState([]);
     const [latestReview, setLatestReview] = useState(null);
 
-    const { getLatestReview } = useFirestore();
+    const { getLatestReview, dbLoading, addReview } = useFirestore();
 
     useEffect(() => {
         window.scroll(0, 0);
@@ -84,6 +83,8 @@ export default function Details() {
     if (isPending) {
         return <Spinner />;
     }
+
+    console.log(dbLoading)
 
     if (!type || !id) return <Spinner />;
 
@@ -152,26 +153,30 @@ export default function Details() {
                             Latest Review <Link to="reviews">{">"}</Link>
                         </h2>
                         <div className="pb-5">
-                            {latestReview ? (
-                                <div className="max-w-2xl mx-auto">
-                                    <ReviewComponent review={latestReview} />
+                            {dbLoading ?
+                                <Spinner/> :
+                                    latestReview ?
+                                    (<div className="max-w-2xl mx-auto">
+                                        <ReviewComponent review={latestReview} />
+                                    </div>
+                                    ) : (
+                                    <p className="text-gray-300">No reviews yet.</p>
+                                    )}
+
+
                                 </div>
-                            ) : (
-                                <p className="text-gray-300">No reviews yet.</p>
-                            )}
-                        </div>
 
                         {/* Review Form */}
-                        <CreateReview movieDetails={details} setLatest={setLatestReview} />
-                    </>
+                            <CreateReview movieDetails={details} setLatest={setLatestReview} onCreate={addReview} />
+                        </>
                 )}
+                    </div>
             </div>
-        </div>
-    );
+            );
 }
 
 
-{/* 
+            {/* 
                         {isPending ? (
                             <Spinner />
                         ) : (

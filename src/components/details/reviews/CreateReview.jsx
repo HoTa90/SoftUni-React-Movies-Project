@@ -3,10 +3,9 @@ import useFirestore from "../../../services/firestore.js";
 import { useParams } from "react-router";
 import ReviewForm from "./ReviewForm.jsx";
 
-export default function CreateReview({ movieDetails, setLatest }) {
+export default function CreateReview({ movieDetails, setLatest, onCreate }) {
     const { type, id } = useParams();
     const { user } = useAuth();
-    const { addReview } = useFirestore();
 
     const submitHandler = async (formData) => {
         const reviewData = {
@@ -30,8 +29,9 @@ export default function CreateReview({ movieDetails, setLatest }) {
             editedOn: null
         };
 
+
         try {
-            const latestReview = await addReview(reviewData);
+            const latestReview = await onCreate(reviewData);
             console.log("Successfully added review");
             setLatest(latestReview)
         } catch (err) {
