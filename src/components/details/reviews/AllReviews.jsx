@@ -50,11 +50,14 @@ export default function AllReviews() {
                     <DetailsHeaderCard details={details} type={type} />
                     <div className="container mx-auto pb-10">
                         <div className="flex items-center justify-center mt-10">
+                           
                             <Link
                                 className="hover:text-gray-400 transition mb-6"
                                 to={-1}
                             >
+                                 <div className="tooltip tooltip-warning normal-case" data-tip={`Go Back`}>
                                 <ArrowUturnLeftIcon className="h-8 w-8" />
+                                </div>
                             </Link>
                             <h2 className="text-md uppercase ml-2 text-center">
                                 All Reviews For {details?.title || details?.name}

@@ -152,9 +152,11 @@ export default function Details() {
                         {/* Latest Review Section */}
                         <h2 className="text-md uppercase mt-9 text-start">
                             Latest Review{" "}
+                            <div className="tooltip tooltip-warning normal-case" data-tip={`Go to all ${details.name || details.title} Reviews`}>
                             <Link className="hover:text-gray-400 transition text-4xl" to="reviews">
                                 {">"}
                             </Link>
+                            </div>
                         </h2>
                         <div className="pb-5">
                             {dbLoading ? (
