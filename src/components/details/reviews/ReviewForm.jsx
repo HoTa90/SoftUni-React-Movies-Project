@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './ReviewForm.css'
 
-export default function ReviewForm({ onSubmit, initialData = { title: "", rating: 5, review: "" }, buttonText = "Submit Review" }) {
+export default function ReviewForm({ onSubmit, initialData = { title: "", rating: 0, review: "" }, buttonText = "Submit Review" }) {
     const [formData, setFormData] = useState(initialData);
 
     const formChangeHandler = (e) => {
@@ -21,7 +21,7 @@ export default function ReviewForm({ onSubmit, initialData = { title: "", rating
     const submitHandler = (e) => {
         e.preventDefault();
         onSubmit(formData);
-        setFormData(initialData)
+        setFormData({ title: "", rating: 0, review: "" })
     };
 
     return (

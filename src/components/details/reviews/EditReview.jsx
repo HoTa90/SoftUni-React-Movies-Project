@@ -6,9 +6,9 @@ import Spinner from "../../loading/Spinner.jsx";
 import DetailsHeaderCard from "../DetailsHeaderCard.jsx";
 
 export default function EditReview() {
-    const { reviewId, type} = useParams();
+    const { reviewId, type } = useParams();
     const navigate = useNavigate();
-    const { getReviewById, editReview } = useFirestore();
+    const { getReviewById, editReview, dbLoading } = useFirestore();
     const [review, setReview] = useState(null);
     const [details, setDetails] = useState([])
 
@@ -36,15 +36,22 @@ export default function EditReview() {
     return (
         <div className="pb-10">
             <DetailsHeaderCard details={details} type={type} />
-            <ReviewForm
-                onSubmit={submitHandler}
-                initialData={{
-                    title: review.title,
-                    rating: review.rating,
-                    review: review.review,
-                }}
-                buttonText="Save Changes"
-            />
+            {dbLoading ?
+                <div className="mt-5">
+                    <Spinner />
+                </div>
+                :
+                <ReviewForm
+                    onSubmit={submitHandler}
+                    initialData={{
+                        title: review.title,
+                        rating: review.rating,
+                        review: review.review,
+                    }}
+                    buttonText="Save Changes"
+                />
+            }
+
         </div>
     );
 }
