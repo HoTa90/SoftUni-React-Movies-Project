@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where } from "firebase/firestore";
 
 
 export default function useFirestore() {
@@ -60,12 +60,14 @@ export default function useFirestore() {
     const addReview = async (data) => {
 
         const reviewData = {
-            ...data
+            ...data,
+            createdOn: new Date(),
+            editedOn: new Date(),
         }
 
         try {
-            await setDoc(doc(db, 'reviews'), reviewData)
-            console.log('Sucessfully added to reviews')
+            const docRef = await addDoc(collection(db, 'reviews'), reviewData)
+            console.log('Sucessfully added to reviews', docRef.id)
         }
         catch (err) {
             console.log(err, 'Error creating a review')
@@ -76,7 +78,7 @@ export default function useFirestore() {
 
         try {
             const reviewsRef = collection(db, 'reviews');
-            const reviewsSnapshot = await getDocs(query(reviewsRef, where('movieId', '==', movieId )));
+            const reviewsSnapshot = await getDocs(query(reviewsRef, where('movieId', '==', movieId)));
 
             const reviews = reviewsSnapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -84,7 +86,7 @@ export default function useFirestore() {
             }))
 
             return reviews
-        } catch (err){
+        } catch (err) {
             console.log('Failed fetching reviews', err.message)
         }
 

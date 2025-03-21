@@ -74,6 +74,8 @@ export default function Details() {
 
     }, [type, id]);
 
+    
+
 
     if (isPending) {
         return (
@@ -119,14 +121,14 @@ export default function Details() {
                                 ))}
                             </div>
                         </div>
-
+{/* 
                         {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />
-                        )}
+                        )} */}
 
-                        <ReviewForm />
+                        <ReviewForm movieData={details} />
                     </>}
 
             </div>

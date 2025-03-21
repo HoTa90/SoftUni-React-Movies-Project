@@ -1,9 +1,13 @@
 
 import { useState } from "react";
 import "./ReviewForm.css";
+import { useAuth } from "../../../context/AuthContext.jsx";
+import useFirestore from "../../../services/firestore.js";
 
-export default function ReviewForm() {
+export default function ReviewForm({ movieData }) {
     const [formData, setFormData] = useState({ title: '', rating: 5, review: '' })
+    const { user } = useAuth()
+    const {addReview} = useFirestore()
 
     const formChangeHandler = (e) => {
         setFormData((prev) => ({
@@ -21,7 +25,23 @@ export default function ReviewForm() {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formData)
+
+        const reviewData = {
+            movieId: movieData.id,
+            userId: user.uid,
+            ...formData
+
+        }
+        try{
+            await addReview(reviewData)
+            console.log('Sucessfully added reiview')
+            setFormData({ title: '', rating: 5, review: '' })
+
+
+        } catch (err){
+            console.log(err.message)
+        }
+         
     }
 
 
