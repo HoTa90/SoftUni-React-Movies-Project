@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 import SmallHeroCard from "./SmallHeroCard.jsx";
@@ -7,6 +7,7 @@ import DetailsHeaderCard from "./DetailsHeaderCard.jsx";
 import PersonHeaderCard from "./PersonHeaderCard.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
 import ReviewForm from "./reviews/ReviewForm.jsx";
+import ReviewComponent from "./reviews/ReviewComponent.jsx";
 
 
 export default function Details() {
@@ -26,8 +27,11 @@ export default function Details() {
     const [cast, setCast] = useState([]);
     const [video, setVideo] = useState(null);
     const [videos, setVideos] = useState([]);
-    const [similar, setSimilar] = useState([])
-    const [profiles, setProfiles] = useState([])
+    const [similar, setSimilar] = useState([]);
+    const [profiles, setProfiles] = useState([]);
+    const [latestReview, setReview] = useState([])
+
+    const {getLa}
 
     useEffect(() => {
         window.scroll(0, 0)
@@ -74,7 +78,7 @@ export default function Details() {
 
     }, [type, id]);
 
-    
+
 
 
     if (isPending) {
@@ -121,14 +125,20 @@ export default function Details() {
                                 ))}
                             </div>
                         </div>
-{/* 
+                        {/* 
                         {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />
                         )} */}
 
-                        <ReviewForm movieData={details} />
+                        <h2 className="text-md uppercase mt-10">Latest Review
+                            <Link> {'>'} </Link>
+                        </h2>
+                        <ReviewComponent review={review} />
+
+
+                        <ReviewForm movieDetails={details} />
                     </>}
 
             </div>

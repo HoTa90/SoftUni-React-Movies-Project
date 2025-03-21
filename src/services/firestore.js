@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where, query, orderBy, limit } from "firebase/firestore";
 
 
 export default function useFirestore() {
@@ -59,14 +59,8 @@ export default function useFirestore() {
 
     const addReview = async (data) => {
 
-        const reviewData = {
-            ...data,
-            createdOn: new Date(),
-            editedOn: new Date(),
-        }
-
         try {
-            const docRef = await addDoc(collection(db, 'reviews'), reviewData)
+            const docRef = await addDoc(collection(db, 'reviews'), data)
             console.log('Sucessfully added to reviews', docRef.id)
         }
         catch (err) {
@@ -88,8 +82,31 @@ export default function useFirestore() {
             return reviews
         } catch (err) {
             console.log('Failed fetching reviews', err.message)
+            return null
         }
 
+    }
+
+    const getLatestReview = async (movieId) => {
+        try {
+            const reviewsRef = collection(db, 'reviews');
+            const query = query(reviewsRef,
+                where('movieId', '==', movieId),
+                orderBy('createdOn', 'desc'),
+                limit(1)
+            )
+
+            const reviewsSnapshot = await getDocs(query)
+
+            if (!reviewsSnapshot.empty) {
+                return {id: reviewsSnapshot.docs[0].id, ...reviewsSnapshot.docs[0].data() }
+            }
+            return null
+
+        } catch (err) {
+            console.log('Failed fetching the latest review', err.message)
+            return null
+        }
     }
 
     return {

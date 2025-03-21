@@ -3,11 +3,13 @@ import { useState } from "react";
 import "./ReviewForm.css";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import useFirestore from "../../../services/firestore.js";
+import { useParams } from "react-router";
 
-export default function ReviewForm({ movieData }) {
+export default function ReviewForm({ movieDetails }) {
+    const { type, id } = useParams()
     const [formData, setFormData] = useState({ title: '', rating: 5, review: '' })
     const { user } = useAuth()
-    const {addReview} = useFirestore()
+    const { addReview } = useFirestore()
 
     const formChangeHandler = (e) => {
         setFormData((prev) => ({
@@ -27,21 +29,33 @@ export default function ReviewForm({ movieData }) {
         e.preventDefault();
 
         const reviewData = {
-            movieId: movieData.id,
-            userId: user.uid,
-            ...formData
+
+            ownerId: user.uid,
+            username: user.username,
+            ...formData,
+            detailsData: {
+                id: id.toString(),
+                type: type,
+                title: movieDetails?.title || movieDetails?.name,
+                poster_path: movieDetails?.poster_path,
+                release_date: movieDetails?.release_date || movieDetails?.first_air_date,
+                original_language: movieDetails?.original_language,
+                vote_average: movieDetails?.vote_average,
+            },
+            createdOn: new Date(),
+            editedOn: new Date(),
 
         }
-        try{
+        try {
             await addReview(reviewData)
             console.log('Sucessfully added reiview')
             setFormData({ title: '', rating: 5, review: '' })
 
 
-        } catch (err){
+        } catch (err) {
             console.log(err.message)
         }
-         
+
     }
 
 
