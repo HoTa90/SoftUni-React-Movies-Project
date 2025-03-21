@@ -1,67 +1,31 @@
-
 import { useState } from "react";
-import "./ReviewForm.css";
-import { useAuth } from "../../../context/AuthContext.jsx";
-import useFirestore from "../../../services/firestore.js";
-import { useParams } from "react-router";
+import './ReviewForm.css'
 
-export default function ReviewForm({ movieDetails }) {
-    const { type, id } = useParams()
-    const [formData, setFormData] = useState({ title: '', rating: 5, review: '' })
-    const { user } = useAuth()
-    const { addReview } = useFirestore()
+export default function ReviewForm({ onSubmit, initialData = { title: "", rating: 5, review: "" }, buttonText = "Submit Review" }) {
+    const [formData, setFormData] = useState(initialData);
 
     const formChangeHandler = (e) => {
         setFormData((prev) => ({
             ...prev,
-            [e.target.name]: e.target.value
-        }))
-    }
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     const ratingChangeHandler = (e) => {
         setFormData((prev) => ({
             ...prev,
-            rating: Number(e.target.value)
-        }))
-    }
+            rating: Number(e.target.value),
+        }));
+    };
 
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-
-        const reviewData = {
-
-            ownerId: user.uid,
-            username: user.username,
-            ...formData,
-            detailsData: {
-                id: id.toString(),
-                type: type,
-                title: movieDetails?.title || movieDetails?.name,
-                poster_path: movieDetails?.poster_path,
-                release_date: movieDetails?.release_date || movieDetails?.first_air_date,
-                original_language: movieDetails?.original_language,
-                vote_average: movieDetails?.vote_average,
-            },
-            createdOn: new Date(),
-            editedOn: new Date(),
-
-        }
-        try {
-            await addReview(reviewData)
-            console.log('Sucessfully added reiview')
-            setFormData({ title: '', rating: 5, review: '' })
-
-
-        } catch (err) {
-            console.log(err.message)
-        }
-
-    }
-
+        onSubmit(formData);
+    };
 
     return (
         <form className="review-form" onSubmit={submitHandler}>
-            <h2 className="form-title">Leave a Review</h2>
+            <h2 className="form-title">{buttonText === "Submit Review" ? "Leave a Review" : "Edit Review"}</h2>
 
             <div className="form-group">
                 <label htmlFor="review-title" className="form-label">
@@ -115,8 +79,10 @@ export default function ReviewForm({ movieDetails }) {
             </div>
 
             <div className="button-container">
-                <button type="submit" className="submit-button">Submit Review</button>
+                <button type="submit" className="submit-button">
+                    {buttonText}
+                </button>
             </div>
         </form>
     );
-};
+}
