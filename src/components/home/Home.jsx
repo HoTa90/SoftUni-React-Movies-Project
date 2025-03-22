@@ -3,6 +3,7 @@ import HeaderSection from "./HeaderSection.jsx";
 import PopularSection from "./PopularSection.jsx";
 import Skeleton from "../loading/Skeleton.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
+import HomeSkeleton from "../loading/HomeSkeleton.jsx";
 
 export default function Home() {
     const [headerMovie, setHeaderMovie] = useState({});
@@ -32,7 +33,7 @@ export default function Home() {
 
     return (
         <>
-            {isPending ?  (<Skeleton/>)
+            {isPending ?  (<HomeSkeleton/>)
             :
             <>
             <HeaderSection movie={headerMovie} />
