@@ -1,11 +1,30 @@
+
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
 import { Link, useParams } from "react-router";
 import { formattedDate } from "../../../utils/helper.js";
 import { useAuth } from "../../../context/AuthContext.jsx";
+import DeleteModal from "./DeleteModal.jsx";
+import { useState } from "react";
 
-export default function ReviewComponent({ review, onDelete }) {
+export default function ReviewComponent({ review }) {
     const { type, id } = useParams()
     const { user } = useAuth()
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const handleDeleteClick = () => {
+        setIsOpen(true)
+    }
+
+    const handleConfirmDelete = () => {
+        //...
+
+        setIsOpen(false)
+    }
+
+    const handleCancelClick = () => {
+        setIsOpen(false)
+    }
 
     const isOwner = user?.uid === review.ownerId
 
@@ -51,12 +70,19 @@ export default function ReviewComponent({ review, onDelete }) {
                     </button>
                 </Link>
                 <button
-                    onClick={onDelete}
+                    onClick={handleDeleteClick}
                     className="text-gray-400 hover:text-red-500 transition cursor-pointer"
                 >
                     <TrashIcon className="h-5 w-5" />
                 </button>
             </div>}
+
+            <DeleteModal
+                isOpen={isOpen}
+                onConfirm={handleConfirmDelete}
+                onCancel={handleCancelClick}
+                reviewTitle={review.title}
+            />
 
         </div>
     );
