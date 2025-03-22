@@ -4,6 +4,7 @@ import './ReviewForm.css'
 export default function ReviewForm({ onSubmit, initialData = { title: "", rating: 0, review: "" }, buttonText = "Submit Review" }) {
     const [formData, setFormData] = useState(initialData);
 
+
     const formChangeHandler = (e) => {
         setFormData((prev) => ({
             ...prev,

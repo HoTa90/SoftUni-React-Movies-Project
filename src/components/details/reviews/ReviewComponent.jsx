@@ -1,13 +1,17 @@
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
 import { Link, useParams } from "react-router";
 import { formattedDate } from "../../../utils/helper.js";
+import { useAuth } from "../../../context/AuthContext.jsx";
 
 export default function ReviewComponent({ review, onDelete }) {
     const { type, id } = useParams()
+    const { user } = useAuth()
+
+    const isOwner = user?.uid === review.ownerId
 
 
     return (
-        <div className="p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white max-w-2xl mx-auto max-w-[600px]">
+        <div className="p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white mx-auto max-w-[600px]">
             <div className="flex justify-between items-center mb-4">
 
                 <div className="flex items-center gap-1">
@@ -18,10 +22,10 @@ export default function ReviewComponent({ review, onDelete }) {
 
 
                 <div className="text-sm text-gray-300">
-                    {review.editedOn ? 
+                    {review.editedOn ?
                         (<span className="ml-2">Edited on: {formattedDate(review.editedOn)}</span>)
-                        : 
-                    (<span className="ml-2">Created on: {formattedDate(review.createdOn)}</span>)
+                        :
+                        (<span className="ml-2">Created on: {formattedDate(review.createdOn)}</span>)
                     }
                 </div>
             </div>
@@ -40,8 +44,7 @@ export default function ReviewComponent({ review, onDelete }) {
                     {review.review}
                 </p>
             </div>
-
-            <div className="flex justify-end">
+            {isOwner && <div className="flex justify-end">
                 <Link to={`/${type}/${id}/edit/${review.id}`}>
                     <button className="text-gray-400 hover:text-yellow-400 transition cursor-pointer">
                         <PencilSquareIcon className="h-5 w-5" />
@@ -53,7 +56,8 @@ export default function ReviewComponent({ review, onDelete }) {
                 >
                     <TrashIcon className="h-5 w-5" />
                 </button>
-            </div>
+            </div>}
+
         </div>
     );
 }

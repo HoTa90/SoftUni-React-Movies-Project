@@ -10,9 +10,11 @@ import ReviewComponent from "./reviews/ReviewComponent.jsx";
 import useFirestore from "../../services/firestore.js";
 import CreateReview from "./reviews/CreateReview.jsx";
 import Skeleton from "../loading/Skeleton.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Details() {
     const { type, id } = useParams();
+    const { user } = useAuth()
 
     const {
         isPending,
@@ -153,9 +155,9 @@ export default function Details() {
                         <h2 className="text-md uppercase mt-9 text-start">
                             Latest Review{" "}
                             <div className="tooltip tooltip-warning normal-case" data-tip={`Go to all ${details.name || details.title} Reviews`}>
-                            <Link className="hover:text-gray-400 transition text-4xl" to="reviews">
-                                {">"}
-                            </Link>
+                                <Link className="hover:text-gray-400 transition text-4xl" to="reviews">
+                                    {">"}
+                                </Link>
                             </div>
                         </h2>
                         <div className="pb-5">
@@ -173,7 +175,8 @@ export default function Details() {
                         </div>
 
                         {/* Review Form */}
-                        <CreateReview movieDetails={details} setLatest={setLatestReview} onCreate={addReview} />
+                        {user && <CreateReview movieDetails={details} setLatest={setLatestReview} onCreate={addReview} />}
+
                     </>
                 )}
             </div>
