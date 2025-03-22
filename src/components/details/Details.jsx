@@ -35,7 +35,7 @@ export default function Details() {
     const [profiles, setProfiles] = useState([]);
     const [latestReview, setLatestReview] = useState(null);
 
-    const { getLatestReview, dbLoading, addReview } = useFirestore();
+    const { getLatestReview, dbLoading, addReview, deleteReview } = useFirestore();
 
     useEffect(() => {
         window.scroll(0, 0);
@@ -82,6 +82,13 @@ export default function Details() {
 
         fetchData();
     }, [type, id]);
+
+    const deleteReviewHandler = async (reviewID) => {
+            await deleteReview(reviewID)
+            const newestReview = await getLatestReview(id)
+            setLatestReview(newestReview)
+
+    }
 
     if (isPending) {
         return <Spinner />;
@@ -167,7 +174,7 @@ export default function Details() {
                                 </div>
                             ) : latestReview ? (
                                 <div className="max-w-2xl mx-auto">
-                                    <ReviewComponent review={latestReview} />
+                                    <ReviewComponent review={latestReview} onDelete={deleteReviewHandler} />
                                 </div>
                             ) : (
                                 <p className="text-gray-300 text-start">No reviews yet.</p>

@@ -6,7 +6,8 @@ import { useAuth } from "../../../context/AuthContext.jsx";
 import DeleteModal from "./DeleteModal.jsx";
 import { useState } from "react";
 
-export default function ReviewComponent({ review }) {
+
+export default function ReviewComponent({ review, onDelete }) {
     const { type, id } = useParams()
     const { user } = useAuth()
 
@@ -16,8 +17,12 @@ export default function ReviewComponent({ review }) {
         setIsOpen(true)
     }
 
-    const handleConfirmDelete = () => {
-        //...
+    const handleConfirmDelete = async () => {
+       try {
+            await onDelete(review.id)
+       } catch (err){
+        console.log('error deleting this review', err)
+       }
 
         setIsOpen(false)
     }

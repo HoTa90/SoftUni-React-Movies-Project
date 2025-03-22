@@ -13,7 +13,7 @@ export default function DeleteModal({ isOpen, onConfirm, onCancel, reviewTitle }
                     </button>
                 </form>
 
-                <p className="py-4">Are you sure you want to delete "{reviewTitle}" review?</p>
+                <p className="py-4">Are you sure you want to delete the "{reviewTitle}" review?</p>
 
                 <div className="modal-action">
                     <form method="dialog" className="flex gap-2">
