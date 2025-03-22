@@ -11,7 +11,7 @@ import SearchReview from "./SearchReview.jsx";
 export default function AllReviews() {
     const { id, type } = useParams()
     const { getDetails } = useFetch()
-    const { getReviewsForMovie, dbLoading } = useFirestore()
+    const { getReviewsForMovie, dbLoading, deleteReview } = useFirestore()
     const [originalReviews, setOriginalReviews] = useState([])
     const [filteredReviews, setFilteredReviews] = useState([])
     const [searchedReviews, setSearchedReviews] = useState([])
@@ -38,7 +38,7 @@ export default function AllReviews() {
             } catch (err) {
 
                 console.log(err.message)
-            } 
+            }
         }
 
         fetchData();
@@ -46,7 +46,7 @@ export default function AllReviews() {
 
     useEffect(() => {
         applyFilter(filter)
-    },[filter, searchedReviews])
+    }, [filter, searchedReviews])
 
     const applyFilter = (filter) => {
         let filtered = [...searchedReviews]
@@ -90,6 +90,18 @@ export default function AllReviews() {
         setFilteredReviews(originalReviews)
     }
 
+    const deleteReviewHandler = async (reviewId) => {
+        try {
+            await deleteReview(reviewId);
+
+            setOriginalReviews((prev) => prev.filter((review) => review.id !== reviewId));
+            setSearchedReviews((prev) => prev.filter((review) => review.id !== reviewId));
+            setFilteredReviews((prev) => prev.filter((review) => review.id !== reviewId));
+        } catch (err) {
+            console.error("Failed to delete review:", err);
+        }
+    }
+
 
     return (
         <div className="pb-6">
@@ -127,7 +139,7 @@ export default function AllReviews() {
                                     key={review.id}
                                     className="p-6 mt-6 rounded-lg"
                                 >
-                                    <ReviewComponent review={review} />
+                                    <ReviewComponent review={review} onDelete={deleteReviewHandler} />
                                 </div>
                             ))
                         ) : (
