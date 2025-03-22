@@ -146,6 +146,24 @@ export default function useFirestore() {
         }
     }
 
+    const deleteReview = async (reviewId) => {
+        setDbLoading(true);
+        try {
+            const reviewRef = doc(db, 'reviews', reviewId);
+            const reviewSnapshot = await getDoc(reviewRef);
+            if (reviewSnapshot.exists()) {
+                await deleteDoc(reviewRef); 
+                console.log('Review deleted successfully');
+            } else {
+                console.log('Review does not exist');
+            }
+        } catch (err) {
+            console.error('Failed to delete', err); 
+        } finally {
+            setDbLoading(false); 
+        }
+    };
+
     const getReviewById = async (reviewId) => {
         setDbLoading(true)
         try {
@@ -176,6 +194,7 @@ export default function useFirestore() {
         getLatestReview,
         editReview,
         getReviewById,
+        deleteReview,
         dbLoading
     }
 }
