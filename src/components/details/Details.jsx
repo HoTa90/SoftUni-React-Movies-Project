@@ -149,11 +149,11 @@ export default function Details() {
 
 
 
-                        {/* {isPending ? (
+                        {isPending ? (
                             <Spinner />
                         ) : (
                             <VideoGallery video={video} videos={videos} />
-                        )} */}
+                        )}
 
                         {/* Latest Review Section */}
                         <h2 className="text-md uppercase mt-9 text-start">

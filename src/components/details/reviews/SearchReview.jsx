@@ -48,6 +48,8 @@ export default function SearchReview({ searchTerm, setSearchTerm, filter, setFil
                 <option value="default">Default</option>
                 <option value="rating-asc">Sort by Lower Rating</option>
                 <option value="rating-desc">Sort by Higher Rating</option>
+                <option value="newest">Sort by Newest</option>
+                <option value="oldest">Sort by Oldest</option>
             </select>
 
             <button type="button" className="btn flex items-center mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded" onClick={onClear}>

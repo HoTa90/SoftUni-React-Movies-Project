@@ -53,11 +53,16 @@ export default function AllReviews() {
 
     const applyFilter = (filter) => {
         let filtered = [...searchedReviews]
+        console.log(filtered)
 
         switch (filter) {
             case 'rating-asc': filtered.sort((a, b) => a.rating - b.rating);
                 break;
             case 'rating-desc': filtered.sort((a, b) => b.rating - a.rating);
+                break;
+            case 'newest': filtered.sort((a, b) => b.createdOn.seconds - a.createdOn.seconds)
+                break;
+            case 'oldest': filtered.sort((a, b) => a.createdOn.seconds - b.createdOn.seconds)
                 break;
             default:
                 break;
