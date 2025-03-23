@@ -47,6 +47,7 @@ export default function NavBar() {
               :
               <>
                 <li><Link to={`/${user.username}/watchlist`}>My Watchlist</Link></li>
+                <li><Link to={`/${user.username}/reviews`}>My Reviews</Link></li>
                 <li><Link to={'/'} onClick={logout} >Logout</Link></li>
               </>
             }
