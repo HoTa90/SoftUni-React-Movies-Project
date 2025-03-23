@@ -37,9 +37,6 @@ export default function Details() {
 
     const { getLatestReview, dbLoading, addReview, deleteReview } = useFirestore();
 
-    useEffect(() => {
-        window.scroll(0, 0);
-    }, []);
 
     useEffect(() => {
         setVideo(null);

@@ -1,12 +1,7 @@
 import { Link } from "react-router";
 import { StarIcon } from "@heroicons/react/16/solid";
-import { useEffect } from "react";
 
 export default function SmallHeroCard({ data, type}) {
-    useEffect(() => {
-        window.scroll(0, 0);
-    }, []);
-
 
 
     return (
