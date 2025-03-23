@@ -1,0 +1,69 @@
+import useUserReviews from "../hooks/useUserReviews.jsx";
+import ReviewComponent from "./details/reviews/ReviewComponent.jsx";
+import HeroCard from "./HeroCard.jsx";
+import Spinner from "./loading/Spinner.jsx";
+
+
+export default function UserReviews() {
+
+    const {reviews, deleteReviewHandler, loading, error} = useUserReviews()
+
+
+
+    const groupedReviews = reviews.reduce((acc, review) => {
+        const mediaId = review.detailsData.id; // Unique ID for movie or TV show
+        const type = review.detailsData.type; // 'movie' or 'tv'
+        if (!acc[mediaId]) {
+            acc[mediaId] = {
+                media: review.detailsData, // Store movie or TV show details
+                type: type, // Store the type ('movie' or 'tv')
+                reviews: [],
+            };
+        }
+        acc[mediaId].reviews.push(review);
+        return acc;
+    }, {});
+
+    return (
+        <section className="px-28 py-15">
+            <h2 className="text-white text-2xl font-bold mb-8">My Reviews</h2>
+            {loading ? (
+                <Spinner />
+            ) : error ? (
+                <p className="text-red-500">{error}</p>
+            ) : reviews.length > 0 ? (
+                <div>
+                    {Object.values(groupedReviews).map((group) => (
+                        <div key={group.media.id} className="flex mb-8">
+                            {/* Media Card on the Left */}
+                            <div className="w-64 pr-8"> {/* Adjust width and height here */}
+                                <HeroCard
+                                    data={group.media}
+                                    type={group.type}
+                                    className="h-96" // Adjust height of HeroCard
+                                />
+                            </div>
+
+                            {/* Reviews with Horizontal Scroll on the Right */}
+                            <div className="w-3/4 overflow-x-auto">
+                                <div className="flex space-x-10">
+                                    {group.reviews.map((review) => (
+                                        <div key={review.id} className="flex-shrink-0 w-96"> {/* Fixed width for reviews */}
+                                            <ReviewComponent
+                                                review={review}
+                                                onDelete={deleteReviewHandler}
+                                                isUserReviews={true} // Pass this prop to conditionally apply styles
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <h3 className="text-gray-400 text-lg italic mb-8">You haven't created any reviews yet!</h3>
+            )}
+        </section>
+    );
+}
