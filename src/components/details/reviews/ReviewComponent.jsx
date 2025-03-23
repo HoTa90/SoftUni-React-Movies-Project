@@ -31,7 +31,7 @@ export default function ReviewComponent({ review, onDelete, isUserReviews }) {
     return (
         <div
             className={`p-5 rounded-2xl bg-[#2c2c2c] shadow-lg text-white ${
-                isUserReviews ? "w-96 h-96 flex flex-col" : "max-w-[600px] mx-auto"
+                isUserReviews ? "w-97 h-97 flex flex-col" : "max-w-[600px] mx-auto"
             }`} 
         >
             <div className="flex justify-between items-center mb-4">

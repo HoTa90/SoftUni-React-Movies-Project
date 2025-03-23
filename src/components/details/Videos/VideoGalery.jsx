@@ -30,7 +30,7 @@ export default function VideoGallery({ video, videos, loading }) {
           {videos.map((v) => (
             <div
               key={v?.id}
-              className="min-w-[290px] cursor-pointer"
+              className="min-w-[290px] max-w-[290px] cursor-pointer"
               onClick={() => changeSelectedVideo(v?.key)}
             >
               <Video id={v?.key} small />

@@ -1,7 +1,7 @@
 import { MinusCircleIcon, StarIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
 
-export default function HeroCard({ data, type, onRemove, isWatchlist }) {
+export default function HeroCard({ data, type, onRemove, isWatchlist, isUserReviews }) {
     const isPerson = type === "person";
 
     return (
@@ -26,7 +26,10 @@ export default function HeroCard({ data, type, onRemove, isWatchlist }) {
                         ? `https://image.tmdb.org/t/p/w500/${data.poster_path || data.profile_path}`
                         : "/no-poster.png"}
                     alt={data.title || data.name}
-                    className="rounded-lg w-full max-w-auto min-h-[102px] object-cover mx-auto"
+                    className={
+                        isUserReviews ? 'rounded-lg w-full max-w-auto max-h-[400px] object-cover mx-auto' 
+                          : 'rounded-lg w-full max-w-auto min-h-[400px] max-h-[400px] object-cover mx-auto'
+                      }
                 />
                 <div className="mt-5">
                     <h3 className="text-white font-bold text-lg truncate">{data.title || data.name}</h3>

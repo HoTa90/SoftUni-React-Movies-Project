@@ -39,6 +39,7 @@ export default function UserReviews() {
                                 <HeroCard
                                     data={group.media}
                                     type={group.type}
+                                    isUserReviews={true}
 
                                 />
                             </div>
