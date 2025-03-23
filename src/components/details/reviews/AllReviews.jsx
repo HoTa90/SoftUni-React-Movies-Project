@@ -40,8 +40,11 @@ export default function AllReviews() {
                 console.log(err.message)
             }
         }
+        if (type && id) {
+            fetchData();
+        }
 
-        fetchData();
+
     }, [type, id])
 
     useEffect(() => {
@@ -106,10 +109,11 @@ export default function AllReviews() {
     return (
         <div className="pb-6">
 
-            {dbLoading ? <Spinner />
+            {dbLoading || !details ? <Spinner />
                 :
                 <>
                     <DetailsHeaderCard details={details} type={type} />
+
                     <div className="container mx-auto pb-10">
                         <div className="flex items-center justify-center mt-10">
 
