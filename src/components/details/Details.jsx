@@ -81,9 +81,9 @@ export default function Details() {
     }, [type, id]);
 
     const deleteReviewHandler = async (reviewID) => {
-            await deleteReview(reviewID)
-            const newestReview = await getLatestReview(id)
-            setLatestReview(newestReview)
+        await deleteReview(reviewID)
+        const newestReview = await getLatestReview(id)
+        setLatestReview(newestReview)
 
     }
 
