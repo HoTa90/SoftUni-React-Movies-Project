@@ -103,6 +103,27 @@ export default function useFirestore() {
 
     }
 
+    const getUserReviews = async (userId) => {
+        setDbLoading(true)
+        try {
+            const reviewsRef = collection(db, 'reviews');
+            const reviewsSnapshot = await getDocs(query(reviewsRef, where('ownerId', '==', userId.toString())));
+
+            const reviews = reviewsSnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            return reviews
+        } catch (err) {
+            console.log('Failed fetching reviews', err.message)
+            return null
+        } finally {
+            setDbLoading(false)
+        }
+
+    }
+
     const getLatestReview = async (movieId) => {
         setDbLoading(true)
         try {
@@ -195,6 +216,7 @@ export default function useFirestore() {
         editReview,
         getReviewById,
         deleteReview,
+        getUserReviews,
         dbLoading
     }
 }
