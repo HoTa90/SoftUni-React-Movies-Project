@@ -31,7 +31,7 @@ export default function UserReviews() {
                 <div>
                     {Object.values(groupedReviews).map((group) => (
                         <div key={group.media.id} className="flex mb-8">
-                            <div className="w-64 pr-8 flex-shrink-0">
+                            <div className="w-64 pr-8 mr-5 flex-shrink-0">
                                 <HeroCard
                                     data={group.media}
                                     type={group.type}
@@ -40,7 +40,7 @@ export default function UserReviews() {
                             </div>
 
                             <div className="flex-1 overflow-x-auto">
-                                <div className="flex space-x-8 pl-8"> 
+                                <div className="flex space-x-8"> 
                                     {group.reviews.map((review) => (
                                         <div key={review.id} className="flex-shrink-0 w-96">
                                             <ReviewComponent
