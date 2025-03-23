@@ -41,7 +41,7 @@ export default function SearchReview({ searchTerm, setSearchTerm, filter, setFil
 
             {/* Filter Dropdown */}
             <select
-                className="input bg-[#2c2c2c] max-w-40 rounded-lg px-3 py-2 cursor-pointer focus:ring-2 focus:ring-gray-500 text-white"
+                className="select bg-[#2c2c2c] max-w-45 rounded-lg px-3 py-2 cursor-pointer text-white"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
             >
