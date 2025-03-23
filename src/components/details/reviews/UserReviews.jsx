@@ -3,12 +3,8 @@ import ReviewComponent from "./ReviewComponent.jsx";
 import HeroCard from "../../HeroCard.jsx";
 import Spinner from "../../loading/Spinner.jsx";
 
-
 export default function UserReviews() {
-
-    const { reviews, deleteReviewHandler, loading, error } = useUserReviews()
-
-
+    const { reviews, deleteReviewHandler, loading, error } = useUserReviews();
 
     const groupedReviews = reviews.reduce((acc, review) => {
         const mediaId = review.detailsData.id; // Unique ID for movie or TV show
@@ -25,7 +21,7 @@ export default function UserReviews() {
     }, {});
 
     return (
-        <section className="px-28 py-15">
+        <section className="px-20 py-15">
             <h2 className="text-white text-2xl font-bold mb-8">My Reviews</h2>
             {loading ? (
                 <Spinner />
@@ -35,23 +31,22 @@ export default function UserReviews() {
                 <div>
                     {Object.values(groupedReviews).map((group) => (
                         <div key={group.media.id} className="flex mb-8">
-                            <div className="w-64 pr-8 flex-shrink-0"> 
+                            <div className="w-64 pr-8 flex-shrink-0">
                                 <HeroCard
                                     data={group.media}
                                     type={group.type}
                                     isUserReviews={true}
-
                                 />
                             </div>
 
-                            <div className="w-3/4 overflow-x-auto">
-                                <div className="flex space-x-10">
+                            <div className="flex-1 overflow-x-auto">
+                                <div className="flex space-x-8 pl-8"> 
                                     {group.reviews.map((review) => (
-                                        <div key={review.id} className="flex-shrink-0 w-96"> 
+                                        <div key={review.id} className="flex-shrink-0 w-96">
                                             <ReviewComponent
                                                 review={review}
                                                 onDelete={deleteReviewHandler}
-                                                isUserReviews={true} 
+                                                isUserReviews={true}
                                             />
                                         </div>
                                     ))}
