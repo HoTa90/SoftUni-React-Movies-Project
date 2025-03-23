@@ -13,6 +13,8 @@ import LoginPage from './components/home/LoginPage.jsx'
 import WatchList from './components/Watchlist.jsx'
 import EditReview from './components/details/reviews/EditReview.jsx'
 import AllReviews from './components/details/reviews/AllReviews.jsx'
+import UserReviews from './components/UserReviews.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
     <AuthProvider>
       <NavBar />
       <main className="bg-[#05011d] min-h-screen ">
+        <ScrollToTop />
         <Routes>
           <Route index element={<Home />} />
           <Route path='/:type/:id' element={<Details />} />
@@ -31,6 +34,7 @@ function App() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/:username/watchlist' element={<WatchList />} />
+          <Route path='/:username/reviews' element={<UserReviews />} />
         </Routes>
       </main>
       <Footer />
