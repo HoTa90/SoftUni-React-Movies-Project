@@ -13,7 +13,7 @@ import LoginPage from './components/home/LoginPage.jsx'
 import WatchList from './components/Watchlist.jsx'
 import EditReview from './components/details/reviews/EditReview.jsx'
 import AllReviews from './components/details/reviews/AllReviews.jsx'
-import UserReviews from './components/UserReviews.jsx'
+import UserReviews from './components/details/reviews/UserReviews.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 
 function App() {

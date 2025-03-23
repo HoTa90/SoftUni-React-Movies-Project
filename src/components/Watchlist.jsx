@@ -3,7 +3,6 @@ import useFirestore from "../services/firestore.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import HeroCard from "./HeroCard.jsx";
 import Spinner from "./loading/Spinner.jsx";
-import { MinusCircleIcon } from "@heroicons/react/16/solid";
 
 export default function WatchList() {
     const { user } = useAuth()

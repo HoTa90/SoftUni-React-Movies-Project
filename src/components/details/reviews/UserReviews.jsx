@@ -1,12 +1,12 @@
-import useUserReviews from "../hooks/useUserReviews.jsx";
-import ReviewComponent from "./details/reviews/ReviewComponent.jsx";
-import HeroCard from "./HeroCard.jsx";
-import Spinner from "./loading/Spinner.jsx";
+import useUserReviews from "../../../hooks/useUserReviews.js";
+import ReviewComponent from "./ReviewComponent.jsx";
+import HeroCard from "../../HeroCard.jsx";
+import Spinner from "../../loading/Spinner.jsx";
 
 
 export default function UserReviews() {
 
-    const {reviews, deleteReviewHandler, loading, error} = useUserReviews()
+    const { reviews, deleteReviewHandler, loading, error } = useUserReviews()
 
 
 
@@ -35,24 +35,22 @@ export default function UserReviews() {
                 <div>
                     {Object.values(groupedReviews).map((group) => (
                         <div key={group.media.id} className="flex mb-8">
-                            {/* Media Card on the Left */}
-                            <div className="w-64 pr-8"> {/* Adjust width and height here */}
+                            <div className="w-64 pr-8 flex-shrink-0"> 
                                 <HeroCard
                                     data={group.media}
                                     type={group.type}
-                                    className="h-96" // Adjust height of HeroCard
+
                                 />
                             </div>
 
-                            {/* Reviews with Horizontal Scroll on the Right */}
                             <div className="w-3/4 overflow-x-auto">
                                 <div className="flex space-x-10">
                                     {group.reviews.map((review) => (
-                                        <div key={review.id} className="flex-shrink-0 w-96"> {/* Fixed width for reviews */}
+                                        <div key={review.id} className="flex-shrink-0 w-96"> 
                                             <ReviewComponent
                                                 review={review}
                                                 onDelete={deleteReviewHandler}
-                                                isUserReviews={true} // Pass this prop to conditionally apply styles
+                                                isUserReviews={true} 
                                             />
                                         </div>
                                     ))}
