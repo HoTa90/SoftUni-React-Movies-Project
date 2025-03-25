@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Navigate } from "react-router";
 import useFirestore from "../../../services/firestore.js";
 import ReviewForm from "./ReviewForm.jsx";
 import Spinner from "../../loading/Spinner.jsx";
 import DetailsHeaderCard from "../DetailsHeaderCard.jsx";
+import { useAuth } from "../../../context/AuthContext.jsx";
 
 export default function EditReview() {
     const { reviewId, type } = useParams();
+    const {user} = useAuth();
     const navigate = useNavigate();
     const { getReviewById, editReview, dbLoading } = useFirestore();
     const [review, setReview] = useState(null);
@@ -31,6 +33,14 @@ export default function EditReview() {
 
     if (!review) {
         return <Spinner />
+    }
+
+    const isOwner = user.uid === review.ownerId;
+    console.log(user.uid)
+    console.log(review.ownerId)
+
+    if (!isOwner){
+        return <Navigate to='/' />
     }
 
     return (
