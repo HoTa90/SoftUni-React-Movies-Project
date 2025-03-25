@@ -64,10 +64,10 @@ export const AuthProvider = ({ children }) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const loggedInUser = userCredential.user;
-
+    
             const userDocRef = doc(db, "users", loggedInUser.uid);
             const userDoc = await getDoc(userDocRef);
-
+    
             if (userDoc.exists()) {
                 setUser(userDoc.data());
             } else {
@@ -77,8 +77,8 @@ export const AuthProvider = ({ children }) => {
                     username: loggedInUser.displayName
                 });
             }
-
             return loggedInUser;
+        
         } finally {
             setIsLoading(false); 
         }

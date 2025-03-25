@@ -1,18 +1,26 @@
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate } from "react-router";
 import { useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function RegisterPage() {
-  const { register } = useAuth();
-  const navigate = useNavigate();
+  const { register, user, isLoading: authLoading } = useAuth();
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
+  if (authLoading && !isSubmitting) {
+    return <Spinner />
+}
+
+if (user) {
+    return <Navigate to={'/'} />;
+}
 
   const registerHandler = async (event) => {
     event.preventDefault();
     setError(null);
-    setIsLoading(true);
+    setIsSubmitting(true);
 
     const formData = new FormData(event.target);
     const { email, password, username, rePass } = Object.fromEntries(formData);
@@ -26,7 +34,6 @@ export default function RegisterPage() {
 
       await register(email, password, username);
       event.target.reset()
-      navigate("/");
     } catch (err) {
       event.target.reset()
       if (err.code === 'auth/email-already-in-use') {
@@ -35,7 +42,7 @@ export default function RegisterPage() {
         setError(err.message);
       }
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
 
     }
   };
@@ -107,11 +114,11 @@ export default function RegisterPage() {
                 </Link>
               </p>
               {error && <p className="text-red-500">{error}</p>}
-              {isLoading && <Spinner />}
+              {isSubmitting && <Spinner />}
             </div>
 
-            <button type="submit" className="btn w-full mt-6" disabled={isLoading}>
-              {isLoading ? "Registering..." : "Register"}
+            <button type="submit" className="btn w-full mt-6" disabled={isSubmitting}>
+              {isSubmitting ? "Registering..." : "Register"}
             </button>
           </div>
         </fieldset>

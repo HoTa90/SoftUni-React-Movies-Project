@@ -1,30 +1,35 @@
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate } from "react-router";
 import { useState } from "react";
 import Spinner from "../loading/Spinner.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 
 export default function LoginPage() {
-    const { login } = useAuth()
-    const navigate = useNavigate()
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const { login, user, isLoading: authLoading } = useAuth();
+    const [error, setError] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
+    if (authLoading && !isSubmitting) {
+        return <Spinner />
+    }
+
+    if (user) {
+        return <Navigate to={'/'} />;
+    }
 
     const loginHandler = async (event) => {
 
         event.preventDefault();
         setError(null);
-        setIsLoading(true);
+        setIsSubmitting(true);
 
         const formData = new FormData(event.target);
         const { email, password } = Object.fromEntries(formData);
         try {
             await login(email, password);
 
-            navigate("/");
         } catch (err) {
-                console.log(err.code)
+            console.log(err.code)
             if (err.code === 'auth/invalid-credential') {
                 setError('Invalid email or password.');
             } else {
@@ -32,7 +37,7 @@ export default function LoginPage() {
             }
         } finally {
             event.target.reset()
-            setIsLoading(false);
+            setIsSubmitting(false);
 
         }
     };
@@ -78,16 +83,16 @@ export default function LoginPage() {
                         <div className="text-center m-auto">
                             <p className="text-sm text-gray-300">
                                 Don't have an account?{" "}
-                                <Link to="/login" className="text-blue-500 hover:underline">
+                                <Link to="/register" className="text-blue-500 hover:underline">
                                     Register here
                                 </Link>
                             </p>
                             {error && <p className="text-red-500">{error}</p>}
-                            {isLoading && <Spinner />}
+                            {isSubmitting && <Spinner />}
                         </div>
 
-                        <button type="submit" className="btn w-full mt-6" disabled={isLoading}>
-                            {isLoading ? "Loggin in..." : "Login"}
+                        <button type="submit" className="btn w-full mt-6" disabled={isSubmitting}>
+                            {isSubmitting ? "Loggin in..." : "Login"}
                         </button>
                     </div>
                 </fieldset>
