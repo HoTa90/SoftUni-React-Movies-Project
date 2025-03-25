@@ -3,7 +3,8 @@ import styles from './NotFound.module.css';
 
 export default function NotFound() {
     return (
-        <div className={styles.container}>
+        <div className={styles.container}
+        style={{ backgroundImage: "url('/notFound.jpg')" }}>
 
             <div className={styles.overlay}></div>
             <div className={styles.content}>
