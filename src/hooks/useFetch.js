@@ -27,15 +27,19 @@ export const useFetch = () => {
             });
 
             if (!res.ok) {
-                throw new Error(`Request failed: ${res.status}`);
-            }
+                const errorData = await res.json().catch(() => ({}));
+                if (res.status === 404 || errorData.status_code === 34) {
+                  throw new Error('NOT_FOUND');
+                }
+                throw new Error(errorData.status_message || `Request failed: ${res.status}`);
+              }
 
             const result = await res.json();
             return result.results || result;
         } catch (err) {
             if (err.name !== "AbortError") {
                 setError(err.message);
-                console.error(err.message);
+                throw err
             }
         } finally {
             ongoingFetches.current -= 1;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useNavigate, useParams } from "react-router";
 import Spinner from "../loading/Spinner.jsx";
 import VideoGallery from "./Videos/VideoGalery.jsx";
 import SmallHeroCard from "./SmallHeroCard.jsx";
@@ -11,14 +11,15 @@ import useFirestore from "../../services/firestore.js";
 import CreateReview from "./reviews/CreateReview.jsx";
 import Skeleton from "../loading/Skeleton.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { isValidType } from "../../utils/helper.js";
 
 export default function Details() {
     const { type, id } = useParams();
     const { user } = useAuth()
+    const navigate = useNavigate()
 
     const {
         isPending,
-        error,
         getDetails,
         getPersonImages,
         getPersonCredits,
@@ -43,6 +44,7 @@ export default function Details() {
         const fetchData = async () => {
             try {
                 const detailsData = await getDetails(type, id);
+
                 setDetails(detailsData);
 
 
@@ -54,7 +56,7 @@ export default function Details() {
                     setProfiles(profilesData.profiles);
                 }
 
-                if (type !== "person") {
+                if (type === "movie" || type === 'tv') {
                     const [videosData, similarData, creditsData, reviewData] = await Promise.all([
                         getVideos(type, id),
                         getSimilar(type, id),
@@ -68,17 +70,20 @@ export default function Details() {
 
                     const video = videosData?.find((video) => video?.type === "Trailer");
                     setVideo(video);
+                    console.log(video)
 
                     const videos = videosData?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
                     setVideos(videos);
                 }
             } catch (error) {
-                console.log(error, "error");
+                if (error.message === 'NOT_FOUND') {
+                    navigate('/404', { replace: true });
+                }
             }
         };
 
         fetchData();
-    }, [type, id]);
+    }, [type, id, navigate]);
 
     const deleteReviewHandler = async (reviewID) => {
         await deleteReview(reviewID)
@@ -87,13 +92,19 @@ export default function Details() {
 
     }
 
+    if (!isValidType(type)) {
+        return <Navigate to={'/404'} replace />
+    }
+
+
     if (isPending) {
         return <Spinner />;
     }
 
-    console.log(dbLoading)
 
     if (!type || !id) return <Spinner />;
+
+
 
     return (
         <div>
@@ -149,16 +160,13 @@ export default function Details() {
 
 
 
-                        {isPending ? (
-                            <Spinner />
-                        ) : (
-                            <VideoGallery video={video} videos={videos} />
-                        )}
+                        <VideoGallery video={video} videos={videos} loading={isPending} />
+
 
                         {/* Latest Review Section */}
                         <h2 className="text-md uppercase mt-9 text-start">
                             Latest Review{" "}
-                            <div className="tooltip tooltip-warning normal-case" data-tip={`Go to all ${details.name || details.title} Reviews`}>
+                            <div className="tooltip tooltip-warning normal-case" data-tip={`Go to all ${details?.name || details?.title} Reviews`}>
                                 <Link className="hover:text-gray-400 transition text-4xl" to="reviews">
                                     {">"}
                                 </Link>

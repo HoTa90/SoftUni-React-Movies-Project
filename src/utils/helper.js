@@ -21,17 +21,17 @@ export const resolveRatingColor = (rating) => {
 
 export const formattedDate = (date) => {
   if (date?.toDate) {
-      date = date.toDate(); 
+    date = date.toDate();
   }
 
   if (!(date instanceof Date) || isNaN(date)) {
-      return "Invalid Date";
+    return "Invalid Date";
   }
 
   return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 };
 
@@ -68,4 +68,10 @@ export const getGenreName = (id) => {
 
   const { name } = genres.find(genre => genre.id === id)
   return name
+}
+
+export const isValidType = (type) => {
+  const validTypes = ['movie', 'tv', 'person']
+
+  return validTypes.includes(type)
 }
