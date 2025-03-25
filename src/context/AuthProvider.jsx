@@ -79,7 +79,11 @@ export const AuthProvider = ({ children }) => {
             }
             return loggedInUser;
         
-        } finally {
+        } catch (err){
+            console.error("Loggin failed:", err.message);
+            throw err;
+        } 
+        finally {
             setIsLoading(false); 
         }
     };
