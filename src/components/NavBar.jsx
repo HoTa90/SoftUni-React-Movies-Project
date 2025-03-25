@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 export default function NavBar() {
 
   const { user, logout } = useAuth();
-  console.log(user)
+
 
   return (
     <div className="navbar shadow-sm bg-[#2c2c2c]">

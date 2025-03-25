@@ -15,6 +15,7 @@ import EditReview from './components/details/reviews/EditReview.jsx'
 import AllReviews from './components/details/reviews/AllReviews.jsx'
 import UserReviews from './components/details/reviews/UserReviews.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
+import AuthGuard from './guards/AuthGuard.jsx'
 
 function App() {
 
@@ -26,15 +27,19 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path='/:type/:id' element={<Details />} />
-          <Route path='/:type/:id/edit/:reviewId' element={<EditReview />} />
           <Route path='/:type/:id/reviews' element={<AllReviews />} />
+          <Route element={<AuthGuard />}>
+            <Route path='/:username/watchlist' element={<WatchList />} />
+            <Route path='/:username/reviews' element={<UserReviews />} />
+            <Route path='/:type/:id/edit/:reviewId' element={<EditReview />} />
+          </Route>
           <Route path='/movies' element={<AllMovies />} />
           <Route path='/series' element={<AllSeries />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/:username/watchlist' element={<WatchList />} />
-          <Route path='/:username/reviews' element={<UserReviews />} />
+          <Route path='/404' element={<NotFound />} />
+
         </Routes>
       </main>
       <Footer />

@@ -1,29 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Video from "./Video.jsx";
-import Spinner from "../../loading/Spinner.jsx";
 
-export default function VideoGallery({ video, videos, loading }) {
-  const [selectedVideoKey, setSelectedVideoKey] = useState(video?.key);
+export default function VideoGallery({ video, videos }) {
+  const [selectedVideoKey, setSelectedVideoKey] = useState(null);
+
+
+  useEffect(() => {
+
+    if (video?.key) {
+      setSelectedVideoKey(video.key);
+
+    }
+  }, [video?.key]);
+
   const changeSelectedVideo = (key) => {
     setSelectedVideoKey(key);
   };
-
-  if (loading) {
-    return <Spinner />;
-  }
 
 
   return (
     <div>
       <h2 className="text-md uppercase mt-10 mb-5">Videos</h2>
 
-
       {selectedVideoKey ? (
         <Video id={selectedVideoKey} />
       ) : (
         <p className="text-l text-gray-300 mt-3">No trailer available</p>
       )}
-
 
       {videos?.length > 0 ? (
         <div className="flex mt-5 mb-10 overflow-x-scroll gap-5">
