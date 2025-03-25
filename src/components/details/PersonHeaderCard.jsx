@@ -20,7 +20,7 @@ export default function PersonHeaderCard({ details, profiles }) {
                 <div className="flex flex-col md:flex-row items-center gap-10">
                     <img
                         className="h-[450px] rounded-sm shadow-lg shadow-gray-500/50"
-                        src={`${imagePath}/${profileImage}`}
+                        src={profileImage ? `${imagePath}/${profileImage}` : '/no-poster.png'}
                         alt={details?.name}
                     />
                     <div className="flex-1">
