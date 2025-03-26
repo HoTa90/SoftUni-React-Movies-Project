@@ -173,15 +173,15 @@ export default function useFirestore() {
             const reviewRef = doc(db, 'reviews', reviewId);
             const reviewSnapshot = await getDoc(reviewRef);
             if (reviewSnapshot.exists()) {
-                await deleteDoc(reviewRef); 
+                await deleteDoc(reviewRef);
                 console.log('Review deleted successfully');
             } else {
                 console.log('Review does not exist');
             }
         } catch (err) {
-            console.error('Failed to delete', err); 
+            console.error('Failed to delete', err);
         } finally {
-            setDbLoading(false); 
+            setDbLoading(false);
         }
     };
 
@@ -195,11 +195,11 @@ export default function useFirestore() {
                 return { id: reviewSnapshot.id, ...reviewSnapshot.data() };
             } else {
                 console.log("No such review found!");
-                return null;
+                throw new Error("No such review found!")
             }
         } catch (err) {
             console.error("Error fetching review:", err.message);
-            return null;
+            throw err
         } finally {
             setDbLoading(false)
         }

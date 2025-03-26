@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Navigate } from "react-router";
+import { useParams, useNavigate, Navigate, replace } from "react-router";
 import useFirestore from "../../../services/firestore.js";
 import ReviewForm from "./ReviewForm.jsx";
 import Spinner from "../../loading/Spinner.jsx";
 import DetailsHeaderCard from "../DetailsHeaderCard.jsx";
 import { useAuth } from "../../../context/AuthContext.jsx";
+import { isValidType } from "../../../utils/helper.js";
 
 export default function EditReview() {
     const { reviewId, type } = useParams();
-    const {user} = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const { getReviewById, editReview, dbLoading } = useFirestore();
     const [review, setReview] = useState(null);
@@ -16,9 +17,18 @@ export default function EditReview() {
 
     useEffect(() => {
         const fetchReview = async () => {
-            const reviewData = await getReviewById(reviewId);
-            setReview(reviewData);
-            setDetails(reviewData.detailsData)
+            try {
+
+                const reviewData = await getReviewById(reviewId);
+                setReview(reviewData);
+                setDetails(reviewData.detailsData)
+            }
+            catch (err) {
+                console.log(err.message)
+                if (err.message === 'No such review found!') {
+                    navigate('404', { replace: true })
+                }
+            }
         };
         fetchReview();
     }, [reviewId]);
@@ -36,11 +46,13 @@ export default function EditReview() {
     }
 
     const isOwner = user.uid === review.ownerId;
-    console.log(user.uid)
-    console.log(review.ownerId)
 
-    if (!isOwner){
+    if (!isOwner) {
         return <Navigate to='/' />
+    }
+
+    if (!isValidType(type)) {
+        return <Navigate to={'/404'} replace />
     }
 
     return (
