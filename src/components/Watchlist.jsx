@@ -3,24 +3,29 @@ import useFirestore from "../services/firestore.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import HeroCard from "./HeroCard.jsx";
 import Spinner from "./loading/Spinner.jsx";
+import { useNavigate, useParams } from "react-router";
 
 export default function WatchList() {
     const { user } = useAuth()
+    const { username } = useParams()
     const [watchlist, setWatchlist] = useState([])
     const { getWatchlist, removeFromWatchlist } = useFirestore()
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        if (user) {
+        if (user.username === username) {
             setError(null)
             setIsPending(true)
             getWatchlist(user.uid)
                 .then(setWatchlist)
                 .catch((err) => setError(err.message))
                 .finally(() => setIsPending(false))
+        } else {
+            navigate('/404', { replace: true })
         }
-    }, [user])
+    }, [user, navigate, username])
 
     const removeFromWatchListHandler = async (id) => {
         try {

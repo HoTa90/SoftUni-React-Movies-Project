@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import useFirestore from "../services/firestore.js";
+import { useNavigate, useParams } from "react-router";
 
 
 export default function useUserReviews() {
     const { user } = useAuth();
+    const { username } = useParams();
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { getUserReviews, deleteReview } = useFirestore();
 
+    const navigate = useNavigate()
+
     useEffect(() => {
-        if (user) {
+        if (user.username === username) {
             setLoading(true);
             setError(null);
             getUserReviews(user.uid)
                 .then(setReviews)
                 .catch((err) => setError(err.message))
                 .finally(() => setLoading(false));
+        } else {
+            navigate('/404', { replace: true })
         }
-    }, [user]);
+    }, [user, navigate, username]);
 
     const deleteReviewHandler = async (reviewID) => {
         try {
@@ -28,7 +34,7 @@ export default function useUserReviews() {
             setReviews((prevReviews) => prevReviews.filter((review) => review.id !== reviewID));
         } catch (err) {
             console.error("Error deleting review:", err);
-        } finally{
+        } finally {
             setLoading(false)
         }
     };

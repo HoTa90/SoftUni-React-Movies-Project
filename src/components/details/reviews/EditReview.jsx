@@ -26,7 +26,7 @@ export default function EditReview() {
             catch (err) {
                 console.log(err.message)
                 if (err.message === 'No such review found!') {
-                    navigate('404', { replace: true })
+                    navigate('/404', { replace: true })
                 }
             }
         };
