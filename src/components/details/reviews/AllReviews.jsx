@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
 import { useFetch } from "../../../hooks/useFetch.js";
 import useFirestore from "../../../services/firestore.js";
 import Spinner from "../../loading/Spinner.jsx";
@@ -18,6 +18,7 @@ export default function AllReviews() {
     const [details, setDetails] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [filter, setFilter] = useState("default");
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -36,8 +37,10 @@ export default function AllReviews() {
                 setFilteredReviews(originalReviews)
 
             } catch (err) {
-
-                console.log(err.message)
+                console.log('Errror is .. :', err.message)
+                if (err.message === 'NOT_FOUND') {
+                    navigate('/404', { replace: true });
+                }
             }
         }
         if (type && id) {
@@ -47,11 +50,7 @@ export default function AllReviews() {
 
     }, [type, id])
 
-    useEffect(() => {
-        applyFilter(filter)
-    }, [filter, searchedReviews])
-
-    const applyFilter = (filter) => {
+    const applyFilter =useCallback((filter) => {
         let filtered = [...searchedReviews]
         console.log(filtered)
 
@@ -70,7 +69,13 @@ export default function AllReviews() {
 
         setFilteredReviews(filtered)
 
-    }
+    },[searchedReviews])
+
+    useEffect(() => {
+        applyFilter(filter)
+    }, [filter, searchedReviews, applyFilter])
+
+   
 
 
     const handleSearch = (term) => {
