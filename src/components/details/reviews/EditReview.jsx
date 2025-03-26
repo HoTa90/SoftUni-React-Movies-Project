@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Navigate, replace } from "react-router";
+import { useParams, useNavigate, Navigate } from "react-router";
 import useFirestore from "../../../services/firestore.js";
 import ReviewForm from "./ReviewForm.jsx";
 import Spinner from "../../loading/Spinner.jsx";
@@ -31,7 +31,7 @@ export default function EditReview() {
             }
         };
         fetchReview();
-    }, [reviewId]);
+    }, [reviewId, navigate]);
 
     const submitHandler = async (formData) => {
         await editReview(reviewId, {

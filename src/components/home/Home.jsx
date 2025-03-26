@@ -1,50 +1,59 @@
 import React, { useEffect, useState } from "react";
 import HeaderSection from "./HeaderSection.jsx";
 import PopularSection from "./PopularSection.jsx";
-import Skeleton from "../loading/Skeleton.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
 import HomeSkeleton from "../loading/HomeSkeleton.jsx";
 
 export default function Home() {
     const [headerMovie, setHeaderMovie] = useState({});
-    const { getTrending, getDetails, isPending, error } = useFetch()
-    const [movieList, setMovieList] = useState([]);
+    const [trendingMovies, setTrendingMovies] = useState([]);
+    const [trendingTV, setTrendingTV] = useState([]);
+    const [trendingPeople, setTrendingPeople] = useState([]);
+    const { getTrending, getDetails, isPending, error } = useFetch();
 
     useEffect(() => {
-        const fetchData = async () => {
-            const movies = await getTrending('movie');
-            setMovieList(movies);
-        }
+        const fetchAllTrendingData = async () => {
+            try {
+                const [movies, tvShows, people] = await Promise.all([
+                    getTrending('movie'),
+                    getTrending('tv'),
+                    getTrending('person')
+                ]);
 
-        fetchData()
-    },[])
+                setTrendingMovies(movies);
+                setTrendingTV(tvShows);
+                setTrendingPeople(people);
 
-    useEffect(() => {
-        if (movieList?.length > 0) {
-            const fetchHeaderMovie = async () => {
-                const headerMovieDetails = await getDetails("movie", movieList[0]?.id);
-                setHeaderMovie(headerMovieDetails);
-            };
-            fetchHeaderMovie();
-        }
-    }, [movieList]);
+                if (movies?.length > 0) {
+                    const headerMovieDetails = await getDetails("movie", movies[0]?.id);
+                    setHeaderMovie(headerMovieDetails);
+                }
+            } catch (err) {
+                console.error("Error fetching trending data:", err);
+            }
+        };
 
-   
+        fetchAllTrendingData();
+    }, [getTrending, getDetails]);
+
+
 
     return (
         <>
-            {isPending ?  (<HomeSkeleton/>)
-            :
-            <>
-            <HeaderSection movie={headerMovie} />
-            <PopularSection
-                movieList={movieList}
-                errorMessage={error}
-                isLoading={isPending}
-                />
+            {isPending ? (<HomeSkeleton />)
+                :
+                <>
+                    <HeaderSection movie={headerMovie} />
+                    <PopularSection
+                        trendingMovies={trendingMovies}
+                        trendingTV={trendingTV}
+                        trendingPeople={trendingPeople}
+                        errorMessage={error}
+                        isLoading={isPending}
+                    />
                 </>
             }
-                   
+
         </>
     );
 }
