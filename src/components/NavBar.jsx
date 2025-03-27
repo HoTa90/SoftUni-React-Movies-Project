@@ -38,7 +38,7 @@ export default function NavBar() {
             <UserIcon className="w-6 h-6 text-gray-300" />
             <span className="text-xl">{user ? `${user.username}` : 'Profile'}</span>
           </div>
-          <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+          <ul tabIndex={0} className="dropdown-content menu bg-[#1d1d1d] rounded-box z-1 w-52 p-2 shadow-sm">
             {!user ?
               <>
                 <li><Link to={'/login'}>Login</Link></li>

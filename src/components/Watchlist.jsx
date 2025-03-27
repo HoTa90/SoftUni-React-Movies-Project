@@ -43,7 +43,7 @@ export default function WatchList() {
 
 
     return (
-        <section className="px-28 py-15">
+        <section className="px-20 py-15">
 
             <h2 className="text-white text-2xl font-bold mb-8">My Watchlist</h2>
             {isPending ? (
