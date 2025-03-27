@@ -5,7 +5,7 @@ import { useFetch } from "../../hooks/useFetch.js";
 import HomeSkeleton from "../loading/HomeSkeleton.jsx";
 
 export default function Home() {
-    const [headerMovie, setHeaderMovie] = useState({});
+    const [headerMovies, setHeaderMovies] = useState([]);
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [trendingTV, setTrendingTV] = useState([]);
     const [trendingPeople, setTrendingPeople] = useState([]);
@@ -25,8 +25,11 @@ export default function Home() {
                 setTrendingPeople(people);
 
                 if (movies?.length > 0) {
-                    const headerMovieDetails = await getDetails("movie", movies[0]?.id);
-                    setHeaderMovie(headerMovieDetails);
+                    const headerMoviesData = movies.slice(0,10);
+                    const moviesDetails = await Promise.all(
+                        headerMoviesData.map(movie => getDetails('movie', movie?.id))
+                    )
+                    setHeaderMovies(moviesDetails)
                 }
             } catch (err) {
                 console.error("Error fetching trending data:", err);
@@ -43,7 +46,7 @@ export default function Home() {
             {isPending ? (<HomeSkeleton />)
                 :
                 <>
-                    <HeaderSection movie={headerMovie} />
+                    <HeaderSection movies={headerMovies} />
                     <PopularSection
                         trendingMovies={trendingMovies}
                         trendingTV={trendingTV}

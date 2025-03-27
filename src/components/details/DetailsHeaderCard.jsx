@@ -124,7 +124,7 @@ export default function DetailsHeaderCard({ details, type }) {
                                                 ) : !isInWatchlist && !alert.show ? (
                                                     <button
                                                         onClick={addToWatchListHandler}
-                                                        className="btn flex items-center mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c] px-3 py-2 rounded">
+                                                        className="btn flex items-center mt-auto bg-[#2c2c2c] hover:bg-[#4c4c4c] px-3 py-3 mb-1 rounded">
                                                         <PlusCircleIcon className="w-5 h-5 text-green-500" />
                                                         Add to Watchlist
                                                     </button>

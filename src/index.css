@@ -34,10 +34,11 @@
   }
 
   button {
-    @apply px-4 py-2 text-white rounded bg-[#2c2c2c];
+    @apply  text-white rounded bg-[#2c2c2c];
   }
 
   input, textarea, select {
     @apply border border-gray-300 rounded px-3 py-2 w-full;
   }
+ 
 }
