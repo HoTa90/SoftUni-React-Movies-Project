@@ -69,7 +69,7 @@ export default function ReviewComponent({ review, onDelete, isUserReviews }) {
             {isOwner && (
                 <div className="flex justify-end">
                     <Link to={`/${review.detailsData.type}/${review.detailsData.id}/edit/${review.id}`}>
-                        <button className="text-gray-400 hover:text-yellow-400 transition cursor-pointer">
+                        <button className="text-gray-400 hover:text-yellow-400 transition cursor-pointer px-5 py-2">
                             <PencilSquareIcon className="h-5 w-5" />
                         </button>
                     </Link>
