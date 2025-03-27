@@ -24,8 +24,8 @@ export default function Home() {
                 setTrendingTV(tvShows);
                 setTrendingPeople(people);
 
-                if (movies?.length > 0) {
-                    const headerMoviesData = movies.slice(0,10);
+                if (movies.length > 0) {
+                    const headerMoviesData = movies.slice(0, 10);
                     const moviesDetails = await Promise.all(
                         headerMoviesData.map(movie => getDetails('movie', movie?.id))
                     )
