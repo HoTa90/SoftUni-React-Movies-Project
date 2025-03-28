@@ -34,10 +34,10 @@ export default function AllReviews() {
                 setDetails(movieData)
                 setOriginalReviews(reviewsData)
                 setSearchedReviews(reviewsData)
-                setFilteredReviews(originalReviews)
+                setFilteredReviews(reviewsData)
 
             } catch (err) {
-                console.log('Errror is .. :', err.message)
+                console.log('Error is .. :', err.message)
                 if (err.message === 'NOT_FOUND') {
                     navigate('/404', { replace: true });
                 }
@@ -48,20 +48,27 @@ export default function AllReviews() {
         }
 
 
-    }, [type, id])
+    }, [type, id, getDetails, getReviewsForMovie, navigate])
 
-    const applyFilter =useCallback((filter) => {
+    const applyFilter = useCallback((filter) => {
         let filtered = [...searchedReviews]
-        console.log(filtered)
 
         switch (filter) {
             case 'rating-asc': filtered.sort((a, b) => a.rating - b.rating);
                 break;
             case 'rating-desc': filtered.sort((a, b) => b.rating - a.rating);
                 break;
-            case 'newest': filtered.sort((a, b) => b.createdOn.seconds - a.createdOn.seconds)
+            case 'newest':
+                filtered.sort((a, b) =>
+                    (b.editedOn?.seconds || b.createdOn.seconds) -
+                    (a.editedOn?.seconds || a.createdOn.seconds)
+                );
                 break;
-            case 'oldest': filtered.sort((a, b) => a.createdOn.seconds - b.createdOn.seconds)
+            case 'oldest':
+                filtered.sort((a, b) =>
+                    (a.editedOn?.seconds || a.createdOn.seconds) -
+                    (b.editedOn?.seconds || b.createdOn.seconds)
+                );
                 break;
             default:
                 break;
@@ -69,13 +76,13 @@ export default function AllReviews() {
 
         setFilteredReviews(filtered)
 
-    },[searchedReviews])
+    }, [searchedReviews])
 
     useEffect(() => {
         applyFilter(filter)
     }, [filter, searchedReviews, applyFilter])
 
-   
+
 
 
     const handleSearch = (term) => {
