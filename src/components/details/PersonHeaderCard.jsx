@@ -1,6 +1,5 @@
 import { CalendarIcon } from "@heroicons/react/16/solid";
-import { imagePath, imagePathOriginal } from "../../api/movieService.js";
-import { ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
+import { imagePath, imagePathOriginal, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 
 export default function PersonHeaderCard({ details, profiles }) {
     const profileImage = profiles[0]?.file_path;

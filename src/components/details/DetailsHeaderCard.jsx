@@ -1,6 +1,5 @@
 import { CalendarIcon, ClockIcon, MinusCircleIcon, PlusCircleIcon, } from "@heroicons/react/16/solid";
-import { imagePath, imagePathOriginal } from "../../api/movieService.js";
-import { minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
+import { imagePath, imagePathOriginal, minutesTohours, ratingToPercentage, resolveRatingColor } from "../../utils/helper.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import useFirestore from "../../services/firestore.js";
 import { useEffect, useState } from "react";

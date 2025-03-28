@@ -1,5 +1,6 @@
 import { MinusCircleIcon, StarIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
+import { imagePath } from "../utils/helper.js";
 
 export default function HeroCard({ data, type, onRemove, isWatchlist, isUserReviews }) {
     const isPerson = type === "person";
@@ -23,7 +24,7 @@ export default function HeroCard({ data, type, onRemove, isWatchlist, isUserRevi
             >
                 <img
                     src={data.poster_path || data.profile_path
-                        ? `https://image.tmdb.org/t/p/w500/${data.poster_path || data.profile_path}`
+                        ? `${imagePath}/${data.poster_path || data.profile_path}`
                         : "/no-poster.png"}
                     alt={data.title || data.name}
                     className={`

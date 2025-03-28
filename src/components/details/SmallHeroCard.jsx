@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { StarIcon } from "@heroicons/react/16/solid";
+import { imagePath } from "../../utils/helper.js";
 
 export default function SmallHeroCard({ data, type}) {
 
@@ -13,7 +14,7 @@ export default function SmallHeroCard({ data, type}) {
             <div className="flex-none">
                 <img 
                     src={data.poster_path || data.profile_path 
-                        ? `https://image.tmdb.org/t/p/w500/${data.poster_path || data.profile_path}` 
+                        ? `${imagePath}/${data.poster_path || data.profile_path}` 
                         : '/no-poster.png'} 
                     alt={data.title || data.name} 
                     className="rounded-lg w-full h-[200px] object-cover aspect-[2/3]"
