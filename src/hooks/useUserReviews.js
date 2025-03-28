@@ -25,7 +25,7 @@ export default function useUserReviews() {
         } else {
             navigate('/404', { replace: true })
         }
-    }, [user, navigate, username]);
+    }, [user, navigate, username, getUserReviews]);
 
     const deleteReviewHandler = async (reviewID) => {
         try {

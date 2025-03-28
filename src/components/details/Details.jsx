@@ -83,7 +83,7 @@ export default function Details() {
         };
 
         fetchData();
-    }, [type, id, navigate]);
+    }, [type, id, navigate, getCredits, getPersonCredits, getSimilar, getVideos, getDetails, getPersonImages, getLatestReview]);
 
     const deleteReviewHandler = async (reviewID) => {
         await deleteReview(reviewID)

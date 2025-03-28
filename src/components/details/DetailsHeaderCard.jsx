@@ -66,7 +66,7 @@ export default function DetailsHeaderCard({ details, type }) {
         }
 
 
-    }, [user?.uid, details?.id])
+    }, [user, details?.id, checkIfInWatchlist])
 
     return (
         <div

@@ -45,7 +45,7 @@ export default function FilterNavBar({ onGenreSelect, isMovie }) {
 
     return (
         <aside className="min-w-[64] text-gray-300 left-0 top-0 sticky mt-33 mb-27 flex flex-col py-6 px-4">
-            <h2 className="text-xl font-bold mb-9 text-center top-0 ">Filter by Genre</h2>
+            <h2 className="text-xl font-bold mb-9 text-center top-0 ">Search by Genre</h2>
             <nav className="space-y-2 ">
                 {genres.map((genre) => (
                     <button

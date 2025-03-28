@@ -12,7 +12,7 @@ export default function AllMovies() {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const {isPending, error, searchMovie, getMoviesByGenre, getMovies } = useFetch()
+    const { isPending, error, searchMovie, getMoviesByGenre, getMovies } = useFetch()
 
 
     useEffect(() => {
@@ -22,13 +22,13 @@ export default function AllMovies() {
         } else if (selectedGenre) {
             getMoviesByGenre(selectedGenre, currentPage)
                 .then(setMovies)
-     
+
         } else {
             getMovies(currentPage, "desc")
                 .then(setMovies)
 
         }
-    }, [currentPage, selectedGenre, searchQuery]);
+    }, [currentPage, selectedGenre, searchQuery, getMovies, searchMovie, getMoviesByGenre]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -41,7 +41,7 @@ export default function AllMovies() {
         setCurrentPage(1);
     };
 
-    
+
 
     const genreSelectHandler = (genreId) => {
         setSelectedGenre(genreId);
@@ -50,7 +50,7 @@ export default function AllMovies() {
     };
 
     useEffect(() => {
-        window.scroll(0,0)
+        window.scroll(0, 0)
     }, [currentPage])
 
     return (
@@ -93,8 +93,8 @@ export default function AllMovies() {
                         {searchQuery
                             ? `Search Results for "${searchQuery}"`
                             : selectedGenre
-                            ? `Every ${getGenreName(selectedGenre)} Movie`
-                            : "All Movies"}
+                                ? `Every ${getGenreName(selectedGenre)} Movie`
+                                : "All Movies"}
                     </h2>
                     {isPending ? (
                         <Spinner />

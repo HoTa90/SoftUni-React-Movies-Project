@@ -28,7 +28,7 @@ export default function AllSeries() {
                 .then(setSeries)
 
         }
-    }, [currentPage, selectedGenre, searchQuery]);
+    }, [currentPage, selectedGenre, searchQuery, searchTV, getTVByGenre, getSeries]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);

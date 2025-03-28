@@ -25,7 +25,7 @@ export default function WatchList() {
         } else {
             navigate('/404', { replace: true })
         }
-    }, [user, navigate, username])
+    }, [user, navigate, username, getWatchlist])
 
     const removeFromWatchListHandler = async (id) => {
         try {

@@ -7,12 +7,12 @@ export default function UserReviews() {
     const { reviews, deleteReviewHandler, loading, error } = useUserReviews();
 
     const groupedReviews = reviews.reduce((acc, review) => {
-        const mediaId = review.detailsData.id; // Unique ID for movie or TV show
-        const type = review.detailsData.type; // 'movie' or 'tv'
+        const mediaId = review.detailsData.id; 
+        const type = review.detailsData.type; 
         if (!acc[mediaId]) {
             acc[mediaId] = {
-                media: review.detailsData, // Store movie or TV show details
-                type: type, // Store the type ('movie' or 'tv')
+                media: review.detailsData, 
+                type: type, 
                 reviews: [],
             };
         }

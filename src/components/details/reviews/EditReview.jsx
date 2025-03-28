@@ -31,7 +31,7 @@ export default function EditReview() {
             }
         };
         fetchReview();
-    }, [reviewId, navigate]);
+    }, [reviewId, navigate, getReviewById]);
 
     const submitHandler = async (formData) => {
         await editReview(reviewId, {

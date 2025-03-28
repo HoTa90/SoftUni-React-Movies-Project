@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { db } from "./firebase.js";
 import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where, orderBy, limit, updateDoc } from "firebase/firestore";
 
@@ -19,7 +19,7 @@ export default function useFirestore() {
     };
 
 
-    const getWatchlist = async (userId) => {
+    const getWatchlist = useCallback(async (userId) => {
         setDbLoading(true)
         try {
             const watchlistSnapshot = await getDocs(collection(db, 'users', userId, 'watchlist'));
@@ -30,9 +30,9 @@ export default function useFirestore() {
         } finally {
             setDbLoading(false)
         }
-    }
+    }, [])
 
-    const checkIfInWatchlist = async (userId, dataId) => {
+    const checkIfInWatchlist = useCallback(async (userId, dataId) => {
 
         setDbLoading(true)
 
@@ -52,7 +52,7 @@ export default function useFirestore() {
         }
 
 
-    }
+    }, [])
 
     const addToWatchList = async (userId, dataId, data) => {
         setDbLoading(true)
@@ -82,7 +82,7 @@ export default function useFirestore() {
         }
     }
 
-    const getReviewsForMovie = async (movieId) => {
+    const getReviewsForMovie = useCallback(async (movieId) => {
         setDbLoading(true)
         try {
             const reviewsRef = collection(db, 'reviews');
@@ -101,9 +101,9 @@ export default function useFirestore() {
             setDbLoading(false)
         }
 
-    }
+    }, [])
 
-    const getUserReviews = async (userId) => {
+    const getUserReviews = useCallback(async (userId) => {
         setDbLoading(true)
         try {
             const reviewsRef = collection(db, 'reviews');
@@ -122,9 +122,9 @@ export default function useFirestore() {
             setDbLoading(false)
         }
 
-    }
+    }, [])
 
-    const getLatestReview = async (movieId) => {
+    const getLatestReview = useCallback(async (movieId) => {
         setDbLoading(true)
         try {
             const reviewsRef = collection(db, 'reviews');
@@ -149,7 +149,7 @@ export default function useFirestore() {
         } finally {
             setDbLoading(false)
         }
-    }
+    }, [])
 
     const editReview = async (reviewId, data) => {
         setDbLoading(true)
@@ -185,7 +185,7 @@ export default function useFirestore() {
         }
     };
 
-    const getReviewById = async (reviewId) => {
+    const getReviewById = useCallback(async (reviewId) => {
         setDbLoading(true)
         try {
             const reviewRef = doc(db, 'reviews', reviewId);
@@ -203,7 +203,7 @@ export default function useFirestore() {
         } finally {
             setDbLoading(false)
         }
-    };
+    }, []);
 
     return {
         addToWatchList,
