@@ -59,9 +59,11 @@ export const useFetch = () => {
     }, []);
 
     useEffect(() => {
+        const controllers = abortControllers.current
+
         return () => {
-            abortControllers.current.forEach(controller => controller.abort());
-            abortControllers.current.clear();
+            controllers.forEach(controller => controller.abort());
+            controllers.clear();
         };
     }, []);
 
