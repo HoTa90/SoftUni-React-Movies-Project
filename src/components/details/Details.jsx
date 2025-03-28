@@ -35,12 +35,14 @@ export default function Details() {
     const [similar, setSimilar] = useState([]);
     const [profiles, setProfiles] = useState([]);
     const [latestReview, setLatestReview] = useState(null);
+    const [detailsLoading, setDetailsLoading] = useState(true)
 
     const { getLatestReview, dbLoading, addReview, deleteReview } = useFirestore();
 
 
     useEffect(() => {
         setVideo(null);
+        setDetailsLoading(true)
         const fetchData = async () => {
             try {
                 const detailsData = await getDetails(type, id);
@@ -79,6 +81,8 @@ export default function Details() {
                 if (error.message === 'NOT_FOUND') {
                     navigate('/404', { replace: true });
                 }
+            } finally {
+                setDetailsLoading(false)
             }
         };
 
@@ -97,7 +101,7 @@ export default function Details() {
     }
 
 
-    if (isPending) {
+    if (isPending || detailsLoading) {
         return <Spinner />;
     }
 
