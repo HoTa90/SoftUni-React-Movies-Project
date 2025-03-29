@@ -37,7 +37,6 @@ export default function AllReviews() {
                 setFilteredReviews(reviewsData)
 
             } catch (err) {
-                console.log('Error is .. :', err.message)
                 if (err.message === 'NOT_FOUND') {
                     navigate('/404', { replace: true });
                 }

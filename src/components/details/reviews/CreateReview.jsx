@@ -32,7 +32,6 @@ export default function CreateReview({ movieDetails, setLatest, onCreate }) {
 
         try {
             const latestReview = await onCreate(reviewData);
-            console.log("Successfully added review");
             setLatest(latestReview)
         } catch (err) {
             console.log(err.message);

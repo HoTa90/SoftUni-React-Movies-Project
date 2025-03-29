@@ -36,7 +36,6 @@ export default function WatchList() {
             await removeFromWatchlist(user.uid, id)
             setWatchlist((prev) => prev.filter((item) => item.id !== id))
         } catch (err) {
-            console.log('Failed to Remove Item from Watchlist', err)
             setError(err.message)
         } finally {
             setIsPending(false)

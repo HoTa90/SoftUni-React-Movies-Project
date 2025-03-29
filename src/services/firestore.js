@@ -11,7 +11,6 @@ export default function useFirestore() {
         setDbLoading(true)
         try {
             await deleteDoc(doc(db, 'users', userId?.toString(), 'watchlist', dataId?.toString()));
-            console.log('Successfully removed from watchlist');
             toast.success('Successfully removed from Watchlist!')
         } catch (err) {
             console.error('Error removing from watchlist:', err);
@@ -61,10 +60,9 @@ export default function useFirestore() {
         setDbLoading(true)
         try {
             await setDoc(doc(db, 'users', userId, 'watchlist', dataId), data)
-            console.log('Successfully added to watchlsit')
 
-        } catch (err) {
-            console.log(err, 'Error adding to Watchlist')
+        } catch {
+            toast.error('Failed to add to watchlist')
         } finally {
             setDbLoading(false)
         }
@@ -78,8 +76,7 @@ export default function useFirestore() {
             toast.success(`Review with title "${data.title}" was created sucessfully!`)
             return { id: docRef.id, ...data };
         }
-        catch (err) {
-            console.log(err, 'Error creating a review')
+        catch  {
             toast.error('Failed to create review!')
         } finally {
             setDbLoading(false)
@@ -99,7 +96,7 @@ export default function useFirestore() {
 
             return reviews
         } catch (err) {
-            console.log('Failed fetching reviews', err.message)
+            console.error('Failed fetching reviews', err.message)
             return null
         } finally {
             setDbLoading(false)
@@ -142,7 +139,6 @@ export default function useFirestore() {
 
             if (!reviewsSnapshot.empty) {
                 const latestReview = { id: reviewsSnapshot.docs[0].id, ...reviewsSnapshot.docs[0].data() };
-                console.log("Latest review found:", latestReview);
                 return latestReview;
             }
             return null
@@ -164,8 +160,7 @@ export default function useFirestore() {
                 editedOn: new Date()
             });
             toast.success(`Review with title ${data.title} was updated!`)
-        } catch (err) {
-            console.log('Failed to edit', err.message)
+        } catch {
             toast.error('Failed to edit the review!')
         } finally {
             setDbLoading(false)
@@ -200,7 +195,6 @@ export default function useFirestore() {
             if (reviewSnapshot.exists()) {
                 return { id: reviewSnapshot.id, ...reviewSnapshot.data() };
             } else {
-                console.log("No such review found!");
                 throw new Error("No such review found!")
             }
         } catch (err) {
