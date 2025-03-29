@@ -64,8 +64,8 @@ export default function PersonHeaderCard({ details, profiles }) {
                             </div>
                             <span className="hidden md:inline">Popularity Rating</span>
                         </div>
-                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Place of Birth:</span> {details?.place_of_birth || 'Unknown'}</p>
-                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Known For:</span> {details?.known_for_department}</p>
+                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Place of Birth:</span> {details?.place_of_birth || 'N/A'}</p>
+                        <p className="text-gray-400 text-sm italic my-5"><span className="font-bold">Known For:</span> {details?.known_for_department || 'N/A'}</p>
                         <h2 className="text-xl font-bold mb-3">Biography</h2>
                         <div className="overflow-y-auto max-h-[200px] pr-4">
                             <p className="text-md mb-3">{details?.biography || 'No available information.'}</p>

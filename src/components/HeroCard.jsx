@@ -54,7 +54,7 @@ export default function HeroCard({ data, type, onRemove, isWatchlist, isUserRevi
                             </p>
                         </div>
                     ) : (
-                        <p className="text-sm text-[#a8b5db] font-medium mt-2">{data.known_for_department}</p>
+                        <p className="text-sm text-[#a8b5db] font-medium mt-2">{data.known_for_department || 'N/A'}</p>
                     )}
                 </div>
             </Link>
