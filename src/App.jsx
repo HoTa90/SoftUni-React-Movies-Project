@@ -16,13 +16,14 @@ import AllReviews from './components/details/reviews/AllReviews.jsx'
 import UserReviews from './components/details/reviews/UserReviews.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import AuthGuard from './guards/AuthGuard.jsx'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
 
   return (
     <AuthProvider>
       <NavBar />
-      <main className="bg-[#05011d] min-h-screen ">
+      <main className="min-h-screen bg-gradient-to-b from-[#02000f] via-[#07012b] to-[#09022e]">
         <ScrollToTop />
         <Routes>
           <Route index element={<Home />} />
@@ -43,6 +44,17 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </AuthProvider>
   )
 }
