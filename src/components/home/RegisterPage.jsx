@@ -35,9 +35,9 @@ if (user) {
       await register(email, password, username);
       event.target.reset()
     } catch (err) {
-      event.target.reset()
       if (err.code === 'auth/email-already-in-use') {
         setError('This email is already in use.');
+        event.target.reset()
       } else {
         setError(err.message);
       }

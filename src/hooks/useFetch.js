@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_BASE_URL = "https://api.themoviedb.org/3";
@@ -34,11 +35,13 @@ export const useFetch = () => {
                 throw new Error(errorData.status_message || `Request failed: ${res.status}`);
             }
 
+
             const result = await res.json();
             return result.results || result;
         } catch (err) {
             if (err.name !== "AbortError") {
                 setError(err.message);
+                toast.error(err.message)
                 throw err
             }
 

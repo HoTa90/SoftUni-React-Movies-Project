@@ -46,9 +46,7 @@ export default function Details() {
         const fetchData = async () => {
             try {
                 const detailsData = await getDetails(type, id);
-
                 setDetails(detailsData);
-
 
                 if (type === "person") {
                     const profilesData = await getPersonImages(type, id);
@@ -72,7 +70,6 @@ export default function Details() {
 
                     const video = videosData?.find((video) => video?.type === "Trailer");
                     setVideo(video);
-                    console.log(video)
 
                     const videos = videosData?.filter((video) => video?.type !== "Trailer")?.slice(0, 10);
                     setVideos(videos);

@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import HeroCard from "./HeroCard.jsx";
 import Spinner from "./loading/Spinner.jsx";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 export default function WatchList() {
     const { user } = useAuth()
@@ -23,6 +24,7 @@ export default function WatchList() {
                 .catch((err) => setError(err.message))
                 .finally(() => setIsPending(false))
         } else {
+            toast.info('You acan only access your own Watchlist!')
             navigate('/404', { replace: true })
         }
     }, [user, navigate, username, getWatchlist])

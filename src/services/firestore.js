@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { db } from "./firebase.js";
 import { addDoc, collection, doc, getDoc, setDoc, deleteDoc, getDocs, query, where, orderBy, limit, updateDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 
 export default function useFirestore() {
@@ -11,8 +12,10 @@ export default function useFirestore() {
         try {
             await deleteDoc(doc(db, 'users', userId?.toString(), 'watchlist', dataId?.toString()));
             console.log('Successfully removed from watchlist');
+            toast.success('Successfully removed from Watchlist!')
         } catch (err) {
             console.error('Error removing from watchlist:', err);
+            toast.error('Error removing from Watchlist!')
         } finally {
             setDbLoading(false)
         }
@@ -72,11 +75,12 @@ export default function useFirestore() {
         setDbLoading(true)
         try {
             const docRef = await addDoc(collection(db, 'reviews'), data)
-            console.log('Sucessfully added to reviews', docRef.id)
+            toast.success(`Review with title "${data.title}" was created sucessfully!`)
             return { id: docRef.id, ...data };
         }
         catch (err) {
             console.log(err, 'Error creating a review')
+            toast.error('Failed to create review!')
         } finally {
             setDbLoading(false)
         }
@@ -159,9 +163,10 @@ export default function useFirestore() {
                 ...data,
                 editedOn: new Date()
             });
-            console.log('Review updated')
+            toast.success(`Review with title ${data.title} was updated!`)
         } catch (err) {
             console.log('Failed to edit', err.message)
+            toast.error('Failed to edit the review!')
         } finally {
             setDbLoading(false)
         }
@@ -174,12 +179,13 @@ export default function useFirestore() {
             const reviewSnapshot = await getDoc(reviewRef);
             if (reviewSnapshot.exists()) {
                 await deleteDoc(reviewRef);
-                console.log('Review deleted successfully');
+                toast.success('Your review was deleted!')
             } else {
-                console.log('Review does not exist');
+                toast.info('Review does not exist')
             }
         } catch (err) {
             console.error('Failed to delete', err);
+            toast.error('Failed to delete review')
         } finally {
             setDbLoading(false);
         }

@@ -6,6 +6,7 @@ import Spinner from "../../loading/Spinner.jsx";
 import DetailsHeaderCard from "../DetailsHeaderCard.jsx";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import { isValidType } from "../../../utils/helper.js";
+import { toast } from "react-toastify";
 
 export default function EditReview() {
     const { reviewId, type } = useParams();
@@ -16,22 +17,37 @@ export default function EditReview() {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        const fetchReview = async () => {
-            try {
 
+        if (!isValidType(type)) {
+            toast.info("Invalid URL!");
+            navigate('/404', { replace: true });
+            return; 
+        }
+
+        const fetchAndValidateReview = async () => {
+            try {
                 const reviewData = await getReviewById(reviewId);
+                
+
+                if (user.uid !== reviewData.ownerId) {
+                    toast.info("You can only edit your own reviews!");
+                    navigate('/', { replace: true });
+                    return;
+                }
+
                 setReview(reviewData);
-                setDetails(reviewData.detailsData)
-            }
-            catch (err) {
-                console.log(err.message)
+                setDetails(reviewData.detailsData);
+            } catch (err) {
+                console.error("Error fetching review:", err.message);
                 if (err.message === 'No such review found!') {
-                    navigate('/404', { replace: true })
+                   toast.error(err.message)
+                    navigate('/404', { replace: true });
                 }
             }
         };
-        fetchReview();
-    }, [reviewId, navigate, getReviewById]);
+
+        fetchAndValidateReview();
+    }, [reviewId, type, user, navigate, getReviewById]);
 
     const submitHandler = async (formData) => {
         await editReview(reviewId, {
@@ -42,17 +58,7 @@ export default function EditReview() {
     };
 
     if (!review) {
-        return <Spinner />
-    }
-
-    const isOwner = user.uid === review.ownerId;
-
-    if (!isOwner) {
-        return <Navigate to='/' />
-    }
-
-    if (!isValidType(type)) {
-        return <Navigate to={'/404'} replace />
+        return <Spinner />;
     }
 
     return (

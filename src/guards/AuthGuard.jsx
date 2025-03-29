@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router";
 import { useAuth } from "../context/AuthContext.jsx";
 import Spinner from "../components/loading/Spinner.jsx";
+import { toast } from "react-toastify";
 
 export default function AuthGuard() {
    const {user, isLoading} = useAuth();
@@ -10,7 +11,8 @@ export default function AuthGuard() {
    }
 
    if (!user){
-    return <Navigate to={'/login'}/>
+      toast.info('You need to be logged in!')
+    return <Navigate to={'/login'} replace/>
    }
    
     return (

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import useFirestore from "../services/firestore.js";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 
 export default function useUserReviews() {
@@ -23,6 +24,7 @@ export default function useUserReviews() {
                 .catch((err) => setError(err.message))
                 .finally(() => setLoading(false));
         } else {
+            toast.info('You can only access your own reviews!')
             navigate('/404', { replace: true })
         }
     }, [user, navigate, username, getUserReviews]);

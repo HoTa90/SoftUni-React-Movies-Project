@@ -4,6 +4,7 @@ import Spinner from "../loading/Spinner.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 
+
 export default function LoginPage() {
     const { login, user, isLoading: authLoading } = useAuth();
     const [error, setError] = useState(null);
