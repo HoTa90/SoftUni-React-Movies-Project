@@ -6,22 +6,27 @@
 
 
 @layer base {
-  
+
   h1 {
     @apply text-4xl font-bold mb-6;
   }
+
   h2 {
     @apply text-3xl font-bold mb-6;
   }
+
   h3 {
     @apply text-2xl font-bold mb-4;
   }
+
   h4 {
     @apply text-xl font-bold mb-4;
   }
+
   h5 {
     @apply text-lg font-bold mb-2;
   }
+
   h6 {
     @apply text-base font-bold mb-2;
   }
@@ -29,16 +34,40 @@
   ul {
     @apply list-inside mb-4;
   }
+
   ol {
     @apply list-decimal list-inside mb-4;
   }
 
   button {
-    @apply  text-white rounded bg-[#2c2c2c];
+    @apply text-white rounded bg-[#2c2c2c];
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     @apply border border-gray-300 rounded px-3 py-2 w-full;
   }
- 
+
+}
+
+.Toastify__toast {
+  background: #1d1d1d !important;
+  color: white !important;
+  border-radius: 12px !important;
+  font-family: inherit !important;
+  /* Match your app font */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.Toastify__toast--error {
+  background: #fc3b3b !important;
+}
+
+.Toastify__progress-bar {
+  background: #05011d !important;
+}
+
+.Toastify__close-button {
+  color: white !important;
 }
