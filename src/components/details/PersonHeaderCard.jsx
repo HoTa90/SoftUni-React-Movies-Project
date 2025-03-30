@@ -4,7 +4,6 @@ import { imagePath, imagePathOriginal, ratingToPercentage, resolveRatingColor } 
 export default function PersonHeaderCard({ details, profiles }) {
     const profileImage = profiles[0]?.file_path;
 
-
     return (
         <div
             className="w-full h-auto md:h-[500px] py-2 flex items-center"
@@ -31,7 +30,7 @@ export default function PersonHeaderCard({ details, profiles }) {
                             <div className="flex items-center">
                                 <CalendarIcon className="w-5 h-5 mr-2 text-gray-400" />
                                 <span className="text-sm">
-                                    Born: {new Date(details?.birthday).toLocaleDateString("en-US") || 'N/A'}
+                                    Born: {details?.birthday ? new Date(details.birthday).toLocaleDateString("en-US") : "N/A" }
                                 </span>
                             </div>
                             {details?.deathday && (

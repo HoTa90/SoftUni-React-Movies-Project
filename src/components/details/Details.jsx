@@ -149,7 +149,7 @@ export default function Details() {
                         <div className="flex mt-5 mb-10 overflow-x-auto pb-4">
                             <div className="flex gap-8 m-2">
                                 {similar?.length === 0 && (
-                                    <p className="text-l text-gray-300 -m-2">No Similar Movies found</p>
+                                    <p className="text-l text-gray-300 -m-2">No Similar {type === "tv" ? "TV Series" : "Movies"} found</p>
                                 )}
                                 {similar?.map((m) => (
                                     <div key={m?.id} className="min-w-[200px] max-w-[200px] flex-none">
