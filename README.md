@@ -1,6 +1,6 @@
 # Softuni Movies
 
-A React-based Single Page Application for movie enthusiasts, providing comprehensive information about films, TV series, and celebrities. The platform features public catalog browsing and private user areas with personalized watchlists and review functionality.
+A React-based Single Page Application for movie enthusiasts, providing comprehensive information about films, TV series, and celebrities. The platform features public catalog browsing and private user areas with personalized watchlists and reviews functionality.
 
 ## Live Preview
 
@@ -18,7 +18,6 @@ This project was developed as part of the SoftUni React course, fulfilling all a
 - User authentication
 - CRUD operations
 - Client-side routing
-- React best practices
 
 ## Technologies Used
 
