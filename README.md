@@ -9,7 +9,7 @@ A React-based Single Page Application for movie enthusiasts, providing comprehen
 **Important Note:**  
 If you encounter any styling issues (CSS not loading properly) in the live preview, please clone and run the project locally
 
-## Test User - email: hota@abv.bg password:123456
+## Test User - email: hota@abv.bg password:123123
 
 ## Project Overview
 
