@@ -29,7 +29,20 @@ This project was developed as part of the SoftUni React course, fulfilling all a
   - Firebase Authentication
   - React Toastify for notifications
 
-[![React](https://img.shields.io/badge/React-✓-blue)]() [![React Router](https://img.shields.io/badge/React_Router-✓-brightgreen)]() [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-✓-important)]() [![Firebase](https://img.shields.io/badge/Firebase_Auth-✓-yellowgreen)]()
+### Backend Services (Firebase)
+- **Firestore Database:** Stores all user-generated content:
+  - Movie/TV show reviews
+  - User watchlists
+- **Firebase Authentication:** Handles user registration and login
+
+### External Data APIs
+- **TMDB API:** Provides all movie/TV show metadata including:
+  - Title information
+  - Cast/crew details
+  - Images and videos
+  - Trending/related content
+
+[![React](https://img.shields.io/badge/React-✓-blue)]() [![React Router](https://img.shields.io/badge/React_Router-✓-brightgreen)]() [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-✓-important)]() [![Firebase](https://img.shields.io/badge/Firebase_Auth-✓-yellowgreen)]() [![TMDB](https://img.shields.io/badge/TMDB_API-✓-informational)]() [![Firestore](https://img.shields.io/badge/Firestore_DB-✓-orange)]()
 
 ## Project Structure
 
