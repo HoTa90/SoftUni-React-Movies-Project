@@ -51,7 +51,7 @@ export default function FilterNavBar({ onGenreSelect, isMovie }) {
                     <button
                         key={genre.id}
                         onClick={() => onGenreSelect(genre.id)}
-                        className="w-full text-left px-4 py-1.5 m-1.5 rounded-lg transition-all hover:bg-gray-700"
+                        className="w-full text-left px-4 py-1.5 m-1.5 rounded-lg transition-all hover:bg-gray-700 cursor-pointer"
                     >
                         {genre.name}
                     </button>
