@@ -77,7 +77,7 @@ export default function AllSeries() {
                                 type="search"
                                 required
                                 name="query"
-                                placeholder="Search by Movie title"
+                                placeholder="Search by TV title"
                                 className="w-full bg-[#2c2c2c]"
                             />
                         </label>
